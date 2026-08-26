@@ -7,9 +7,13 @@ const API_BASE = process.env.NEXT_PUBLIC_MUSIC_ANALYZER_API_BASE_URL?.replace(/\
 export const isLiveAnalysisConfigured = Boolean(API_BASE);
 
 type UploadSession = {
-  fileId: string;
+  uploadId: string;
   uploadUrl: string;
   expiresAt?: string;
+};
+
+type FinalizedUpload = {
+  fileId: string;
 };
 
 type AnalysisStateResponse =
@@ -49,26 +53,43 @@ async function createTemporaryUpload(file: File): Promise<UploadSession> {
   });
 }
 
-function uploadWithTus(file: File, endpoint: string, onProgress?: (progress: number) => void) {
+function uploadWithTus(
+  file: File,
+  session: UploadSession,
+  onProgress?: (progress: number) => void,
+) {
   return new Promise<void>((resolve, reject) => {
     const upload = new Upload(file, {
-      endpoint,
-      retryDelays: [0, 1000, 3000, 5000],
+      retryDelays: [0, 5000],
+      removeFingerprintOnSuccess: true,
+      fingerprint: async () => ["bridge-tools", file.name, file.type, file.size].join("-"),
       metadata: {
+        id: session.uploadId,
         filename: file.name,
         filetype: file.type || "application/octet-stream",
       },
       onError: reject,
+      onShouldRetry: (error) => {
+        const status = error?.originalResponse?.getStatus() || 0;
+        return status !== 403;
+      },
       onProgress: (uploaded, total) => {
         onProgress?.(total > 0 ? uploaded / total : 0);
       },
       onSuccess: () => resolve(),
     });
 
-    upload.findPreviousUploads().then((previous) => {
-      if (previous.length) upload.resumeFromPreviousUpload(previous[0]);
-      upload.start();
-    });
+    // Bridge's current webapp upload flow receives a pre-created TUS resource URL
+    // and resumes directly against that resource rather than POSTing to a TUS endpoint.
+    upload.url = session.uploadUrl;
+    upload.start();
+  });
+}
+
+async function finalizeTemporaryUpload(uploadId: string): Promise<FinalizedUpload> {
+  return request<FinalizedUpload>(`/tools/music-analyzer/uploads/${uploadId}/complete`, {
+    method: "POST",
+    body: JSON.stringify({}),
   });
 }
 
@@ -127,9 +148,11 @@ export async function analyzeMusicFile(
 
   options?.onStatus?.("uploading");
   const session = await createTemporaryUpload(file);
-  await uploadWithTus(file, session.uploadUrl, options?.onUploadProgress);
-  options?.onStatus?.("queued");
-  await startAnalysis(session.fileId);
+  await uploadWithTus(file, session, options?.onUploadProgress);
 
-  return pollAnalysis(session.fileId, options?.onStatus);
+  options?.onStatus?.("queued");
+  const { fileId } = await finalizeTemporaryUpload(session.uploadId);
+  await startAnalysis(fileId);
+
+  return pollAnalysis(fileId, options?.onStatus);
 }
