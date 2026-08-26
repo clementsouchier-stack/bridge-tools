@@ -69,11 +69,11 @@ The current Bridge webapp audio upload flow is:
 1. GraphQL `LibraryInitializeTrackUpload` receives library ID, file name, size and MIME type.
 2. It returns `upload_id` and a pre-created TUS `url`.
 3. The browser creates `new tus.Upload(file, ...)`, assigns `upload.url = url`, adds the upload ID as metadata and starts the upload.
-4. After TUS succeeds, GraphQL `AddLibraryFile(library_id, upload_id)` finalizes the upload and returns the Library file ID.
+4. After TUS succeeds, GraphQL `AddLibraryFile(library_id, upload_id)` claims/finalizes the uploaded object into the Library and returns the Library file ID.
 
 This matters for Bridge Tools: the public flow should preserve these storage primitives instead of treating the returned URL as a generic TUS creation endpoint.
 
-Anonymous users cannot call `AddLibraryFile` because they do not yet have a workspace/library. The BFF therefore needs an equivalent temporary-file finalization path.
+Anonymous users cannot call `AddLibraryFile` because they do not yet have a workspace/library. The BFF therefore needs an equivalent temporary-file claim path.
 
 ## Storage primitives confirmed in `account-api`
 
@@ -186,7 +186,7 @@ service_id: bridge-tools::music-analyzer:{session-id}
 workspace_id: null
 ```
 
-The exact accepted format for `owner`, `service_id` and `added_by` must still be verified in the **storage-api server implementation** before production. `api-client-lib` proves the client contract but not server-side validation rules.
+The exact accepted format for `owner`, `service_id` and `added_by` must still be verified in the storage-api server implementation before production.
 
 ### Other relevant file routes
 
@@ -201,18 +201,67 @@ PATCH  /api/v1/file/{fileId}
 
 These are useful for temporary-file retrieval, cleanup and later conversion/saving flows.
 
-## Internal authentication boundary
+## Upload Gateway behavior confirmed
 
-`StorageApiClient` reads its base URL and access key from server-side environment variables:
+The `Upload Gateway` repository clarifies the part that was previously ambiguous.
+
+### The gateway is TUS-only
+
+It exposes only a TUS handler under:
 
 ```text
-STORAGE_API_URL
-STORAGE_API_ACCESS_KEY
+/tus/
 ```
 
-These values must never be exposed through `NEXT_PUBLIC_*` variables or returned to the browser.
+Its custom store explicitly returns `handler.ErrNotImplemented` from `NewUpload(...)`. This proves that TUS resources are **pre-created in Storage API** and the browser uploads only to an already-existing resource URL.
 
-The current shared client does not expose enough information to conclude all server-side access-control rules for the upload POST endpoints. The BFF must therefore remain the only caller of Storage API initialization/claim endpoints.
+### Upload state comes from Storage API
+
+For every TUS upload, the gateway loads upload metadata through:
+
+```http
+GET /api/v1/upload/{uploadId}
+```
+
+The response gives it the S3 bucket, multipart upload reference, object key, expected size and `completed_at` state.
+
+### Multipart completion is automatic
+
+When the final TUS chunk completes, `tusd` invokes the gateway store's `FinishUpload(...)` method. The gateway then automatically calls:
+
+```http
+PUT /api/v1/upload/{uploadId}
+```
+
+on Storage API.
+
+So the browser/BFF does **not** need to call the Storage `PUT` itself after TUS succeeds.
+
+This gives us a clean distinction:
+
+```text
+PUT  /api/v1/upload/{id}  = finish the multipart/TUS upload
+POST /api/v1/upload/{id}  = claim the completed upload into a Bridge file
+```
+
+The public `/tools/music-analyzer/uploads/{uploadId}/complete` endpoint should therefore mean:
+
+1. verify the upload has `completed_at`
+2. validate actual MIME type and size
+3. claim the upload into a temporary Bridge file
+4. return `fileId`
+
+It should not re-run the Storage `PUT`.
+
+### Gateway size limit
+
+The Upload Gateway enforces `UPLOAD_SIZE_LIMIT`, with a code default of 5 GiB. That is only an infrastructure ceiling. Music Analyzer should impose its own much smaller product-level file-size/duration limit before creating an upload.
+
+### Internal Storage connectivity
+
+The gateway receives Storage API through a server-only `STORAGE_API_URL`. Local development points this at `storage-api.bridge.localhost`.
+
+The Go client used by Upload Gateway calls the Storage API directly without any custom auth middleware in this repository. That suggests internal-network/service trust for this path, but it does **not** prove that every Storage API route is unauthenticated. The server implementation remains the source of truth for middleware/access rules.
 
 ## Current recommended public flow
 
@@ -225,7 +274,12 @@ BFF → Storage API POST /api/v1/upload
   ↓
 uploadId + pre-created TUS URL
   ↓
-Browser uploads audio using upload.url = returned URL
+Browser uploads audio to the returned TUS resource
+  ↓
+Upload Gateway → Storage API PUT /api/v1/upload/{uploadId}
+  (automatic when final TUS chunk completes)
+  ↓
+Browser receives TUS success
   ↓
 POST /tools/music-analyzer/uploads/{uploadId}/complete
   ↓
@@ -250,11 +304,14 @@ GET /tools/music-analyzer/{fileId}/analysis
 
 ## What remains to verify
 
-The upload architecture no longer depends on locating the GraphQL Library backend. The one missing source-of-truth is now the **storage-api server repository**, specifically the handlers for:
+The upload architecture no longer depends on locating the GraphQL Library backend, and the Upload Gateway lifecycle is now fully understood.
+
+The remaining source-of-truth we still want is the **storage-api server repository**, specifically the handlers for:
 
 ```text
 POST /api/v1/upload
-GET /api/v1/upload/{uploadId}
+GET  /api/v1/upload/{uploadId}
+PUT  /api/v1/upload/{uploadId}
 POST /api/v1/upload/{uploadId}
 ```
 
@@ -265,7 +322,7 @@ We need it only to confirm:
 - accepted `type` values
 - service-context validation
 - upload expiration / cleanup behavior
-- any access-key or internal-network middleware on those routes
+- route middleware / internal access rules
 
 If those rules accept a dedicated Bridge Tools context, no new storage mechanism is required.
 
