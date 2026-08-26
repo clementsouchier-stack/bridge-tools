@@ -1,0 +1,14 @@
+{
+  "name": "bridge-tools",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @bridge-tools/music-analyzer",
+    "build": "npm run build --workspace @bridge-tools/music-analyzer",
+    "lint": "npm run lint --workspace @bridge-tools/music-analyzer"
+  }
+}
