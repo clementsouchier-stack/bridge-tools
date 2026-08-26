@@ -6,7 +6,8 @@ This document defines the public-safe contract between the Music Analyzer fronte
 
 - The browser must never call internal Bridge services directly.
 - Public uploads are temporary until a signed-in user explicitly saves the track to Bridge.
-- The upload flow mirrors the existing Bridge webapp TUS lifecycle: initialize → upload to a pre-created TUS resource URL → finalize.
+- The upload flow mirrors the existing Bridge webapp TUS lifecycle: initialize → upload to a pre-created TUS resource URL → verify completion → claim into a Bridge file.
+- The Upload Gateway itself finishes the underlying multipart upload when the final TUS chunk is received.
 - Internal tag, family and category IDs are normalized server-side into human-readable analysis groups.
 - The API exposes explicit processing states so the UI never relies on internal 404 polling semantics.
 
@@ -36,9 +37,21 @@ This document defines the public-safe contract between the Music Analyzer fronte
 
 `uploadUrl` is a pre-created TUS resource URL, matching the current Bridge webapp behavior. The frontend assigns this URL to the TUS upload instance and sends `uploadId` as upload metadata.
 
+Internally, the BFF creates this upload through the existing Storage API `POST /api/v1/upload` primitive.
+
 ## 2. Upload audio with TUS
 
 The browser uploads the selected audio directly to the returned pre-created TUS resource.
+
+The Bridge Upload Gateway exposes TUS under `/tus/`. Its custom TUS store deliberately does **not** implement `NewUpload`: upload resources must already exist in Storage API before the browser starts uploading.
+
+When the final TUS chunk is received, the Upload Gateway automatically calls:
+
+```http
+PUT /api/v1/upload/{uploadId}
+```
+
+on Storage API. This finishes the underlying multipart upload. The browser/BFF must not perform that Storage finalization a second time.
 
 Important production parity details:
 
@@ -47,11 +60,19 @@ Important production parity details:
 - the upload fingerprint should be removed after success
 - `uploadId` is included in TUS metadata
 
-## 3. Finalize temporary upload
+## 3. Complete public upload / claim Bridge file
 
 `POST /tools/music-analyzer/uploads/{uploadId}/complete`
 
-This BFF operation finalizes the temporary upload using Bridge storage/file primitives and creates the file record required by AI Processor.
+The public endpoint name remains `complete`, but its internal responsibility is now precise:
+
+1. `GET /api/v1/upload/{uploadId}`
+2. verify `completed_at` is present
+3. validate actual size and MIME type against the public-tool rules
+4. claim the completed upload through `POST /api/v1/upload/{uploadId}`
+5. return the resulting Bridge `fileId`
+
+The underlying multipart/TUS upload has already been finished by Upload Gateway before this endpoint is called.
 
 ### Response
 
@@ -61,7 +82,7 @@ This BFF operation finalizes the temporary upload using Bridge storage/file prim
 }
 ```
 
-The exact internal implementation may differ from the existing Library `AddLibraryFile` mutation because anonymous Music Analyzer uploads must not require a workspace or library. The public contract should remain stable.
+The claim uses a dedicated server-side Bridge Tools storage context and must not require the visitor to already have a workspace/library.
 
 ## 4. Start analysis
 
@@ -168,5 +189,7 @@ The production BFF should enforce:
 - internal service isolation
 - taxonomy resolution
 - stable error mapping
+
+The Upload Gateway currently enforces a configurable TUS maximum size (`UPLOAD_SIZE_LIMIT`; 5 GiB default in its code), but Music Analyzer should enforce a much smaller product-specific limit before initializing an upload.
 
 No internal Bridge hostname, service token or credential should ever reach the browser.
