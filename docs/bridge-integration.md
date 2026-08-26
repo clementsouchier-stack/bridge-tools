@@ -75,6 +75,42 @@ This matters for Bridge Tools: the public flow should preserve these storage pri
 
 Anonymous users cannot call `AddLibraryFile` because they do not yet have a workspace/library. The BFF therefore needs an equivalent temporary-file finalization path.
 
+## Storage primitives confirmed in `account-api`
+
+The `account-api` repository is **not** the GraphQL Library backend, but it confirms that Bridge already exposes the generic storage primitives we need through `bridge/api-client-lib`.
+
+`App\\Api\\StorageApi` wraps `Bridge\\ApiClient\\Storage\\V2\\StorageApiClientV2` and already provides:
+
+```text
+initializeUpload(owner, isPublic, type, fileName, size, pathPrefix)
+getUpload(uploadId)
+claimUpload(owner, uploadId, context, addedBy)
+deleteFile(fileId, context)
+findById(fileId, context)
+```
+
+The profile-picture V2 flow is a concrete production example:
+
+1. `POST /v2/picture/upload`
+2. calls `initializeUpload(...)`
+3. returns `upload_id + url`
+4. browser uploads to the pre-created TUS resource
+5. later `claimUpload(...)` converts that upload into a real Bridge file
+
+The important implication is that Music Analyzer does **not** need a new storage mechanism. It needs a public-safe owner/context for anonymous temporary music uploads plus a thin endpoint around the existing `initializeUpload / getUpload / claimUpload` primitives.
+
+The account service uses an owner string shaped like `user:{uuid}` for profile pictures. The Music Analyzer should use a dedicated server-side namespace such as `music-analyzer:{session-id}` rather than impersonating a user or Library owner.
+
+The `account-api` package lock also identifies the exact shared client source:
+
+```text
+git@gitlab.bridgeaudio.net:bridge-audio/back/api-client-lib.git
+package: bridge/api-client-lib
+version observed: 8.8.0
+```
+
+The next source to inspect is therefore `api-client-lib`, specifically `StorageApiClientV2`, to recover the exact Storage API routes, payloads and service-context requirements before implementing the BFF adapter.
+
 Target public flow:
 
 ```text
@@ -82,11 +118,15 @@ Browser
   ↓
 POST /tools/music-analyzer/uploads
   ↓
+BFF → StorageApiClientV2.initializeUpload(...)
+  ↓
 uploadId + pre-created TUS URL
   ↓
 TUS upload using upload.url = returned URL
   ↓
 POST /tools/music-analyzer/uploads/{uploadId}/complete
+  ↓
+BFF → getUpload(...) + claimUpload(...)
   ↓
 temporary fileId
   ↓
