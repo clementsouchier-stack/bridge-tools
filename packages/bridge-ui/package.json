@@ -1,0 +1,8 @@
+{
+  "name": "@bridge-tools/bridge-ui",
+  "version": "0.1.0",
+  "private": true,
+  "exports": {
+    "./tokens.css": "./src/tokens.css"
+  }
+}
