@@ -97,40 +97,149 @@ The profile-picture V2 flow is a concrete production example:
 4. browser uploads to the pre-created TUS resource
 5. later `claimUpload(...)` converts that upload into a real Bridge file
 
-The important implication is that Music Analyzer does **not** need a new storage mechanism. It needs a public-safe owner/context for anonymous temporary music uploads plus a thin endpoint around the existing `initializeUpload / getUpload / claimUpload` primitives.
+The account service validates the uploaded object's size and MIME type again after TUS completion and before claiming it. Music Analyzer should preserve that pattern.
 
-The account service uses an owner string shaped like `user:{uuid}` for profile pictures. The Music Analyzer should use a dedicated server-side namespace such as `music-analyzer:{session-id}` rather than impersonating a user or Library owner.
+## Exact Storage API contract confirmed in `api-client-lib`
 
-The `account-api` package lock also identifies the exact shared client source:
+`Bridge\\ApiClient\\Storage\\StorageApiClient` confirms the current internal HTTP routes and payloads.
 
-```text
-git@gitlab.bridgeaudio.net:bridge-audio/back/api-client-lib.git
-package: bridge/api-client-lib
-version observed: 8.8.0
+### Initialize upload
+
+```http
+POST /api/v1/upload
+Content-Type: application/x-www-form-urlencoded
 ```
 
-The next source to inspect is therefore `api-client-lib`, specifically `StorageApiClientV2`, to recover the exact Storage API routes, payloads and service-context requirements before implementing the BFF adapter.
+Fields:
 
-Target public flow:
+```text
+owner
+is_public      // 1 or 0
+type
+file_name
+size
+path_prefix    // optional
+```
+
+Successful response is expected with HTTP `201` and contains:
+
+```json
+{
+  "data": {
+    "id": "upload-uuid",
+    "url": "pre-created-tus-resource-url"
+  }
+}
+```
+
+### Read upload state
+
+```http
+GET /api/v1/upload/{uploadId}
+```
+
+The client maps the response to:
+
+```text
+id
+bucket
+key
+ref_id
+size
+mime_type
+completed_at
+```
+
+`completed_at` is therefore available to the BFF as a server-side check that the TUS upload actually completed before claiming it.
+
+### Claim upload into a Bridge file
+
+```http
+POST /api/v1/upload/{uploadId}
+Content-Type: application/x-www-form-urlencoded
+```
+
+Fields:
+
+```text
+owner
+service_id
+workspace_id   // optional
+added_by
+```
+
+The important discovery is that **`workspace_id` is optional in the shared client**. `account-api` already claims profile-picture uploads without a workspace. This makes a Tools-specific temporary file context technically plausible without creating a fake Library/workspace.
+
+`service_id` is generated as:
+
+```text
+{context.serviceName()}::{context.contextName()}
+```
+
+For example, an account user's storage context is built from its service name plus `user:{uuid}` context.
+
+For Music Analyzer, the BFF should use a dedicated Tools storage context rather than impersonating an existing user or Library. A conceptual namespace could be:
+
+```text
+owner: music-analyzer:{session-id}
+service_id: bridge-tools::music-analyzer:{session-id}
+workspace_id: null
+```
+
+The exact accepted format for `owner`, `service_id` and `added_by` must still be verified in the **storage-api server implementation** before production. `api-client-lib` proves the client contract but not server-side validation rules.
+
+### Other relevant file routes
+
+The shared client also confirms:
+
+```text
+GET    /api/v1/file/{fileId}?service_id=...
+DELETE /api/v1/file/{fileId}?service_id=...
+POST   /api/v1/file/link-service/{fileId}
+PATCH  /api/v1/file/{fileId}
+```
+
+These are useful for temporary-file retrieval, cleanup and later conversion/saving flows.
+
+## Internal authentication boundary
+
+`StorageApiClient` reads its base URL and access key from server-side environment variables:
+
+```text
+STORAGE_API_URL
+STORAGE_API_ACCESS_KEY
+```
+
+These values must never be exposed through `NEXT_PUBLIC_*` variables or returned to the browser.
+
+The current shared client does not expose enough information to conclude all server-side access-control rules for the upload POST endpoints. The BFF must therefore remain the only caller of Storage API initialization/claim endpoints.
+
+## Current recommended public flow
 
 ```text
 Browser
   ↓
 POST /tools/music-analyzer/uploads
   ↓
-BFF → StorageApiClientV2.initializeUpload(...)
+BFF → Storage API POST /api/v1/upload
   ↓
 uploadId + pre-created TUS URL
   ↓
-TUS upload using upload.url = returned URL
+Browser uploads audio using upload.url = returned URL
   ↓
 POST /tools/music-analyzer/uploads/{uploadId}/complete
   ↓
-BFF → getUpload(...) + claimUpload(...)
+BFF → GET /api/v1/upload/{uploadId}
   ↓
-temporary fileId
+validate completed_at + actual size + MIME type
+  ↓
+BFF → POST /api/v1/upload/{uploadId} (claim)
+  ↓
+temporary Bridge fileId
   ↓
 POST /tools/music-analyzer/{fileId}/analysis
+  ↓
+BFF → AI Processor POST /api/v1/files/{fileId}/analysis
   ↓
 Bridge AI Processor
   ↓
@@ -138,6 +247,27 @@ Taxonomy resolution + normalization
   ↓
 GET /tools/music-analyzer/{fileId}/analysis
 ```
+
+## What remains to verify
+
+The upload architecture no longer depends on locating the GraphQL Library backend. The one missing source-of-truth is now the **storage-api server repository**, specifically the handlers for:
+
+```text
+POST /api/v1/upload
+GET /api/v1/upload/{uploadId}
+POST /api/v1/upload/{uploadId}
+```
+
+We need it only to confirm:
+
+- allowed `owner` formats
+- whether `added_by` may be a service/session identifier rather than a user UUID
+- accepted `type` values
+- service-context validation
+- upload expiration / cleanup behavior
+- any access-key or internal-network middleware on those routes
+
+If those rules accept a dedicated Bridge Tools context, no new storage mechanism is required.
 
 ## Public safety requirements
 
