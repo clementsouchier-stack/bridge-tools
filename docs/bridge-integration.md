@@ -64,20 +64,31 @@ The Tools BFF should map these to useful public-safe copy.
 
 ## Existing webapp upload flow
 
-The current Bridge webapp already uses a TUS-based audio upload flow and obtains a Bridge file ID before downstream processing.
+The current Bridge webapp audio upload flow is:
 
-The public tool should reuse the same storage/upload primitives, but anonymous users need a temporary-file path that is not tied to an existing workspace/library.
+1. GraphQL `LibraryInitializeTrackUpload` receives library ID, file name, size and MIME type.
+2. It returns `upload_id` and a pre-created TUS `url`.
+3. The browser creates `new tus.Upload(file, ...)`, assigns `upload.url = url`, adds the upload ID as metadata and starts the upload.
+4. After TUS succeeds, GraphQL `AddLibraryFile(library_id, upload_id)` finalizes the upload and returns the Library file ID.
 
-Target flow:
+This matters for Bridge Tools: the public flow should preserve these storage primitives instead of treating the returned URL as a generic TUS creation endpoint.
+
+Anonymous users cannot call `AddLibraryFile` because they do not yet have a workspace/library. The BFF therefore needs an equivalent temporary-file finalization path.
+
+Target public flow:
 
 ```text
 Browser
   ↓
 POST /tools/music-analyzer/uploads
   ↓
-Temporary Bridge file + TUS endpoint
+uploadId + pre-created TUS URL
   ↓
-TUS upload
+TUS upload using upload.url = returned URL
+  ↓
+POST /tools/music-analyzer/uploads/{uploadId}/complete
+  ↓
+temporary fileId
   ↓
 POST /tools/music-analyzer/{fileId}/analysis
   ↓
