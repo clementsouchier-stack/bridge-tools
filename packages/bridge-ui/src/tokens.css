@@ -1,0 +1,57 @@
+:root {
+  /* Bridge.audio DS — light foundation */
+  --bridge-font-sans: "Manrope", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --bridge-white: #ffffff;
+  --bridge-grey-25: #fcfcfc;
+  --bridge-grey-50: #f7f7f8;
+  --bridge-grey-100: #dcdce0;
+  --bridge-grey-200: #cbcace;
+  --bridge-grey-300: #777481;
+  --bridge-grey-400: #434149;
+  --bridge-grey-500: #252428;
+  --bridge-grey-600: #1e1d20;
+  --bridge-grey-800: #030401;
+
+  --bridge-primary: #2f43de;
+  --bridge-primary-hover: #5c6ce5;
+  --bridge-primary-dark: #1e30bd;
+  --bridge-primary-soft: #e0e3fa;
+  --bridge-primary-softer: #f6f7fe;
+
+  --bridge-yellow: #ffc833;
+  --bridge-magenta: #ff3364;
+  --bridge-logo-purple: #5900ff;
+
+  --bridge-content: var(--bridge-grey-500);
+  --bridge-content-strong: var(--bridge-grey-800);
+  --bridge-content-secondary: var(--bridge-grey-300);
+  --bridge-content-tertiary: var(--bridge-grey-200);
+  --bridge-border: var(--bridge-grey-200);
+  --bridge-border-soft: var(--bridge-grey-100);
+  --bridge-surface: var(--bridge-grey-50);
+  --bridge-surface-subtle: var(--bridge-grey-25);
+  --bridge-accent: var(--bridge-primary);
+
+  --bridge-radius-xs: 2px;
+  --bridge-radius-s: 4px;
+  --bridge-radius-m: 6px;
+  --bridge-radius-l: 8px;
+  --bridge-radius-xl: 10px;
+  --bridge-radius-xxl: 12px;
+
+  --bridge-space-1: 2px;
+  --bridge-space-2: 4px;
+  --bridge-space-3: 8px;
+  --bridge-space-4: 12px;
+  --bridge-space-5: 16px;
+  --bridge-space-6: 20px;
+  --bridge-space-7: 24px;
+  --bridge-space-8: 32px;
+  --bridge-space-9: 40px;
+  --bridge-space-10: 48px;
+  --bridge-space-11: 56px;
+  --bridge-space-12: 64px;
+
+  --bridge-shadow-soft: 0 18px 40px rgba(119, 116, 129, 0.12), 0 9px 20px rgba(119, 116, 129, 0.06);
+}
