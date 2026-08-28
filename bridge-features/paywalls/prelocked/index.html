@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridge.audio — Pre-locked Pro Banner</title>
+  <style>
+    :root {
+      --black: #252428;
+      --blue: #2F43DE;
+      --yellow: #FFC94A;
+      --yellow-soft: #FFF7E2;
+      --yellow-border: #F3D68A;
+      --orange: #E28B00;
+      --orange-soft: #FFF7E2;
+      --green: #59D994;
+      --grey-50: #FAFAFB;
+      --grey-100: #F5F5F7;
+      --grey-200: #ECECF0;
+      --grey-300: #D8D8DE;
+      --grey-500: #8A8A93;
+      --grey-600: #5B5A61;
+      --sidebar: #F7F7F8;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 50px rgba(37, 36, 40, 0.07);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--grey-100);
+      color: var(--black);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .app {
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 96px;
+      min-width: 96px;
+      height: 100vh;
+      background: var(--grey-100);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      z-index: 10;
+      border-right: 0;
+    }
+
+    .workspace-switcher {
+      height: 56px;
+      margin: 16px 0;
+      width: 100%;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .workspace-avatar {
+      position: relative;
+      z-index: 10;
+      width: 88px;
+      height: 88px;
+      border-radius: 0;
+      background: transparent;
+      object-fit: contain;
+      outline: none;
+      outline-offset: 0;
+      transition: transform 160ms ease, opacity 160ms ease;
+      display: block;
+      overflow: visible;
+    }
+
+    .workspace-switcher:hover .workspace-avatar {
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .workspace-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sidebar-scroll {
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar-nav-wrap {
+      position: relative;
+      width: 100%;
+      margin-top: 32px;
+      font-size: 16px;
+    }
+
+    .sidebar-add-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .add-btn {
+      width: 64px;
+      height: 64px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #CFCFD6;
+      box-shadow: 0 8px 20px rgba(37, 36, 40, 0.14);
+      color: var(--black);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .add-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #252428;
+    }
+
+    .nav {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-item {
+      position: relative;
+      width: 100%;
+      margin-bottom: 16px;
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #8F8F99;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+
+    .nav-item.active {
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    .nav-icon-box {
+      position: relative;
+      box-sizing: content-box;
+      width: 24px;
+      height: 24px;
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #A9A9B1;
+    }
+
+    .nav-item.active .nav-icon-box {
+      background: var(--yellow);
+      color: #fff;
+    }
+
+    .nav-icon-box svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-item.active .nav-icon-box svg.filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    .nav-label {
+      margin-top: 4px;
+      flex-grow: 1;
+    }
+
+    .beta {
+      position: absolute;
+      top: -8px;
+      right: 4px;
+      z-index: 10;
+      border-radius: 999px;
+      border: 1px solid #DEDEE4;
+      background: #fff;
+      padding: 4px 8px;
+      color: var(--black);
+      font-size: 8px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .sidebar-bottom {
+      width: 100%;
+      flex: none;
+    }
+
+    .sidebar-divider {
+      height: 1px;
+      margin: 0 20px;
+      background: #DEDEE4;
+    }
+
+    .sidebar-pro-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 0 0 14px;
+    }
+
+    .pro-mini {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      height: 34px;
+      padding: 0 11px;
+      border-radius: 5px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(52, 68, 212, 0.24);
+    }
+
+    .pro-mini > svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex: none;
+    }
+
+    .sidebar-bottom-icons {
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+      margin: 16px;
+    }
+
+    .sidebar-bottom-icons a {
+      color: #9D9DA6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .sidebar-bottom-icons svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .main {
+      flex: 1;
+      height: 100vh;
+      padding: 20px 30px 28px 18px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .billing-banner {
+      width: 100%;
+      min-height: 92px;
+      border-radius: 16px;
+      border: 1px solid var(--yellow-border);
+      background: linear-gradient(180deg, #FFF9EA 0%, var(--yellow-soft) 100%);
+      box-shadow: 0 14px 38px rgba(37, 36, 40, 0.045);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 60px 16px 22px;
+      margin: 0 0 18px;
+      position: sticky;
+      top: 0;
+      z-index: 8;
+    }
+
+    .pro-emblem {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFE59A, #F8C85A);
+      display: grid;
+      place-items: center;
+      flex: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+
+    .pro-emblem img,
+    .pro-emblem > svg {
+      width: 25px;
+      height: 24px;
+      display: block;
+    }
+
+    .pro-emblem > svg path {
+      stroke: none;
+    }
+
+    .banner-copy {
+      min-width: 0;
+    }
+
+    .banner-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .banner-title {
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+    }
+
+    .pill {
+      height: 27px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #F0C968;
+      color: #E28B00;
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .banner-text {
+      max-width: 720px;
+      font-size: 14px;
+      line-height: 1.35;
+      color: #3f3e45;
+    }
+
+    .days-left {
+      margin-left: auto;
+      height: 50px;
+      min-width: 205px;
+      padding-left: 22px;
+      border-left: 1px solid #EED99D;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--black);
+      flex: none;
+    }
+
+    .days-left svg {
+      width: 25px;
+      height: 25px;
+      stroke: var(--black);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex: none;
+    }
+
+    .days-main {
+      font-size: 17px;
+      font-weight: 750;
+      margin-bottom: 4px;
+    }
+
+    .days-sub {
+      color: #55545b;
+      font-size: 14px;
+    }
+
+    .update-btn {
+      height: 44px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: 0 10px 22px rgba(52, 68, 212, 0.25);
+      white-space: nowrap;
+      flex: none;
+    }
+
+    .view-plans-btn {
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 9px;
+      border: 1px solid #E5C76F;
+      background: rgba(255,255,255,0.72);
+      color: var(--black);
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .view-plans-btn:hover {
+      background: #fff;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 13px;
+      right: 14px;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.45);
+      color: var(--black);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: rgba(255,255,255,0.75);
+    }
+
+    .close-btn svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .workspace {
+      background: #fff;
+      border-radius: var(--radius-xl);
+      min-height: calc(100vh - 150px);
+      padding: 0 30px 0;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topbar {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 0;
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      background: #fff;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--grey-500);
+      font-size: 18px;
+    }
+
+    .folder-chip {
+      width: 31px;
+      height: 31px;
+      border-radius: 7px;
+      background: var(--yellow);
+      display: grid;
+      place-items: center;
+      color: #fff;
+    }
+
+    .folder-chip svg {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .breadcrumb b {
+      color: var(--black);
+      font-weight: 750;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      height: 48px;
+      padding: 0 18px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      border: 1px solid #9D9DA5;
+      background: #fff;
+      color: var(--black);
+    }
+
+    .btn.dark {
+      background: #1f1f22;
+      color: #fff;
+      border-color: #1f1f22;
+    }
+
+    .btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .top-icons {
+      display: flex;
+      align-items: center;
+      gap: 21px;
+      color: #BDBDC4;
+      margin-left: 12px;
+    }
+
+    .top-icons svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1d1d20, #999);
+      overflow: hidden;
+      margin-left: 4px;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero {
+      height: 255px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: #08090a;
+      position: relative;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      filter: contrast(1.02) saturate(0.9) brightness(0.72);
+    }
+
+    .project-info {
+      padding-top: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 760;
+    }
+
+    .meta {
+      margin-top: 14px;
+      font-size: 14px;
+      color: var(--grey-500);
+    }
+
+    .description {
+      margin: 28px 0 34px 16px;
+      font-size: 16px;
+      color: #3f3e45;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 16px;
+    }
+
+    .table thead th {
+      text-align: left;
+      height: 38px;
+      font-size: 17px;
+      font-weight: 760;
+      border-bottom: 1px solid #DADAE0;
+      color: var(--black);
+    }
+
+    .table tbody td {
+      height: 61px;
+      vertical-align: middle;
+      color: #303038;
+    }
+
+    .table th:first-child,
+    .table td:first-child {
+      width: 48px;
+      text-align: left;
+    }
+
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+      width: 41%;
+    }
+
+    .table th:nth-child(3),
+    .table td:nth-child(3) {
+      width: 23%;
+    }
+
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+      width: 14%;
+    }
+
+    .check {
+      width: 17px;
+      height: 17px;
+      border-radius: 3px;
+      border: 2px solid #D0D0D5;
+      display: inline-block;
+    }
+
+    .track-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .track-index {
+      width: 22px;
+      text-align: right;
+      color: #29292f;
+    }
+
+    .cover {
+      width: 48px;
+      height: 48px;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #111, #5b5b64);
+      overflow: hidden;
+      flex: none;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .track-title {
+      font-weight: 760;
+      letter-spacing: -0.01em;
+    }
+
+    .track-sub,
+    .update-sub {
+      color: var(--grey-500);
+      margin-top: 3px;
+    }
+
+    .chat {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #DEE2FF;
+      box-shadow: 0 10px 30px rgba(37, 36, 40, 0.18);
+      display: grid;
+      place-items: center;
+      color: #414866;
+    }
+
+    .chat svg {
+      width: 35px;
+      height: 35px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @media (max-width: 1200px) {
+      .billing-banner {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .days-left {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .billing-banner {
+        grid-template-columns: auto 1fr;
+        gap: 16px;
+      }
+
+      .update-btn,
+      .close-btn {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .topbar {
+        height: auto;
+        align-items: flex-start;
+        gap: 14px;
+        flex-direction: column;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        height: 190px;
+      }
+    }
+
+
+    /* Bridge DS refinement — pre-locked billing banner */
+    .billing-banner {
+      min-height: 88px;
+      border-color: var(--grey-200);
+      background: #fff;
+      box-shadow: none;
+      gap: 16px;
+      padding: 16px 58px 16px 18px;
+      overflow: hidden;
+      transition: min-height 180ms ease, padding 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .billing-banner::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      border-radius: 16px 0 0 16px;
+      background: var(--yellow);
+    }
+
+    .billing-banner .pro-emblem {
+      display: none;
+    }
+
+    .banner-title {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--black);
+    }
+
+    .title-diamond-icon {
+      width: 20px;
+      height: 20px;
+      display: block;
+      color: var(--black);
+      flex: none;
+      transform: translateY(-1px);
+    }
+
+    .pill {
+      height: 26px;
+      padding: 0 11px;
+      background: var(--yellow-soft);
+      border-color: var(--yellow-border);
+      color: #8A5B00;
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: -0.01em;
+    }
+
+    .banner-text {
+      max-width: 760px;
+      font-size: 13.5px;
+      line-height: 1.35;
+    }
+
+    .days-left {
+      height: 44px;
+      min-width: 192px;
+      padding-left: 18px;
+      border-left-color: var(--grey-200);
+    }
+
+    .days-left svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--grey-600);
+    }
+
+    .days-main {
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .days-sub {
+      color: var(--grey-500);
+      font-size: 12.5px;
+    }
+
+    .update-btn,
+    .view-plans-btn {
+      height: 40px;
+      border-radius: 9px;
+      font-size: 13px;
+      box-shadow: none;
+      cursor: pointer;
+    }
+
+    .update-btn {
+      padding: 0 16px;
+    }
+
+    .view-plans-btn {
+      padding: 0 15px;
+      border-color: var(--grey-200);
+      background: #fff;
+    }
+
+    .view-plans-btn:hover {
+      border-color: var(--grey-300);
+      background: var(--grey-50);
+    }
+
+    .close-btn,
+    .close-btn:hover {
+      background: #fff;
+    }
+
+    .billing-banner.is-collapsed {
+      min-height: 64px;
+      padding-top: 12px;
+      padding-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .billing-banner.is-collapsed .banner-heading {
+      margin-bottom: 0;
+    }
+
+    .billing-banner.is-collapsed .banner-text,
+    .billing-banner.is-collapsed .days-sub,
+    .billing-banner.is-collapsed .close-btn {
+      display: none;
+    }
+
+    .billing-banner.is-collapsed .days-left {
+      min-width: auto;
+      height: 40px;
+      padding-left: 16px;
+    }
+
+    .billing-banner.is-collapsed .days-left svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .billing-banner.is-collapsed .days-main {
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .billing-banner.is-collapsed .banner-copy {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .billing-banner.is-collapsed .pill {
+      display: inline-flex;
+    }
+
+    @media (max-width: 1200px) {
+      .billing-banner .days-left {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .billing-banner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "copy close"
+          "days days"
+          "plans billing";
+        align-items: start;
+        padding: 14px;
+      }
+
+      .billing-banner .banner-copy { grid-area: copy; }
+      .billing-banner .days-left { grid-area: days; border-left: 0; padding-left: 0; min-width: 0; }
+      .billing-banner .view-plans-btn { grid-area: plans; }
+      .billing-banner .update-btn { grid-area: billing; }
+      .billing-banner .close-btn { position: static; grid-area: close; justify-self: end; margin-top: -4px; }
+
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "copy days"
+          "plans billing";
+        align-items: center;
+      }
+
+      .billing-banner.is-collapsed .banner-copy {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .billing-banner.is-collapsed .days-left {
+        justify-self: end;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .billing-banner,
+      .billing-banner.is-collapsed {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "copy"
+          "days"
+          "billing";
+      }
+
+      .billing-banner .close-btn {
+        position: absolute;
+        top: 9px;
+        right: 10px;
+      }
+
+      .billing-banner.is-collapsed .close-btn {
+        display: none;
+      }
+
+      .billing-banner.is-collapsed .days-left {
+        justify-self: start;
+      }
+
+      .update-btn,
+      .view-plans-btn {
+        width: 100%;
+      }
+    }
+
+
+
+    /* Responsive optimization — pre-locked billing banner */
+    @media (max-width: 1024px) {
+      .billing-banner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "copy billing"
+          "days billing";
+        align-items: center;
+        gap: 12px 14px;
+        padding: 14px 54px 14px 18px;
+      }
+
+      .billing-banner .banner-copy { grid-area: copy; }
+      .billing-banner .days-left {
+        grid-area: days;
+        width: fit-content;
+        height: 36px;
+        min-width: 0;
+        padding-left: 0;
+        border-left: 0;
+      }
+      .billing-banner .view-plans-btn { grid-area: plans; }
+      .billing-banner .update-btn { grid-area: billing; }
+      .billing-banner .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas: "copy days billing";
+        min-height: 58px;
+        padding: 10px 18px;
+      }
+
+      .billing-banner.is-collapsed .banner-copy {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .main {
+        padding: 12px;
+      }
+
+      .billing-banner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "copy close"
+          "days days"
+          "billing billing";
+        gap: 10px 12px;
+        padding: 13px 14px 14px 16px;
+        border-radius: 16px;
+      }
+
+      .billing-banner .banner-copy {
+        padding-right: 0;
+      }
+
+      .billing-banner .banner-heading {
+        gap: 7px;
+        margin-bottom: 6px;
+        padding-right: 0;
+      }
+
+      .banner-title {
+        font-size: 14px;
+        line-height: 1.18;
+        gap: 7px;
+      }
+
+      .title-diamond-icon {
+        width: 18px;
+        height: 18px;
+        transform: translateY(-1px);
+      }
+
+      .pill {
+        height: 23px;
+        padding: 0 9px;
+        font-size: 10.5px;
+      }
+
+      .banner-text {
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .billing-banner .days-left {
+        width: 100%;
+        height: 38px;
+        gap: 9px;
+        padding: 8px 10px;
+        border: 1px solid var(--grey-200);
+        border-radius: 10px;
+        background: var(--grey-50);
+      }
+
+      .billing-banner .days-left svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .days-main {
+        font-size: 13px;
+        margin-bottom: 0;
+      }
+
+      .days-sub {
+        display: none;
+      }
+
+      .billing-banner .close-btn {
+        position: static;
+        grid-area: close;
+        justify-self: end;
+        width: 30px;
+        height: 30px;
+        margin: -4px -4px 0 0;
+      }
+
+      .billing-banner .update-btn,
+      .billing-banner .view-plans-btn {
+        width: 100%;
+        height: 40px;
+      }
+
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "copy"
+          "days"
+          "billing";
+        gap: 8px;
+        padding: 12px 14px 13px 16px;
+      }
+
+      .billing-banner.is-collapsed .banner-copy {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .billing-banner.is-collapsed .view-plans-btn {
+        display: none;
+      }
+
+      .billing-banner.is-collapsed .days-left {
+        justify-self: stretch;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .billing-banner {
+        padding-left: 14px;
+      }
+
+      .billing-banner::before {
+        width: 3px;
+      }
+
+      .banner-heading {
+        align-items: flex-start;
+      }
+
+      .banner-title span {
+        display: inline;
+      }
+
+      .billing-banner .update-btn,
+      .billing-banner .view-plans-btn {
+        height: 38px;
+        font-size: 12.5px;
+      }
+    }
+
+
+    /* Final optimized pre-locked state */
+    .title-diamond-icon { display: none !important; }
+    .title-clock-icon {
+      width: 20px;
+      height: 20px;
+      display: block;
+      flex: none;
+      color: var(--orange);
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform: translateY(-1px);
+    }
+
+    .billing-banner::before {
+      background: var(--orange);
+    }
+
+    .pill {
+      background: var(--orange-soft);
+      border-color: var(--yellow-border);
+      color: #8A5B00;
+    }
+
+    .view-plans-btn {
+      display: none !important;
+    }
+
+    .update-btn {
+      background: var(--blue);
+    }
+
+    .days-left {
+      min-width: 210px;
+    }
+
+    .billing-banner {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-areas: "copy days billing";
+    }
+
+    .billing-banner .banner-copy { grid-area: copy; }
+    .billing-banner .days-left { grid-area: days; }
+    .billing-banner .update-btn { grid-area: billing; }
+
+    .billing-banner.is-collapsed {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      grid-template-areas: "copy days billing";
+    }
+
+    @media (max-width: 1024px) {
+      .billing-banner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "copy billing"
+          "days billing";
+      }
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas: "copy days billing";
+      }
+    }
+
+    @media (max-width: 760px) {
+      .billing-banner,
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "copy"
+          "days"
+          "billing";
+      }
+      .billing-banner .update-btn,
+      .billing-banner.is-collapsed .update-btn { width: 100%; }
+      .title-clock-icon { width: 18px; height: 18px; }
+    }
+
+
+    /* Final fixed version — no expand/collapse, no close */
+    .billing-banner,
+    .billing-banner.is-collapsed {
+      min-height: 88px !important;
+      cursor: default !important;
+      grid-template-columns: minmax(0, 1fr) auto auto !important;
+      grid-template-areas: "copy days billing" !important;
+      gap: 16px !important;
+      padding: 16px 18px !important;
+      align-items: center !important;
+    }
+
+    .billing-banner .banner-copy,
+    .billing-banner.is-collapsed .banner-copy {
+      grid-area: copy !important;
+      display: block !important;
+      min-width: 0 !important;
+    }
+
+    .billing-banner .banner-heading,
+    .billing-banner.is-collapsed .banner-heading {
+      display: flex !important;
+      margin-bottom: 8px !important;
+    }
+
+    .billing-banner .banner-text,
+    .billing-banner.is-collapsed .banner-text,
+    .billing-banner .days-sub,
+    .billing-banner.is-collapsed .days-sub {
+      display: block !important;
+    }
+
+    .billing-banner .days-left,
+    .billing-banner.is-collapsed .days-left {
+      grid-area: days !important;
+      min-width: 210px !important;
+      height: 44px !important;
+      padding-left: 18px !important;
+      border-left: 1px solid var(--grey-200) !important;
+      background: transparent !important;
+      border-radius: 0 !important;
+    }
+
+    .billing-banner .update-btn,
+    .billing-banner.is-collapsed .update-btn {
+      grid-area: billing !important;
+      width: auto !important;
+      height: 40px !important;
+    }
+
+    .billing-banner .close-btn,
+    .billing-banner.is-collapsed .close-btn,
+    .billing-banner .view-plans-btn,
+    .billing-banner.is-collapsed .view-plans-btn {
+      display: none !important;
+    }
+
+    @media (max-width: 1024px) {
+      .billing-banner,
+      .billing-banner.is-collapsed {
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        grid-template-areas:
+          "copy billing"
+          "days billing" !important;
+        gap: 12px 14px !important;
+        padding: 14px 18px !important;
+      }
+
+      .billing-banner .days-left,
+      .billing-banner.is-collapsed .days-left {
+        width: fit-content !important;
+        min-width: 0 !important;
+        padding-left: 0 !important;
+        border-left: 0 !important;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .billing-banner,
+      .billing-banner.is-collapsed {
+        min-height: auto !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        grid-template-areas:
+          "copy"
+          "days"
+          "billing" !important;
+        padding: 13px 14px 14px 16px !important;
+      }
+
+      .billing-banner .banner-heading,
+      .billing-banner.is-collapsed .banner-heading {
+        margin-bottom: 6px !important;
+      }
+
+      .billing-banner .days-left,
+      .billing-banner.is-collapsed .days-left {
+        width: 100% !important;
+        height: 38px !important;
+        padding: 8px 10px !important;
+        border: 1px solid var(--grey-200) !important;
+        border-radius: 10px !important;
+        background: var(--grey-50) !important;
+      }
+
+      .billing-banner .days-sub,
+      .billing-banner.is-collapsed .days-sub {
+        display: none !important;
+      }
+
+      .billing-banner .update-btn,
+      .billing-banner.is-collapsed .update-btn {
+        width: 100% !important;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="workspace-switcher" aria-label="Switch workspace" title="My Label — Switch workspace">
+        <div class="workspace-avatar">
+          <svg width="88" height="88" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g filter="url(#filter-workspace-logo)">
+              <rect x="12" y="8" width="64" height="64" rx="16" fill="url(#paint-workspace-logo)"/>
+              <rect x="13.5" y="9.5" width="61" height="61" rx="14.5" stroke="#E3E3E7" stroke-width="3"/>
+            </g>
+            <defs>
+              <filter id="filter-workspace-logo" x="0" y="0" width="88" height="88" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset dy="4"/>
+                <feGaussianBlur stdDeviation="6"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_workspace"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_workspace" result="shape"/>
+              </filter>
+              <linearGradient id="paint-workspace-logo" x1="12" y1="8" x2="76" y2="72" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#59F0A0"/>
+                <stop offset="0.52" stop-color="#6AFFB7"/>
+                <stop offset="0.53" stop-color="#19191D"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+
+      <div class="sidebar-scroll">
+        <div class="sidebar-nav-wrap">
+          <div class="sidebar-add-wrap">
+            <button class="add-btn" aria-label="Create new">
+              <svg viewBox="0 0 20 20"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path></svg>
+            </button>
+          </div>
+
+          <nav class="nav">
+            <a class="nav-item" href="#">
+              <div class="nav-icon-box">
+                <svg viewBox="0 0 24 24"><path d="m9 9 10.5-3m0 6.553v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 1 1-.99-3.467l2.31-.66a2.25 2.25 0 0 0 1.632-2.163Zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 0 1-1.632 2.163l-1.32.377a1.803 1.803 0 0 1-.99-3.467l2.31-.66A2.25 2.25 0 0 0 9 15.553Z"></path></svg>
+              </div>
+              <div class="nav-label">Library</div>
+            </a>
+
+            <a class="nav-item active" href="#">
+              <div class="nav-icon-box">
+                <svg class="filled" viewBox="0 0 24 24"><path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z"></path></svg>
+              </div>
+              <div class="nav-label">Projects</div>
+            </a>
+
+            <a class="nav-item" href="#">
+              <div class="nav-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"></path></svg>
+              </div>
+              <div class="nav-label">Shared</div>
+            </a>
+
+            <a class="nav-item" href="#">
+              <div class="nav-icon-box">
+                <svg viewBox="0 0 24 24"><path d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"></path></svg>
+              </div>
+              <div class="nav-label">Received</div>
+            </a>
+
+            <a class="nav-item" href="#">
+              <span class="beta">BETA</span>
+              <div class="nav-icon-box">
+                <svg viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 13.5C2.25 8.94365 5.94365 5.25 10.5 5.25C10.9142 5.25 11.25 5.58579 11.25 6V12.75H18C18.4142 12.75 18.75 13.0858 18.75 13.5C18.75 18.0563 15.0563 21.75 10.5 21.75C5.94365 21.75 2.25 18.0563 2.25 13.5Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M12.75 3C12.75 2.58579 13.0858 2.25 13.5 2.25C18.0563 2.25 21.75 5.94365 21.75 10.5C21.75 10.9142 21.4142 11.25 21 11.25H13.5C13.0858 11.25 12.75 10.9142 12.75 10.5V3Z"></path></svg>
+              </div>
+              <div class="nav-label">Analytics</div>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-pro-wrap">
+          <div class="pro-mini">
+            <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g clip-path="url(#clip-pro-diamond-white-mini)">
+                <path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="white"/>
+              </g>
+              <defs><clipPath id="clip-pro-diamond-white-mini"><rect width="19.142" height="19.1993" fill="white" transform="translate(0 0.421875)"/></clipPath></defs>
+            </svg>
+            <span>Pro</span>
+          </div>
+        </div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-bottom-icons">
+          <a href="#" aria-label="Settings">
+            <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54A6.992 6.992 0 0 1 7.51 3.456l.33-1.652ZM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"></path></svg>
+          </a>
+          <a href="#" aria-label="Invite">
+            <svg viewBox="0 0 18 17"><path d="M14 4.75V7.25M14 7.25V9.75M14 7.25H16.5M14 7.25H11.5M9.625 3.8125C9.625 5.3658 8.3658 6.625 6.8125 6.625C5.2592 6.625 4 5.3658 4 3.8125C4 2.2592 5.2592 1 6.8125 1C8.3658 1 9.625 2.2592 9.625 3.8125ZM1.50077 14.5286C1.50026 14.4983 1.5 14.4679 1.5 14.4375C1.5 11.5035 3.87849 9.125 6.8125 9.125C9.74651 9.125 12.125 11.5035 12.125 14.4375V14.4396C12.125 14.4693 12.1247 14.499 12.1242 14.5286C10.5728 15.4627 8.7554 16 6.8125 16C4.8696 16 3.0522 15.4627 1.50077 14.5286Z"></path></svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="billing-banner" id="billingBanner" aria-live="polite">
+        <div class="pro-emblem">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g clip-path="url(#clip-pro-diamond-black-banner)">
+              <path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="black"/>
+              <path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="url(#paint-pro-diamond-black-banner)"/>
+            </g>
+            <defs>
+              <linearGradient id="paint-pro-diamond-black-banner" x1="-7.44105" y1="0.400929" x2="18.7489" y2="3.83733" gradientUnits="userSpaceOnUse">
+                <stop offset="1" stop-color="#1E1D20"/>
+              </linearGradient>
+              <clipPath id="clip-pro-diamond-black-banner">
+                <rect width="19.142" height="19.1993" fill="white" transform="translate(0 0.421875)"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="banner-copy">
+          <div class="banner-heading">
+            <div class="banner-title"><svg class="title-clock-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg><span>Your Pro access needs attention</span></div>
+            <span class="pill">Grace period</span>
+          </div>
+          <div class="banner-text">
+            We couldn't process your latest payment. Update your billing details within 15 days to keep your Pro access active.
+          </div>
+        </div>
+
+        <div class="days-left">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+          <div>
+            <div class="days-main">15-day grace period</div>
+            <div class="days-sub">Keep access active</div>
+          </div>
+        </div>
+        <button class="update-btn">Update billing</button>
+      </section>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div class="breadcrumb">
+            <span class="folder-chip"><svg viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2"/></svg></span>
+            <span>Projects / <b>Ysos</b></span>
+          </div>
+
+          <div class="actions">
+            <button class="btn dark"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4"/><path d="m15.4 6.5-6.8 4"/></svg>Share</button>
+            <button class="btn"><svg viewBox="0 0 24 24"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 7h7v7"/></svg>Activity</button>
+            <div class="top-icons">
+              <svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4Z"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.82 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <div class="avatar"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200&auto=format&fit=crop" alt="User avatar"></div>
+            </div>
+          </div>
+        </header>
+
+        <div class="hero">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1800&auto=format&fit=crop" alt="Ysos cover" />
+        </div>
+
+        <div class="project-info">
+          <h1>Ysos</h1>
+          <div class="meta">33 tracks • 1 hr 24 min 22 sec • Updated 57 seconds ago</div>
+          <div class="description">Click to add a description...</div>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th><span class="check"></span></th>
+              <th>Track (33)</th>
+              <th>Album</th>
+              <th>◷</th>
+              <th>Last update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="check"></span></td>
+              <td><div class="track-cell"><span class="track-index">1</span><div class="cover"><img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=120&auto=format&fit=crop" alt="cover"></div><div><div class="track-title">Emotions (feat. Kaza)</div><div class="track-sub">Kaza&nbsp;&nbsp; Ysos</div></div></div></td>
+              <td>Emotions (feat. Kaza)</td>
+              <td>2:46</td>
+              <td><div>13 mai 2026</div><div class="update-sub">Clement Souchier</div></td>
+            </tr>
+            <tr>
+              <td><span class="check"></span></td>
+              <td><div class="track-cell"><span class="track-index">2</span><div class="cover"><img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=120&auto=format&fit=crop" alt="cover"></div><div><div class="track-title">Changé (feat. Kodes)</div><div class="track-sub">Kodes&nbsp;&nbsp; Ysos</div></div></div></td>
+              <td>Changé (feat. Kodes)</td>
+              <td>2:10</td>
+              <td><div>13 mai 2026</div><div class="update-sub">Clement Souchier</div></td>
+            </tr>
+            <tr>
+              <td><span class="check"></span></td>
+              <td><div class="track-cell"><span class="track-index">3</span><div class="cover"><img src="https://images.unsplash.com/photo-1496293455970-f8581aae0e3b?q=80&w=120&auto=format&fit=crop" alt="cover"></div><div><div class="track-title">Poto</div><div class="track-sub">De2s&nbsp;&nbsp; Ysos</div></div></div></td>
+              <td>Poto</td>
+              <td>2:40</td>
+              <td><div>13 mai 2026</div><div class="update-sub">Clement Souchier</div></td>
+            </tr>
+            <tr>
+              <td><span class="check"></span></td>
+              <td><div class="track-cell"><span class="track-index">4</span><div class="cover"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=120&auto=format&fit=crop" alt="cover"></div><div><div class="track-title">Beldia (feat. Zedon)</div><div class="track-sub">Zedon&nbsp;&nbsp; Ysos</div></div></div></td>
+              <td>Beldia (feat. Zedon)</td>
+              <td>3:22</td>
+              <td><div>13 mai 2026</div><div class="update-sub">Clement Souchier</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <div class="chat"><svg viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg></div>
+  </div>
+</body>
+</html>

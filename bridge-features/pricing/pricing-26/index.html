@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bridge Pricing</title>
+<style>
+/* Typography: Satoshi Bold, not ExtraBold. Uses local Satoshi when available, then Inter/system fallback. */
+
+:root{--bg:#f3f3f4;--surface:#fff;--soft:#f8f8f9;--border:#d9d8dc;--text:#252428;--muted:#6f6d76;--danger:#d92d20;--free:#252428;--talent:#ffc833;--music:#2f43de;--supervisor:#ff3364;--radius:18px;font-family:Satoshi,Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}button,select{font:inherit}.page-shell{min-height:100vh;padding:32px}.pricing-hero{max-width:1180px;margin:0 auto 30px;padding-top:30px;text-align:center}.pricing-hero h1{margin:0 auto;max-width:980px;font-size:clamp(42px,6vw,82px);line-height:.96;letter-spacing:-.058em;font-weight:700}.pricing-hero p{max-width:610px;margin:18px auto 0;color:var(--muted);font-size:17px;line-height:1.45}.billing{display:inline-flex;gap:6px;margin-top:22px;padding:5px;border:1px solid var(--border);border-radius:999px;background:#fff}.billing button{border:0;border-radius:999px;background:transparent;padding:9px 14px;color:var(--muted);font-size:13px;font-weight:650;cursor:pointer}.billing button.active{background:#252428;color:#fff}.pricing-section{max-width:1180px;margin:0 auto 80px;display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,410px);gap:28px;align-items:start}.pricing-step{display:flex;flex-direction:column;gap:6px;margin:0 0 18px}.pricing-step-label{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.14em;opacity:.82}.pricing-step-title{font-size:28px;line-height:1;font-weight:700;letter-spacing:-.05em}.pricing-step-description{color:var(--muted);font-size:14px;line-height:1.45;max-width:520px}.plans{display:grid;gap:12px}.pricing-plan{--plan-color:#252428;--plan-text:#fff;position:relative;display:flex;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--border);border-radius:18px;background:var(--surface);cursor:pointer;transition:.15s ease;overflow:hidden}.pricing-plan:before{content:none}.pricing-plan:hover{transform:translateY(-1px);border-color:#252428;box-shadow:0 3px 0 #252428}.pricing-plan.selected{border:2px solid #252428;box-shadow:4px 4px 0 #252428}.pricing-plan-main{min-width:0}.pricing-plan-name{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;color:var(--plan-text);font-weight:700;font-size:13px;line-height:1;letter-spacing:-.01em;text-transform:uppercase;padding:8px 10px;border:1px solid rgba(37,36,40,.08);border-radius:999px;background:var(--plan-color)}.plan-diamond{display:inline-flex;color:currentColor;width:20px;height:19px;flex:0 0 auto}.plan-diamond svg{display:block;width:100%;height:100%}.pricing-plan-title{font-size:20px;font-weight:700;line-height:1.04;letter-spacing:-.045em;max-width:520px}.pricing-plan-description{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45;max-width:520px}.pricing-plan-lovedby{margin-top:12px;color:var(--muted);font-size:10px;line-height:1.1;font-weight:700;letter-spacing:.13em;text-transform:uppercase;opacity:.78}.right{text-align:right;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;min-width:118px}.pricing-plan-notice{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px;font-weight:700}.pricing-plan-price-main{display:flex;align-items:flex-end;gap:2px;color:var(--text)}.pricing-plan-price-value{font-size:31px;line-height:.88;font-weight:700;letter-spacing:-.06em;white-space:nowrap}.pricing-plan-price-suffix{font-size:13px;line-height:1.1;font-weight:600;color:var(--muted);margin-bottom:4px}.pricing-plan-price-yearly{font-size:11px;line-height:1.2;color:var(--muted);font-weight:600}.selected-plan{--active:#252428;--active-rgb:37,36,40;--active-text:#fff;position:sticky;top:24px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:0;box-shadow:0 1px 0 rgba(37,36,40,.04)}.selected-plan-top{padding:22px 22px 16px;background:linear-gradient(180deg,rgba(var(--active-rgb),.075),#fff 70%);border-bottom:1px solid rgba(var(--active-rgb),.14)}.selected-plan-title{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% + 44px);margin:-22px -22px 0;padding:18px 22px;background:var(--active);color:var(--active-text);font-size:16px;line-height:1;font-weight:700;letter-spacing:-.015em;text-transform:uppercase;text-align:center}.selected-plan-title .plan-diamond{color:var(--active-text)}.selected-plan-subtitle{margin:16px auto 0;max-width:320px;color:var(--text);font-size:19px;line-height:1.18;font-weight:700;letter-spacing:-.035em;text-align:center}.selected-plan-loved{display:flex;justify-content:center;margin-top:12px;color:#252428;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;opacity:.72;text-align:center}.pricing-plan-accent{display:flex;align-items:flex-start;justify-content:flex-start;margin:18px 22px 8px;gap:10px;text-align:left}.total-price-main{display:flex;align-items:flex-end;gap:3px}.total-price-value{font-size:44px;line-height:.88;font-weight:700;letter-spacing:-.07em}.total-price-suffix{font-size:15px;line-height:1.1;color:var(--muted);font-weight:700;margin-bottom:5px}.total-price-yearly{margin-top:4px;font-size:12px;line-height:1.25;color:var(--muted);font-weight:650}.selected-plan-details{display:grid;gap:2px;padding:8px 22px 16px}.recap-feature{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid rgba(23,22,21,.065)}.recap-feature:last-child{border-bottom:0}.summary-icon{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:7px;background:rgba(var(--active-rgb),.13)}.summary-icon img{width:13px;height:13px}.recap-feature-title{margin:0 0 3px;color:var(--text);font-size:13px;line-height:1.15;font-weight:650;letter-spacing:-.02em}.recap-feature-description,.recap-feature-list li{margin:0;color:var(--muted);font-size:11.5px;line-height:1.32}.recap-feature-list{display:grid;gap:2px;margin:0;padding:0;list-style:none}.settings{display:none;margin:8px 22px 12px;padding:14px;border-radius:17px;background:var(--soft);border:1px solid var(--border)}.settings.visible{display:block}.settings h3{margin:0 0 4px;font-size:15px;line-height:1;font-weight:700;letter-spacing:-.03em}.settings p{margin:0 0 12px;color:var(--muted);font-size:12px;line-height:1.35}.setting-field{display:grid;gap:7px;margin-top:10px}.setting-field label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#252428}.setting-field label img{width:16px;height:16px}.select-wrap{position:relative}.select-wrap:after{content:'⌄';position:absolute;right:13px;top:50%;transform:translateY(-56%);color:var(--muted);font-weight:700;pointer-events:none}.setting-field select{width:100%;appearance:none;border:1px solid var(--border);border-radius:12px;background:#fff;padding:11px 34px 11px 12px;color:var(--text);font-size:13px;font-weight:600;cursor:pointer}.settings-warning{display:none;margin:0 22px 12px;padding:12px 14px;border-radius:16px;background:rgba(217,45,32,.08);border:1px solid rgba(217,45,32,.18);color:var(--danger);font-size:13px;line-height:1.35;font-weight:600}.settings-warning.visible{display:block}.pricing-plan-sign-up{width:calc(100% - 44px);height:50px;margin:10px 22px 8px;border:2px solid #252428;border-radius:14px;background:var(--active);color:var(--active-text);font-weight:700;font-size:15px;letter-spacing:-.01em;cursor:pointer;box-shadow:0 4px 0 #252428}.pricing-plan-sign-up.secondary{background:#fff;color:#252428}.pricing-plan-sign-up.is-disabled{background:#ececef;color:#8a8792;border-color:#d6d4da;box-shadow:none;cursor:not-allowed}.pricing-plan-sign-up.is-disabled:hover{transform:none;filter:none}.reassurance{margin:0 22px 18px;text-align:center;color:var(--muted);font-size:12px;font-weight:600}.trust{max-width:1180px;margin:30px auto 0;padding:24px;border:1px solid var(--border);border-radius:20px;background:#fff;text-align:center}.trust strong{display:block;margin-bottom:16px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.logos{display:flex;align-items:center;justify-content:space-between;gap:16px}.logos img{height:clamp(42px,5vw,64px);max-width:18%;object-fit:contain;filter:grayscale(1);opacity:.86}@media(max-width:900px){.page-shell{padding:20px}.pricing-section{grid-template-columns:1fr}.selected-plan{position:relative;top:0}.pricing-hero{padding-top:24px}.pricing-hero h1{font-size:44px}.logos img{height:42px}}@media(max-width:620px){.pricing-plan{display:block}.right{align-items:flex-start;text-align:left;margin-top:14px}.logos{flex-wrap:wrap;justify-content:center}.logos img{max-width:30%}}
+
+html{scroll-behavior:smooth}.settings.shake,.settings-warning.shake,.selected-plan.shake{animation:bridgeShake .42s cubic-bezier(.36,.07,.19,.97) both}@keyframes bridgeShake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}.ecosystem-kicker{display:block;margin-bottom:6px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}.ecosystem-title{margin:0 0 18px;font-size:24px;line-height:1.05;font-weight:700;letter-spacing:-.045em;color:var(--text)}@media(max-width:900px){.pricing-section{gap:18px;margin-bottom:44px}.pricing-infos{order:1}.selected-plan{order:2}.pricing-step-description{max-width:100%}.pricing-plan.selected{box-shadow:3px 3px 0 #252428}.selected-plan{scroll-margin-top:18px}.pricing-plan-sign-up{height:54px}.recap-feature{grid-template-columns:24px 1fr;padding:10px 0}.recap-feature-title{font-size:14px}.recap-feature-list li{font-size:12.5px}.settings{margin-top:10px;padding:16px}.setting-field select{font-size:16px}}@media(max-width:620px){.page-shell{padding:16px}.pricing-hero{margin-bottom:22px}.pricing-section{margin-bottom:36px}.pricing-plan{padding:16px}.pricing-plan-title{font-size:19px}.selected-plan-title{font-size:14px}.total-price-value{font-size:40px}.trust{padding:20px 16px}.ecosystem-title{font-size:21px}.pricing-step-label{display:none}}
+
+
+.ecosystem-proof{max-width:1180px;margin:0 auto 56px;padding:34px;border:1px solid var(--border);border-radius:28px;background:#fff;box-shadow:0 20px 70px rgba(37,36,40,.06)}
+.ecosystem-proof-kicker{margin:0 0 8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.ecosystem-proof h3{max-width:760px;margin:0 auto 26px;text-align:center;font-size:clamp(28px,4vw,48px);line-height:1.02;letter-spacing:-.05em;font-weight:700;color:var(--text)}
+.ecosystem-proof-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ecosystem-stat{min-height:210px;padding:22px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,#fff,#f8f8f9)}
+.ecosystem-stat-number{font-size:42px;line-height:1;font-weight:700;letter-spacing:-.06em;color:var(--text)}
+.ecosystem-stat-title{margin-top:10px;font-size:16px;font-weight:700;color:var(--text)}
+.ecosystem-stat-copy{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.45}
+.ecosystem-logo-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.ecosystem-logo-grid span{display:inline-flex;align-items:center;min-height:28px;padding:7px 10px;border:1px solid var(--border);border-radius:999px;background:#fff;color:#4c4a52;font-size:11px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+@media (max-width:900px){.ecosystem-proof{margin:22px 0 36px;padding:20px;border-radius:22px}.ecosystem-proof-stats{grid-template-columns:1fr}.ecosystem-stat{min-height:0}.ecosystem-proof h3{text-align:left}.ecosystem-proof-kicker{text-align:left}}
+
+/* Refined title system — tech / mode / Gen Z, Satoshi Bold but not ExtraBold */
+.pricing-hero h1{font-weight:700!important;letter-spacing:-.044em!important;line-height:.98!important;color:#1b1b1f!important;}
+.pricing-step-title,.pricing-plan-title,.selected-plan-subtitle,.ecosystem-title,.ecosystem-proof h3{font-weight:700!important;letter-spacing:-.036em!important;color:#1b1b1f!important;}
+.pricing-plan-name,.selected-plan-title,.pricing-step-label,.pricing-plan-lovedby,.selected-plan-loved,.ecosystem-proof-kicker,.ecosystem-kicker{font-weight:650!important;letter-spacing:.105em!important;}
+.total-price-value,.pricing-plan-price-value,.ecosystem-stat-number{font-weight:700!important;letter-spacing:-.055em!important;}
+.recap-feature-title,.settings h3,.setting-field label,.pricing-plan-sign-up,.billing button{font-weight:650!important;}
+body{font-family:Satoshi,Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;color:#1f1f23!important;}
+
+.summary-card .billing-label{display:none!important;}
+
+
+/* Bigger recap icons — targeted override */
+.selected-plan-details .recap-feature{grid-template-columns:32px 1fr;gap:13px;align-items:flex-start;}
+.selected-plan-details .summary-icon{width:30px;height:30px;border-radius:10px;}
+.selected-plan-details .summary-icon img{width:18px;height:18px;}
+@media(max-width:620px){.selected-plan-details .recap-feature{grid-template-columns:30px 1fr;gap:12px}.selected-plan-details .summary-icon{width:28px;height:28px}.selected-plan-details .summary-icon img{width:17px;height:17px}}
+
+/* Mobile-only order: plan identity → price → personalization → options → CTA. Desktop order is unchanged. */
+@media(max-width:900px){
+  .selected-plan{display:flex;flex-direction:column;}
+  .selected-plan-top{order:1;}
+  .pricing-plan-accent{order:2;}
+  .settings{order:3;margin-top:6px;margin-bottom:10px;}
+  .settings-warning{order:4;}
+  .selected-plan-details{order:5;}
+  .pricing-plan-sign-up{order:6;}
+  .reassurance{order:7;}
+}
+
+
+/* Sticky CTA footer inside the selected plan card */
+.selected-plan{
+  display:flex;
+  flex-direction:column;
+  max-height:calc(100vh - 48px);
+}
+.selected-plan-body{
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:8px;
+}
+.selected-plan-footer{
+  flex:0 0 auto;
+  position:sticky;
+  bottom:0;
+  z-index:5;
+  padding:12px 0 16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.72),#fff 28%);
+  border-top:1px solid rgba(37,36,40,.08);
+  box-shadow:0 -10px 24px rgba(37,36,40,.045);
+}
+.selected-plan-footer .pricing-plan-sign-up{margin-top:0;}
+.selected-plan-footer .reassurance{margin-bottom:0;}
+@media(max-width:900px){
+  .selected-plan{max-height:calc(100vh - 32px);}
+  .selected-plan-footer{padding-bottom:calc(16px + env(safe-area-inset-bottom));}
+}
+
+
+/* Desktop: options stay at the bottom of the scrollable recap body; only the CTA footer is sticky. */
+.selected-plan-body .settings{margin-top:14px;margin-bottom:14px;}
+.selected-plan-body .settings-warning{margin-top:-6px;}
+
+
+
+/* Mobile and desktop selected plan order: identity → included options → settings → sticky price/CTA */
+.selected-plan-body{display:flex;flex-direction:column;}
+.selected-plan-body .selected-plan-top{order:1;}
+.selected-plan-body .selected-plan-details{order:2;}
+.selected-plan-body .settings{order:3;margin-top:auto;}
+.selected-plan-body .settings-warning{order:4;}
+@media(max-width:900px){
+  .selected-plan-body .selected-plan-top{order:1;}
+  .selected-plan-body .selected-plan-details{order:2;}
+  .selected-plan-body .settings{order:3;margin-top:auto;}
+  .selected-plan-body .settings-warning{order:4;}
+}
+
+/* Full Compare */
+.full-compare{max-width:1180px;margin:-28px auto 72px;padding:30px;border:1px solid var(--border);border-radius:28px;background:#fff;box-shadow:0 20px 70px rgba(37,36,40,.05)}
+.full-compare-kicker{margin:0 0 8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.full-compare h3{margin:0 0 22px;text-align:center;font-size:clamp(26px,3vw,40px);line-height:1.05;letter-spacing:-.04em;font-weight:700;color:var(--text)}
+.compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:18px;background:#fff}
+.compare-table{width:100%;min-width:860px;border-collapse:separate;border-spacing:0;font-size:13px}
+.compare-table th,.compare-table td{padding:14px 14px;border-bottom:1px solid rgba(37,36,40,.08);border-right:1px solid rgba(37,36,40,.06);vertical-align:top;text-align:left}
+.compare-table th:last-child,.compare-table td:last-child{border-right:0}
+.compare-table tr:last-child td{border-bottom:0}
+.compare-table thead th{position:sticky;top:0;background:#f8f8f9;z-index:1;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#252428}
+.compare-feature{width:22%;font-weight:700;color:#252428}
+.compare-family td{background:#f3f3f4;color:#6f6d76;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.compare-check{font-weight:700;color:#252428}
+.compare-muted{color:var(--muted)}
+@media(max-width:900px){.full-compare{margin:0 0 44px;padding:20px;border-radius:22px}.full-compare-kicker,.full-compare h3{text-align:left}.compare-table th,.compare-table td{padding:12px}.compare-table{font-size:12px}}
+
+
+/* Fixed checkout card: locked plan name + locked CTA, scrollable middle content */
+.selected-plan{
+  height:calc(100vh - 48px);
+  max-height:none;
+}
+.selected-plan-body{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}
+.selected-plan-title{
+  position:sticky;
+  top:0;
+  z-index:8;
+  box-shadow:0 10px 22px rgba(37,36,40,.08);
+}
+.selected-plan-footer{
+  position:relative;
+  bottom:auto;
+}
+@media(max-width:900px){
+  .selected-plan{
+    height:calc(100svh - 32px);
+    max-height:none;
+  }
+}
+@media(min-width:1180px){
+  .selected-plan{height:calc(100vh - 48px);}
+}
+
+
+/* Variant: sticky footer with price and CTA on the same line */
+.selected-plan-footer{
+  padding:12px 22px 16px;
+}
+.selected-plan-footer-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footer-price{
+  flex:0 0 auto;
+  min-width:112px;
+}
+.footer-price-main{
+  display:flex;
+  align-items:flex-end;
+  gap:3px;
+}
+.footer-price-value{
+  font-size:31px;
+  line-height:.9;
+  font-weight:700;
+  letter-spacing:-.055em;
+  color:var(--text);
+  white-space:nowrap;
+}
+.footer-price-suffix{
+  margin-bottom:3px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.1;
+  font-weight:700;
+}
+.footer-price-yearly{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10.5px;
+  line-height:1.2;
+  font-weight:650;
+  white-space:nowrap;
+}
+.selected-plan-footer .pricing-plan-sign-up{
+  flex:1 1 auto;
+  width:auto;
+  min-width:0;
+  margin:0;
+}
+.selected-plan-footer .reassurance{
+  margin:9px 0 0;
+}
+@media(max-width:430px){
+  .selected-plan-footer-main{align-items:stretch;flex-direction:column;gap:9px;}
+  .footer-price{min-width:0;text-align:center;}
+  .footer-price-main{justify-content:center;}
+  .footer-price-value{font-size:34px;}
+}
+
+
+
+
+/* Checkout billing toggle */
+.checkout-billing{display:inline-flex;gap:5px;margin:0 0 8px;padding:4px;border:1px solid var(--border);border-radius:999px;background:#fff}
+.checkout-billing button{border:0;border-radius:999px;background:transparent;padding:7px 10px;color:var(--muted);font-size:11.5px;font-weight:650;cursor:pointer;white-space:nowrap}
+.checkout-billing button.active{background:#252428;color:#fff}
+.footer-price-row{display:flex;flex-direction:column-reverse;align-items:flex-start;justify-content:center;gap:0;min-width:132px}
+.footer-price{min-width:104px}
+@media(max-width:430px){.footer-price-row{align-items:center}.checkout-billing{margin-bottom:7px}}
+
+/* Disabled feature styling inside plan recaps */
+.feature-disabled{
+  color:var(--muted);
+  text-decoration:line-through;
+  text-decoration-thickness:1.5px;
+  text-decoration-color:currentColor;
+  opacity:.72;
+}
+
+/* Discovery Hubs tooltip */
+.info-tooltip{position:relative;display:inline-flex;align-items:center;gap:5px;margin-left:4px;color:var(--muted);font-size:11px;font-weight:700;cursor:help;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.info-tooltip::after{content:attr(data-tooltip);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%) translateY(4px);width:260px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:#252428;color:#fff;font-size:11.5px;line-height:1.35;font-weight:600;letter-spacing:0;text-transform:none;text-align:left;box-shadow:0 14px 34px rgba(37,36,40,.18);opacity:0;pointer-events:none;transition:.14s ease;z-index:20}
+.info-tooltip::before{content:'';position:absolute;left:50%;bottom:calc(100% + 4px);transform:translateX(-50%);border:6px solid transparent;border-top-color:#252428;opacity:0;transition:.14s ease;z-index:21}
+.info-tooltip:hover::after,.info-tooltip:hover::before{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:620px){.info-tooltip::after{left:auto;right:-12px;transform:translateY(4px);width:230px}.info-tooltip:hover::after{transform:translateY(0)}.info-tooltip::before{left:auto;right:18px;transform:none}.info-tooltip:hover::before{transform:none}}
+
+/* Keep Set your options at the bottom of the scrollable checkout body on every breakpoint. */
+.selected-plan-body .settings{margin-top:auto!important;margin-bottom:14px;}
+.selected-plan-body .settings-warning{margin-top:-6px;}
+@media(max-width:900px){
+  .selected-plan-body .settings{margin-top:auto!important;margin-bottom:14px;}
+}
+
+
+
+/* Final polish: smaller Annual / Monthly pills + aligned CTA reassurance */
+.checkout-billing{
+  gap:4px!important;
+  margin:0 0 6px!important;
+  padding:3px!important;
+}
+.checkout-billing button{
+  padding:5px 9px!important;
+  font-size:10.5px!important;
+  line-height:1!important;
+}
+.selected-plan-footer-main{
+  align-items:flex-end!important;
+}
+
+.selected-plan-footer-main.no-price{
+  align-items:stretch!important;
+}
+.selected-plan-footer-main.no-price .footer-cta-stack{
+  flex:1 1 100%;
+  width:100%;
+}
+.footer-price-row{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:6px;
+}
+.footer-cta-stack{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+}
+.footer-cta-stack .pricing-plan-sign-up{
+  width:100%!important;
+}
+.footer-cta-stack .reassurance{
+  width:100%;
+  margin:8px 0 0!important;
+  text-align:center;
+  font-size:11.5px;
+  line-height:1.15;
+}
+@media(max-width:430px){
+  .selected-plan-footer-main{align-items:stretch!important;}
+  .footer-price-row{align-items:center;}
+  .footer-cta-stack .reassurance{margin-top:7px!important;}
+}
+
+
+
+/* Prevent horizontal scroll inside checkout card */
+.selected-plan,
+.selected-plan-body,
+.selected-plan-footer{
+  overflow-x:hidden;
+}
+.selected-plan-footer-main,
+.footer-price-row,
+.footer-cta-stack{
+  min-width:0;
+  max-width:100%;
+}
+.selected-plan-footer .pricing-plan-sign-up{
+  max-width:100%;
+}
+.checkout-billing{
+  max-width:100%;
+  flex-wrap:wrap;
+}
+.recap-feature,
+.recap-feature-title,
+.recap-feature-description,
+.recap-feature-list li{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+
+</style>
+</head>
+<body>
+<main class="page-shell">
+<header class="pricing-hero"><h1>Where creators, music pros and entertainment connect.</h1><p>Organize, discover, pitch and collaborate on music — powered by ethical AI.</p></header>
+<section class="pricing-section"><div class="pricing-infos"><div class="pricing-step"><div class="pricing-step-title">Choose your plan</div><div class="pricing-step-description">Select the plan that matches your role. Options appear only when the plan needs configuration.</div></div><div class="plans" id="plans"></div></div><aside class="selected-plan" id="summary"></aside></section>
+<section class="ecosystem-proof" aria-label="Bridge.audio ecosystem proof">
+  <p class="ecosystem-proof-kicker">BRIDGE.AUDIO ECOSYSTEM</p>
+  <h3>Bridge the gap within the music industry and beyond.</h3>
+  <div class="ecosystem-proof-stats">
+    <div class="ecosystem-stat">
+      <div class="ecosystem-stat-number">50K+</div>
+      <div class="ecosystem-stat-title">Creators &amp; artists</div>
+      <div class="ecosystem-stat-copy">Artists, composers, voice-over and independent creative teams.</div>
+    </div>
+    <div class="ecosystem-stat">
+      <div class="ecosystem-stat-number">5K+</div>
+      <div class="ecosystem-stat-title">Music professionals</div>
+      <div class="ecosystem-stat-copy">Labels, publishers, managers, brokers and rights holders.</div>
+      <div class="ecosystem-logo-grid" aria-label="Music professionals using Bridge.audio">
+        <span>Sony Music</span><span>Warner Music</span><span>Wagram</span><span>Budde Music</span><span>Wise Music</span>
+      </div>
+    </div>
+    <div class="ecosystem-stat">
+      <div class="ecosystem-stat-number">600+</div>
+      <div class="ecosystem-stat-title">Buyers &amp; creative teams</div>
+      <div class="ecosystem-stat-copy">Supervisors, agencies, brands, broadcasters and media teams searching for music.</div>
+      <div class="ecosystem-logo-grid" aria-label="Buyer network examples">
+        <span>ASM</span><span>BBDO</span><span>Chanel</span><span>L’Oréal</span><span>TBWA</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="full-compare" aria-label="Full plan comparison">
+  <p class="full-compare-kicker">FULL COMPARE</p>
+  <h3>Compare plans line by line.</h3>
+  <div class="compare-scroll">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th class="compare-feature">Feature family</th>
+          <th>Free</th>
+          <th>Music Pro</th>
+          <th>Supervisor / Media Pro</th>
+          <th>Enterprise</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="compare-family"><td colspan="5">Workspace</td></tr>
+        <tr><td class="compare-feature">Included tracks</td><td>Up to 50 tracks</td><td>250 / 1,000 / 2,500 / 5,000 tracks</td><td>1,000 / 2,500 / 5,000 tracks</td><td>Custom</td></tr>
+        <tr><td class="compare-feature">Media files</td><td>Audio, video, PDF and image</td><td>Unlimited media files</td><td>Unlimited media files</td><td>Custom media workflows</td></tr>
+        <tr><td class="compare-feature">Projects</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited / custom</td></tr>
+        <tr class="compare-family"><td colspan="5">Teamwork</td></tr>
+        <tr><td class="compare-feature">Members</td><td>Up to 3 members</td><td>Up to 7 members</td><td>Up to 7 members</td><td>Custom member access</td></tr>
+        <tr><td class="compare-feature">Desktop + mobile access</td><td class="compare-check">Included</td><td class="compare-check">Included</td><td class="compare-check">Included</td><td class="compare-check">Included</td></tr>
+        <tr class="compare-family"><td colspan="5">Sharing</td></tr>
+        <tr><td class="compare-feature">Sharing options</td><td>Basic sharing</td><td>Advanced sharing</td><td>Advanced sharing</td><td>Advanced / custom sharing</td></tr>
+        <tr><td class="compare-feature">Password protection</td><td class="compare-muted">—</td><td class="compare-check">Included</td><td class="compare-check">Included</td><td class="compare-check">Included</td></tr>
+        <tr><td class="compare-feature">Smart Inbox</td><td class="compare-check">Included</td><td class="compare-check">Included</td><td class="compare-check">Included</td><td class="compare-check">Included</td></tr>
+        <tr class="compare-family"><td colspan="5">Discovery</td></tr>
+        <tr><td class="compare-feature">Auto-tagging</td><td>Basic</td><td>Advanced</td><td>Full auto-tagging</td><td>Custom AI setup</td></tr>
+        <tr><td class="compare-feature">Discovery Hub exposure</td><td class="compare-muted"><span class="feature-disabled">Discovery Hub</span></td><td>20 to 5,000 promoted tracks</td><td class="compare-muted">—</td><td>Custom setup</td></tr>
+        <tr><td class="compare-feature">Discovery Hubs access</td><td class="compare-muted">—</td><td class="compare-muted">—</td><td>Bridge Sync, Library & Score</td><td>Custom buyer / rights holder workflows</td></tr>
+        <tr class="compare-family"><td colspan="5">Analytics & support</td></tr>
+        <tr><td class="compare-feature">Analytics</td><td class="compare-muted">—</td><td>Full insights option with workspaces activities and Discovery Hubs visibility.</td><td>Full insights option with workspaces activities and Discovery Hubs visibility.</td><td>Custom analytics & reporting</td></tr>
+        <tr><td class="compare-feature">Support & ingestion</td><td class="compare-muted">Standard</td><td>Premium support + premium ingestion for plans of 1,000 tracks or more: DDEX, FTP, Disco</td><td>Premium support + premium ingestion for plans of 1,000 tracks or more: DDEX, FTP, Disco</td><td>Dedicated support + custom ingestion</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+<script>
+const icons={"cloud": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00LjUgOS43NUM0LjUgNi40MzYyOSA3LjE4NjI5IDMuNzUgMTAuNSAzLjc1QzEzLjAyOCAzLjc1IDE1LjE4OTMgNS4zMTI4MiAxNi4wNzMzIDcuNTI0MDhDMTYuMjEzNSA3LjUwODE2IDE2LjM1NTkgNy41IDE2LjUgNy41QzE4LjU3MTEgNy41IDIwLjI1IDkuMTc4OTMgMjAuMjUgMTEuMjVDMjAuMjUgMTEuNDQ1OSAyMC4yMzQ5IDExLjYzODYgMjAuMjA1OCAxMS44MjdDMjEuNTc0NCAxMi41OTgxIDIyLjUgMTQuMDY1MyAyMi41IDE1Ljc1QzIyLjUgMTguMjM1MyAyMC40ODUzIDIwLjI1IDE4IDIwLjI1SDYuNzVDMy44NTA1MSAyMC4yNSAxLjUgMTcuODk5NSAxLjUgMTVDMS41IDEyLjg5NjggMi43MzYyNyAxMS4wODQgNC41MjAyNCAxMC4yNDU5QzQuNTA2ODMgMTAuMDgyMiA0LjUgOS45MTY4NiA0LjUgOS43NVoiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg==", "paper": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMuNDc4MDQgMi40MDQzQzMuMjEzMyAyLjMyNzQgMi45Mjc3MSAyLjQwMTkzIDIuNzM0MzIgMi41OTg0QzIuNTQwOTMgMi43OTQ4NyAyLjQ3MDkxIDMuMDgxNiAyLjU1MTk4IDMuMzQ1MUw0Ljk4NDI2IDExLjI1SDEzLjVDMTMuOTE0MiAxMS4yNSAxNC4yNSAxMS41ODU4IDE0LjI1IDEyQzE0LjI1IDEyLjQxNDIgMTMuOTE0MiAxMi43NSAxMy41IDEyLjc1SDQuOTg0MjdMMi41NTIwNyAyMC42NTQ2QzIuNDcxIDIwLjkxODEgMi41NDEwMiAyMS4yMDQ5IDIuNzM0NDEgMjEuNDAxM0MyLjkyNzgxIDIxLjU5NzggMy4yMTM0IDIxLjY3MjMgMy40NzgxNCAyMS41OTU0QzEwLjE3NjcgMTkuNjQ5NCAxNi4zOTc0IDE2LjU4MTQgMjEuOTIzMyAxMi42MDg3QzIyLjExOTMgMTIuNDY3OCAyMi4yMzU1IDEyLjI0MTIgMjIuMjM1NSAxMS45OTk4QzIyLjIzNTUgMTEuNzU4MyAyMi4xMTkzIDExLjUzMTcgMjEuOTIzMyAxMS4zOTA4QzE2LjM5NzQgNy40MTgxNyAxMC4xNzY3IDQuMzUwMjEgMy40NzgwNCAyLjQwNDNaIiBmaWxsPSIjMUUxRDIwIi8+Cjwvc3ZnPgo=", "search": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTguMjUgMTAuODc1QzguMjUgOS40MjUyNSA5LjQyNTI1IDguMjUgMTAuODc1IDguMjVDMTIuMzI0NyA4LjI1IDEzLjUgOS40MjUyNSAxMy41IDEwLjg3NUMxMy41IDExLjYwMDEgMTMuMjA3IDEyLjI1NTMgMTIuNzMxMiAxMi43MzEyQzEyLjI1NTMgMTMuMjA3IDExLjYwMDEgMTMuNSAxMC44NzUgMTMuNUM5LjQyNTI1IDEzLjUgOC4yNSAxMi4zMjQ3IDguMjUgMTAuODc1WiIgZmlsbD0iIzFFMUQyMCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEyIDIuMjVDNi42MTUyMiAyLjI1IDIuMjUgNi42MTUyMiAyLjI1IDEyQzIuMjUgMTcuMzg0OCA2LjYxNTIyIDIxLjc1IDEyIDIxLjc1QzE3LjM4NDggMjEuNzUgMjEuNzUgMTcuMzg0OCAyMS43NSAxMkMyMS43NSA2LjYxNTIyIDE3LjM4NDggMi4yNSAxMiAyLjI1Wk0xMC44NzUgNi43NUM4LjU5NjgzIDYuNzUgNi43NSA4LjU5NjgzIDYuNzUgMTAuODc1QzYuNzUgMTMuMTUzMiA4LjU5NjgzIDE1IDEwLjg3NSAxNUMxMS43NDI4IDE1IDEyLjU0ODcgMTQuNzMxNSAxMy4yMTMxIDE0LjI3MzdMMTUuMjE5NyAxNi4yODAzQzE1LjUxMjYgMTYuNTczMiAxNS45ODc0IDE2LjU3MzIgMTYuMjgwMyAxNi4yODAzQzE2LjU3MzIgMTUuOTg3NCAxNi41NzMyIDE1LjUxMjYgMTYuMjgwMyAxNS4yMTk3TDE0LjI3MzcgMTMuMjEzMUMxNC43MzE1IDEyLjU0ODcgMTUgMTEuNzQyOCAxNSAxMC44NzVDMTUgOC41OTY4MyAxMy4xNTMyIDYuNzUgMTAuODc1IDYuNzVaIiBmaWxsPSIjMUUxRDIwIi8+Cjwvc3ZnPgo=", "team": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02Ljg3NSA1LjYyNUM2Ljg3NSAzLjg5OTExIDguMjc0MTEgMi41IDEwIDIuNUMxMS43MjU5IDIuNSAxMy4xMjUgMy44OTkxMSAxMy4xMjUgNS42MjVDMTMuMTI1IDcuMzUwODkgMTEuNzI1OSA4Ljc1IDEwIDguNzVDOC4yNzQxMSA4Ljc1IDYuODc1IDcuMzUwODkgNi44NzUgNS42MjVaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMTI1IDguMTI1QzEzLjEyNSA2Ljc0NDI5IDE0LjI0NDMgNS42MjUgMTUuNjI1IDUuNjI1QzE3LjAwNTcgNS42MjUgMTguMTI1IDYuNzQ0MjkgMTguMTI1IDguMTI1QzE4LjEyNSA5LjUwNTcxIDE3LjAwNTcgMTAuNjI1IDE1LjYyNSAxMC42MjVDMTQuMjQ0MyAxMC42MjUgMTMuMTI1IDkuNTA1NzEgMTMuMTI1IDguMTI1WiIgZmlsbD0iIzFFMUQyMCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEuODc1IDguMTI1QzEuODc1IDYuNzQ0MjkgMi45OTQyOSA1LjYyNSA0LjM3NSA1LjYyNUM1Ljc1NTcxIDUuNjI1IDYuODc1IDYuNzQ0MjkgNi44NzUgOC4xMjVDNi44NzUgOS41MDU3MSA1Ljc1NTcxIDEwLjYyNSA0LjM3NSAxMC42MjVDMi45OTQyOSAxMC42MjUgMS44NzUgOS41MDU3MSAxLjg3NSA4LjEyNVoiIGZpbGw9IiMxRTFEMjAiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01LjI1ODIyIDEyLjU5NzlDNi4yNTY1MyAxMS4wMzcgOC4wMDY5NiAxMCAxMCAxMEMxMS45OTMzIDEwIDEzLjc0MzkgMTEuMDM3MyAxNC43NDIyIDEyLjU5ODVDMTUuNDMyMyAxMy42Nzc5IDE1LjczMDkgMTQuOTc5MyAxNS41OTA4IDE2LjI0ODNDMTUuNTY4OSAxNi40NDY2IDE1LjQ1MzcgMTYuNjIyNSAxNS4yODA2IDE2LjcyMThDMTMuNzI0NSAxNy42MTQ3IDExLjkyMDkgMTguMTI1IDEwIDE4LjEyNUM4LjA3OTEgMTguMTI1IDYuMjc1NDkgMTcuNjE0NyA0LjcxOTM3IDE2LjcyMThDNC41NDYzMyAxNi42MjI1IDQuNDMxMDggMTYuNDQ2NiA0LjQwOTE5IDE2LjI0ODNDNC4yNjkxMSAxNC45NzkxIDQuNTY3ODQgMTMuNjc3NCA1LjI1ODIyIDEyLjU5NzlaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGQ9Ik00LjIzNTI0IDExLjg3ODFDNC4yMjUyIDExLjg5MzUgNC4yMTUyMyAxMS45MDg5IDQuMjA1MzEgMTEuOTI0NEMzLjQwMDc2IDEzLjE4MjQgMy4wMzI1NyAxNC42ODA2IDMuMTQ1NTkgMTYuMTU3NUMyLjYzODg5IDE2LjA4MDUgMi4xNDcyNSAxNS45NTY3IDEuNjc1MzYgMTUuNzkwNkwxLjU3OTU2IDE1Ljc1NjhDMS40MDQ4IDE1LjY5NTMgMS4yODI2OSAxNS41MzY2IDEuMjY3OTkgMTUuMzUxOUwxLjI1OTk0IDE1LjI1MDZDMS4yNTMzNSAxNS4xNjc4IDEuMjUgMTUuMDg0MiAxLjI1IDE1QzEuMjUgMTMuMzIwOSAyLjU3NDIgMTEuOTUxMiA0LjIzNTI0IDExLjg3ODFaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGQ9Ik0xNi44NTQ3IDE2LjE1NzVDMTYuOTY3NyAxNC42ODA4IDE2LjU5OTcgMTMuMTgzIDE1Ljc5NTQgMTEuOTI1MUMxNS43ODU0IDExLjkwOTQgMTUuNzc1MyAxMS44OTM3IDE1Ljc2NTEgMTEuODc4MUMxNy40MjYgMTEuOTUxMyAxOC43NSAxMy4zMjEgMTguNzUgMTVDMTguNzUgMTUuMDg0MiAxOC43NDY3IDE1LjE2NzggMTguNzQwMSAxNS4yNTA2TDE4LjczMiAxNS4zNTE5QzE4LjcxNzMgMTUuNTM2NiAxOC41OTUyIDE1LjY5NTMgMTguNDIwNCAxNS43NTY4TDE4LjMyNDYgMTUuNzkwNkMxNy44NTI4IDE1Ljk1NjcgMTcuMzYxMyAxNi4wODA1IDE2Ljg1NDcgMTYuMTU3NVoiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg==", "rocket": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik05LjMxNSA3LjU4MzY1QzEyLjE5NTYgMy44ODI5NiAxNi42OTQ2IDEuNTAwMjEgMjEuNzUgMS41QzIxLjk0ODkgMS40OTk5OSAyMi4xMzk3IDEuNTc5MDEgMjIuMjgwMyAxLjcxOTY2QzIyLjQyMSAxLjg2MDMxIDIyLjUgMi4wNTEwOCAyMi41IDIuMjVDMjIuNSA3LjMwNTY0IDIwLjExNzMgMTEuODA1IDE2LjQxNjUgMTQuNjg1OUMxNi40NzE1IDE1LjAzMjkgMTYuNSAxNS4zODgzIDE2LjUgMTUuNzVDMTYuNSAxOS40Nzc5IDEzLjQ3NzkgMjIuNSA5Ljc1IDIyLjVDOS4zMzU3OSAyMi41IDkgMjIuMTY0MiA5IDIxLjc1VjE3LjYxODVDOC45OTA3NSAxNy42MTE4IDguOTgxNjMgMTcuNjA0OSA4Ljk3MjY0IDE3LjU5NzhDOC4wMjA2MyAxNi44NDI5IDcuMTU3OTkgMTUuOTgwMyA2LjQwMzEyIDE1LjAyODJDNi4zOTU3NyAxNS4wMTkgNi4zODg2NiAxNS4wMDk2IDYuMzgxNzkgMTVIMi4yNUMxLjgzNTc5IDE1IDEuNSAxNC42NjQyIDEuNSAxNC4yNUMxLjUgMTAuNTIyMSA0LjUyMjA4IDcuNSA4LjI1IDcuNUM4LjYxMTk4IDcuNSA4Ljk2NzcyIDcuNTI4NTYgOS4zMTUgNy41ODM2NVpNMTUgNi43NUMxMy43NTc0IDYuNzUgMTIuNzUgNy43NTczNiAxMi43NSA5QzEyLjc1IDEwLjI0MjYgMTMuNzU3NCAxMS4yNSAxNSAxMS4yNUMxNi4yNDI2IDExLjI1IDE3LjI1IDEwLjI0MjYgMTcuMjUgOUMxNy4yNSA3Ljc1NzM2IDE2LjI0MjYgNi43NSAxNSA2Ljc1WiIgZmlsbD0iIzFFMUQyMCIvPgo8cGF0aCBkPSJNNS4yNjAzNiAxNy4yNDE4QzUuNTkyMzcgMTYuOTk0MiA1LjY2MDc0IDE2LjUyNDIgNS40MTMwNiAxNi4xOTIyQzUuMTY1MzkgMTUuODYwMiA0LjY5NTQ2IDE1Ljc5MTggNC4zNjM0NSAxNi4wMzk1QzMuMDgyMDkgMTYuOTk1NCAyLjI1IDE4LjUyNTYgMi4yNSAyMC4yNDk5QzIuMjUgMjAuNTI1NSAyLjI3MTI5IDIwLjc5NjYgMi4zMTI0NiAyMS4wNjE1QzIuMzYyNTkgMjEuMzg0MiAyLjYxNTc0IDIxLjYzNzMgMi45Mzg0MiAyMS42ODc1QzMuMjAzMzYgMjEuNzI4NiAzLjQ3NDQ1IDIxLjc0OTkgMy43NSAyMS43NDk5QzUuNDc0MzQgMjEuNzQ5OSA3LjAwNDUyIDIwLjkxNzggNy45NjA0IDE5LjYzNjVDOC4yMDgwOCAxOS4zMDQ1IDguMTM5NzEgMTguODM0NSA3LjgwNzcgMTguNTg2OUM3LjQ3NTY5IDE4LjMzOTIgNy4wMDU3NiAxOC40MDc1IDYuNzU4MDkgMTguNzM5NkM2LjA3MzEzIDE5LjY1NzcgNC45ODA4MSAyMC4yNDk5IDMuNzUgMjAuMjQ5OUMzLjc1IDE5LjAxOTEgNC4zNDIxOCAxNy45MjY4IDUuMjYwMzYgMTcuMjQxOFoiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg==", "chart": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zIDZDMyA0LjM0MzE1IDQuMzQzMTUgMyA2IDNIMThDMTkuNjU2OSAzIDIxIDQuMzQzMTUgMjEgNlYxOEMyMSAxOS42NTY5IDE5LjY1NjkgMjEgMTggMjFINkM0LjM0MzE1IDIxIDMgMTkuNjU2OSAzIDE4VjZaTTcuNSAxMy41QzcuOTE0MjEgMTMuNSA4LjI1IDEzLjgzNTggOC4yNSAxNC4yNVYxNi41QzguMjUgMTYuOTE0MiA3LjkxNDIxIDE3LjI1IDcuNSAxNy4yNUM3LjA4NTc5IDE3LjI1IDYuNzUgMTYuOTE0MiA2Ljc1IDE2LjVWMTQuMjVDNi43NSAxMy44MzU4IDcuMDg1NzkgMTMuNSA3LjUgMTMuNVpNMTEuMjUgMTJDMTEuMjUgMTEuNTg1OCAxMC45MTQyIDExLjI1IDEwLjUgMTEuMjVDMTAuMDg1OCAxMS4yNSA5Ljc1IDExLjU4NTggOS43NSAxMlYxNi41QzkuNzUgMTYuOTE0MiAxMC4wODU4IDE3LjI1IDEwLjUgMTcuMjVDMTAuOTE0MiAxNy4yNSAxMS4yNSAxNi45MTQyIDExLjI1IDE2LjVWMTJaTTEzLjUgOUMxMy45MTQyIDkgMTQuMjUgOS4zMzU3OSAxNC4yNSA5Ljc1VjE2LjVDMTQuMjUgMTYuOTE0MiAxMy45MTQyIDE3LjI1IDEzLjUgMTcuMjVDMTMuMDg1OCAxNy4yNSAxMi43NSAxNi45MTQyIDEyLjc1IDE2LjVWOS43NUMxMi43NSA5LjMzNTc5IDEzLjA4NTggOSAxMy41IDlaTTE3LjI1IDcuNUMxNy4yNSA3LjA4NTc5IDE2LjkxNDIgNi43NSAxNi41IDYuNzVDMTYuMDg1OCA2Ljc1IDE1Ljc1IDcuMDg1NzkgMTUuNzUgNy41VjE2LjVDMTUuNzUgMTYuOTE0MiAxNi4wODU4IDE3LjI1IDE2LjUgMTcuMjVDMTYuOTE0MiAxNy4yNSAxNy4yNSAxNi45MTQyIDE3LjI1IDE2LjVWNy41WiIgZmlsbD0iIzFFMUQyMCIvPgo8L3N2Zz4K", "wrench": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCA1LjYyNUMxMCAzLjIwODc1IDExLjk1ODggMS4yNSAxNC4zNzUgMS4yNUMxNC44MTU5IDEuMjUgMTUuMjQyNyAxLjMxNTQzIDE1LjY0NTYgMS40Mzc1NEMxNS44NTU4IDEuNTAxMjYgMTYuMDE3MiAxLjY3MDY2IDE2LjA3MDYgMS44ODM3NEMxNi4xMjQgMi4wOTY4MSAxNi4wNjE2IDIuMzIyMjggMTUuOTA2MyAyLjQ3NzYxTDEzLjE0MDcgNS4yNDMxOUMxMy4xOTIxIDUuNjM5NTEgMTMuMzY5OSA2LjAyMTUxIDEzLjY3NDIgNi4zMjU4M0MxMy45Nzg1IDYuNjMwMTQgMTQuMzYwNSA2LjgwNzg5IDE0Ljc1NjggNi44NTkzMUwxNy41MjI0IDQuMDkzNzNDMTcuNjc3NyAzLjkzODQgMTcuOTAzMiAzLjg3NjAyIDE4LjExNjMgMy45Mjk0MkMxOC4zMjkzIDMuOTgyODIgMTguNDk4NyA0LjE0NDE2IDE4LjU2MjUgNC4zNTQzOEMxOC42ODQ2IDQuNzU3MjUgMTguNzUgNS4xODQwNSAxOC43NSA1LjYyNUMxOC43NSA4LjA0MTI1IDE2Ljc5MTIgMTAgMTQuMzc1IDEwQzE0LjI0OTYgMTAgMTQuMTI1MyA5Ljk5NDcxIDE0LjAwMjMgOS45ODQzMUMxMy4xNTQ2IDkuOTEyNjUgMTIuNDQ0OCAxMC4wNjggMTIuMDc4NyAxMC41MTI2TDYuMTE5MzkgMTcuNzQ4OUM1LjU5NzM3IDE4LjM4MjggNC44MTkyMyAxOC43NSAzLjk5ODA3IDE4Ljc1QzIuNDgwMzUgMTguNzUgMS4yNSAxNy41MTk2IDEuMjUgMTYuMDAxOUMxLjI1IDE1LjE4MDggMS42MTcyMiAxNC40MDI2IDIuMjUxMSAxMy44ODA2TDkuNDg3NCA3LjkyMTMxQzkuOTMxOTcgNy41NTUxOSAxMC4wODczIDYuODQ1NDQgMTAuMDE1NyA1Ljk5Nzc0QzEwLjAwNTMgNS44NzQ3MyAxMCA1Ljc1MDQxIDEwIDUuNjI1Wk0zLjQzMTAzIDE1LjkzNzVDMy40MzEwMyAxNS41OTI0IDMuNzEwODUgMTUuMzEyNSA0LjA1NjAzIDE1LjMxMjVINC4wNjIyOEM0LjQwNzQ2IDE1LjMxMjUgNC42ODcyOCAxNS41OTI0IDQuNjg3MjggMTUuOTM3NVYxNS45NDM4QzQuNjg3MjggMTYuMjg5IDQuNDA3NDYgMTYuNTY4OCA0LjA2MjI4IDE2LjU2ODhINC4wNTYwM0MzLjcxMDg1IDE2LjU2ODggMy40MzEwMyAxNi4yODkgMy40MzEwMyAxNS45NDM4VjE1LjkzNzVaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGQ9Ik04LjM5NjY0IDcuMjAwMjZMNi41NjI1MSA1LjM2NjEzVjQuMDYyNTFDNi41NjI1MSAzLjg0Mjk3IDYuNDQ3MzMgMy42Mzk1MyA2LjI1OTA3IDMuNTI2NThMMy4xMzQwNyAxLjY1MTU4QzIuODg4MTUgMS41MDQwMyAyLjU3MzM2IDEuNTQyNzggMi4zNzA1NyAxLjc0NTU3TDEuNzQ1NTcgMi4zNzA1N0MxLjU0Mjc4IDIuNTczMzYgMS41MDQwMyAyLjg4ODE1IDEuNjUxNTggMy4xMzQwN0wzLjUyNjU4IDYuMjU5MDdDMy42Mzk1MyA2LjQ0NzMzIDMuODQyOTcgNi41NjI1MSA0LjA2MjUxIDYuNTYyNTFINS4zNjYxM0w3LjA4NDQ4IDguMjgwODZMOC4zOTY2NCA3LjIwMDI2WiIgZmlsbD0iIzFFMUQyMCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEwLjQ2MzMgMTQuNDQwNkwxMy45NDg5IDE3LjkyNjJDMTUuMDQ3MiAxOS4wMjQ1IDE2LjgyOCAxOS4wMjQ1IDE3LjkyNjMgMTcuOTI2MkMxOS4wMjQ3IDE2LjgyNzggMTkuMDI0NyAxNS4wNDcxIDE3LjkyNjMgMTMuOTQ4N0wxNS4xNzE2IDExLjE5NEMxNC45MTE0IDExLjIzMDkgMTQuNjQ1NSAxMS4yNSAxNC4zNzUxIDExLjI1QzE0LjIxNDUgMTEuMjUgMTQuMDU1IDExLjI0MzIgMTMuODk3MSAxMS4yMjk4QzEzLjU2ODUgMTEuMjAyMSAxMy4zMjgzIDExLjIyNDcgMTMuMTc0MSAxMS4yNjQ3QzEzLjA4NzcgMTEuMjg3MSAxMy4wNDc5IDExLjMwOTQgMTMuMDM0OSAxMS4zMTc5TDEwLjQ2MzMgMTQuNDQwNlpNMTMuMzA4MSAxMy4zMDgxQzEzLjU1MjIgMTMuMDY0IDEzLjk0NzkgMTMuMDY0IDE0LjE5MiAxMy4zMDgxTDE1Ljc1NDUgMTQuODcwNkMxNS45OTg2IDE1LjExNDYgMTUuOTk4NiAxNS41MTA0IDE1Ljc1NDUgMTUuNzU0NEMxNS41MTA0IDE1Ljk5ODUgMTUuMTE0NyAxNS45OTg1IDE0Ljg3MDYgMTUuNzU0NEwxMy4zMDgxIDE0LjE5MTlDMTMuMDY0MSAxMy45NDc5IDEzLjA2NDEgMTMuNTUyMSAxMy4zMDgxIDEzLjMwODFaIiBmaWxsPSIjMUUxRDIwIi8+Cjwvc3ZnPgo="};
+const plans=[
+{id:'free',name:'Free Plan',color:'#252428',rgb:'37,36,40',text:'#fff',badge:'FREE PLAN',title:'Start building your catalog',description:'',loved:'LOVED BY EVERYONE',cta:'Start for Free Now',priceType:'free',baseY:0,baseM:0,tracks:[{label:'2 GB • Up to 50 tracks',y:0,m:0}],hubs:[]},
+{id:'music',name:'Music Pro plan',color:'#2F43DE',rgb:'47,67,222',text:'#fff',badge:'MUSIC PRO',title:'Manage your catalog. Get heard!',description:'',loved:'LOVED BY ARTISTS, COMPOSERS, LABELS, PUBLISHERS, MANAGERS & PR',cta:'Scale your music now',priceType:'from',baseY:5,baseM:7,tracks:[{label:'Store 250 tracks',y:5,m:7},{label:'Store 1000 tracks',y:9,m:12},{label:'Store 2500 tracks',y:14,m:18},{label:'Store 5000 tracks',y:19,m:24}],hubs:[{label:'Promote 20 tracks',y:4,m:5},{label:'Promote 100 tracks',y:19,m:24},{label:'Promote 1000 tracks',y:29,m:37},{label:'Promote 2500 tracks',y:49,m:62},{label:'Promote 5000 tracks',y:69,m:87},{label:"I'll Promote later",y:0,m:0,later:true}]},
+{id:'supervisor',name:'Supervisor / Media Pro plan',color:'#FF3364',rgb:'255,51,100',text:'#fff',badge:'SUPERVISOR / MEDIA PRO',title:'Find the perfect track, fast.',description:'',loved:'LOVED BY SUPERVISORS, FILM, TV, ADS & GAMES',cta:'Find music better, faster',priceType:'from',baseY:9,baseM:12,tracks:[{label:'Store 1000 tracks',y:9,m:12},{label:'Store 2500 tracks',y:14,m:18},{label:'Store 5000 tracks',y:19,m:24}],hubs:[{label:'Discovery Hubs access included',y:0,m:0}]},
+{id:'enterprise',name:'Enterprise plan',color:'#252428',rgb:'37,36,40',text:'#fff',badge:'ENTERPRISE',title:'Custom workflows for large organizations',description:'',loved:'LOVED BY MAJORS, BROADCASTERS & MEDIA GROUPS',cta:'Talk to Sales',priceType:'custom',baseY:null,baseM:null,tracks:[{label:'Custom workspace, tracks and storage',y:0,m:0}],hubs:[]}
+];
+let state={plan:0,yearly:true,track:0,hub:null};
+function configurable(p){return ['music','supervisor'].includes(p.id)}
+function diamond(){return `<span class="plan-diamond" aria-hidden="true"><svg viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="currentColor"/></svg></span>`}
+function formatEuro(n){return Number.isInteger(n)?`${n}€`:`${n.toFixed(2).replace('.', ',')}€`}
+function money(n){return n===0?'Free':formatEuro(n)}
+function priceFor(o){return state.yearly?o.y:o.m}
+function basePrice(p){if(p.priceType==='free')return 0;if(p.priceType==='custom')return null;return state.yearly?p.baseY:p.baseM}
+function selectedTrack(p){if(p.id==='music'||p.id==='supervisor')return state.track===null?p.tracks[0]:p.tracks[state.track];return p.tracks[0]}
+function selectedHub(p){if(p.id==='music')return state.hub===null?{y:0,m:0}:p.hubs[state.hub];return {y:0,m:0}}
+function total(p){if(p.priceType==='custom')return null;if(p.id==='free')return 0;return priceFor(selectedTrack(p))+priceFor(selectedHub(p))}
+function yearlyEquivalent(monthly){return Math.round(monthly*12*100)/100}
+function startingPrice(p){if(p.priceType==='custom')return 'Custom';if(p.priceType==='free')return 'Free';return formatEuro(basePrice(p))}
+function icon(k){return `<span class="summary-icon"><img src="${icons[k]}" alt=""></span>`}
+function optionLabel(o,mode='addon'){const add=priceFor(o);if(!add)return o.label;const prefix=mode==='base'?'':'+';return `${o.label} — ${prefix}${formatEuro(add)}/mo`}
+function resetPlanSettings(id){if(id==='music'){state.track=null;state.hub=null}else if(id==='supervisor'){state.track=null;state.hub=0}else{state.track=0;state.hub=null}}
+function planNeedsSettings(p){if(p.id==='music')return state.track===null||state.hub===null;if(p.id==='supervisor')return state.track===null;return false}
+function warningText(p){if(p.id==='music')return 'Please choose your workspace size and Discovery Hub exposure before continuing.';if(p.id==='supervisor')return 'Please choose your workspace size before continuing.';return ''}
+function smartScrollAfterPlanChange(){
+ const isMobile=window.matchMedia('(max-width: 900px)').matches;
+ const target=isMobile?document.getElementById('summary'):document.querySelector('.pricing-section');
+ if(!target)return;
+ setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:isMobile?'start':'center'}),60);
+}
+function renderPlans(){document.getElementById('plans').innerHTML=plans.map((p,i)=>`<article class="pricing-plan ${i===state.plan?'selected':''}" data-i="${i}" style="--plan-color:${p.color};--plan-text:${p.text}"><div class="pricing-plan-main"><div class="pricing-plan-name">${configurable(p)?diamond():''}${p.badge}</div><div class="pricing-plan-title">${p.title}</div><div class="pricing-plan-lovedby">${p.loved}</div></div><div class="right"><div class="pricing-plan-notice">${p.priceType==='custom'?'Tailored plan':p.priceType==='free'?'':'Starting at'}</div><div class="pricing-plan-price-main"><span class="pricing-plan-price-value">${startingPrice(p)}</span>${p.priceType==='from'?'<span class="pricing-plan-price-suffix">/mo</span>':''}</div>${p.priceType==='from'?`<div class="pricing-plan-price-yearly">${state.yearly?'billed yearly':'billed monthly'}</div>`:''}</div></article>`).join('');document.querySelectorAll('.pricing-plan').forEach(el=>el.onclick=()=>{state.plan=+el.dataset.i;resetPlanSettings(plans[state.plan].id);render();smartScrollAfterPlanChange();})}
+function settings(p){
+ if(!configurable(p))return '';
+ const isMusic=p.id==='music';
+ const isSupervisor=p.id==='supervisor';
+ const intro=isMusic?'Choose your workspace size and how many tracks you want to promote on Discovery Hubs.':'Choose the workspace size you need. Discovery Hubs access is included.';
+ const trackControl=(isMusic||isSupervisor)?`<div class="setting-field"><label><img src="${icons.cloud}" alt="">Workspace size</label><div class="select-wrap"><select id="trackSelect"><option value="" ${state.track===null?'selected':''} disabled>Choose an option</option>${p.tracks.map((o,i)=>`<option value="${i}" ${i===state.track?'selected':''}>${optionLabel(o,'base')}</option>`).join('')}</select></div></div>`:'';
+ const hubControl=isMusic?`<div class="setting-field"><label><img src="${icons.rocket}" alt="">Discovery Hub exposure <span class="info-tooltip" data-tooltip="Discovery Hubs are curated spaces where industry buyers can search, discover and shortlist music for sync, score, library, advertising, film, TV, games and media projects.">What are the Discovery Hubs?</span></label><div class="select-wrap"><select id="hubSelect"><option value="" ${state.hub===null?'selected':''} disabled>Choose an option</option>${p.hubs.map((o,i)=>`<option value="${i}" ${i===state.hub?'selected':''}>${optionLabel(o,'addon')}</option>`).join('')}</select></div></div>`:'';
+ return `<div class="settings visible"><h3>Set your options</h3><p>${intro}</p>${trackControl}${hubControl}</div><div class="settings-warning" id="warning">${warningText(p)}</div>`
+}
+function features(p){
+ const data={
+ free:[[icon('cloud'),'Workspace',['All media (video, PDF and image)','2 GB • Up to 50 tracks','Unlimited Projects']],[icon('team'),'Teamwork from anywhere',['Access on desktop and mobile for up to 3 members.']],[icon('paper'),'Sharing',['Basic sharing','Smart Inbox to receive music']],[icon('rocket'),'Discoverability',['Auto-tagging: basic','<span class="feature-disabled">Discovery Hub</span>']]],
+ music:[[icon('cloud'),'Workspace',['Unlimited media files included','250 tracks included, then scale in Set your options','Unlimited Projects']],[icon('team'),'Teamwork from anywhere',['Access on desktop and mobile for up to 7 members.']],[icon('paper'),'Sharing',['Advanced sharing','Password protection','Smart Inbox to receive music']],[icon('rocket'),'Discoverability',['Auto-tagging: Advanced','Help industry buyers find your music faster.','Choose how many tracks you want to promote on Discovery Hubs.']],[icon('chart'),'Advanced analytics & reporting',['Full insights option with workspaces activities and Discovery Hubs visibility.']],[icon('wrench'),'Support & ingestion',['Premium support','Premium ingestion for plans of 1,000 tracks or more','DDEX, FTP, Disco easy ingestion']]],
+ supervisor:[[icon('cloud'),'Workspace',['Unlimited media files included','1000 tracks (or more - check Set your options section)','Unlimited Projects']],[icon('team'),'Teamwork from anywhere',['Access on desktop and mobile for up to 7 members.']],[icon('paper'),'Sharing',['Advanced sharing','Password protection','Smart Inbox to receive music']],[icon('search'),'Discovery Hubs access',['Find the perfect track with AI-powered search','500,000+ finely described tracks','Access to Bridge Sync, Bridge Library & Bridge Score']],[icon('chart'),'Advanced analytics & reporting',['Full insights option with workspaces activities and Discovery Hubs visibility.']],[icon('wrench'),'Support & ingestion',['Premium support','Premium ingestion for plans of 1,000 tracks or more','DDEX, FTP, Disco easy ingestion']]],
+ enterprise:[[icon('cloud'),'Workspace',['All media (video, PDF and image)','Custom workspace, tracks and storage','Unlimited Projects']],[icon('team'),'Teamwork from anywhere',['Custom member access']],[icon('paper'),'Sharing',['Advanced sharing','Security features','Smart Inbox to receive music']],[icon('rocket'),'Discoverability',['Custom Discovery Hubs setup','Custom buyer / rights holder workflows']],[icon('chart'),'Custom analytics & reporting',[]],[icon('wrench'),'Support & ingestion',['Dedicated support','DDEX, FTP, Disco easy ingestion']]]
+ };
+ return data[p.id].map(r=>`<div class="recap-feature">${r[0]}<div><p class="recap-feature-title">${r[1]}</p>${Array.isArray(r[2])&&r[2].length?`<ul class="recap-feature-list">${r[2].map(x=>`<li>${x}</li>`).join('')}</ul>`:''}</div></div>`).join('')
+}
+function renderSummary(){const p=plans[state.plan];const val=total(p);const price=p.priceType==='custom'?'Custom':money(val);const suffix=p.priceType==='from'?'/mo':'';const yearly=p.priceType==='from'?yearlyEquivalent(val):0;const disabled=planNeedsSettings(p);document.getElementById('summary').style.setProperty('--active',p.color);document.getElementById('summary').style.setProperty('--active-rgb',p.rgb);document.getElementById('summary').style.setProperty('--active-text',p.text);document.getElementById('summary').innerHTML=`<div class="selected-plan-body"><div class="selected-plan-top"><div class="selected-plan-title">${configurable(p)?diamond():''}${p.badge}</div><div class="selected-plan-subtitle">${p.title}</div><div class="selected-plan-loved">${p.loved}</div></div><div class="selected-plan-details">${features(p)}</div>${settings(p)}</div><div class="selected-plan-footer"><div class="selected-plan-footer-main ${p.id==='free'?'no-price':''}">${p.id==='free'?'':`<div class="footer-price-row"><div class="footer-price"><div class="footer-price-main"><span class="footer-price-value">${price}</span>${suffix?`<span class="footer-price-suffix">${suffix}</span>`:''}</div>${p.priceType==='from'?`<div class="footer-price-yearly">${state.yearly?money(yearly)+'/year billed yearly':money(yearly)+'/year billed monthly'}</div>`:p.priceType==='custom'?`<div class="footer-price-yearly">Talk to Sales</div>`:''}</div>${p.priceType==='from'?`<div class="checkout-billing"><button id="checkoutYearlyBtn" class="${state.yearly?'active':''}" type="button">Yearly <span style="opacity:.7">−20%</span></button><button id="checkoutMonthlyBtn" class="${!state.yearly?'active':''}" type="button">Monthly</button></div>`:''}</div>`}<div class="footer-cta-stack"><button class="pricing-plan-sign-up ${p.priceType==='custom'?'secondary':''} ${disabled?'is-disabled':''}" id="mainCta" aria-disabled="${disabled?'true':'false'}">${p.cta}</button><div class="reassurance">${p.id==='free'?'No credit card required':configurable(p)?'Cancel anytime':''}</div></div></div></div>`;if(configurable(p)){const trackSelect=document.getElementById('trackSelect');if(trackSelect)trackSelect.onchange=e=>{state.track=e.target.value===''?null:+e.target.value;renderSummary()};const hub=document.getElementById('hubSelect');if(hub)hub.onchange=e=>{state.hub=e.target.value===''?null:+e.target.value;renderSummary()}}const checkoutYearly=document.getElementById('checkoutYearlyBtn');if(checkoutYearly)checkoutYearly.onclick=()=>{state.yearly=true;render()};const checkoutMonthly=document.getElementById('checkoutMonthlyBtn');if(checkoutMonthly)checkoutMonthly.onclick=()=>{state.yearly=false;render()};document.getElementById('mainCta').onclick=()=>{if(planNeedsSettings(p)){const w=document.getElementById('warning');const box=document.querySelector('.settings');const summary=document.getElementById('summary');if(w)w.classList.add('visible');[w,box,summary].forEach(el=>{if(!el)return;el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')});if(box)box.scrollIntoView({behavior:'smooth',block:'center'});return;}alert('Demo action')}}
+function render(){renderPlans();renderSummary()}
+render();
+</script>
+</body>
+</html>
