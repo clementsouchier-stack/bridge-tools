@@ -1,0 +1,47 @@
+name: Import root Bridge features
+
+on:
+  push:
+    branches:
+      - import-root-features
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout bridge-tools
+        uses: actions/checkout@v4
+        with:
+          ref: import-root-features
+          fetch-depth: 0
+
+      - name: Import newplus and hubs-contact
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf bridge-features/newplus bridge-features/hubs-contact
+          mkdir -p bridge-features/newplus bridge-features/hubs-contact
+
+          git clone --depth 1 https://github.com/clementsouchier-stack/newplus.git /tmp/newplus
+          git clone --depth 1 https://github.com/clementsouchier-stack/hubs-contact.git /tmp/hubs-contact
+
+          rm -rf /tmp/newplus/.git /tmp/hubs-contact/.git
+          cp -a /tmp/newplus/. bridge-features/newplus/
+          cp -a /tmp/hubs-contact/. bridge-features/hubs-contact/
+
+      - name: Commit imported features
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bridge-features/newplus bridge-features/hubs-contact
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Add newplus and hubs-contact to bridge-features"
+            git push origin import-root-features
+          fi
