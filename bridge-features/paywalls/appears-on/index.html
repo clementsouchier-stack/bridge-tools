@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bridge — Projects Paywall</title>
+  <style>
+    :root {
+      --primary: #2f43de;
+      --primary-hover: #2638c4;
+      --text: #18181b;
+      --muted: #71717a;
+      --soft: #f8f8fa;
+      --surface: #ffffff;
+      --line: #e4e4e7;
+      --side: #fbfbfc;
+      --selected: #c8cef6;
+      --icon-muted: #d4d4d8;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body {
+      overflow: hidden;
+      background: #fff;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    button, input { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    svg { display: block; }
+
+    .app {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .sidebar {
+      width: 102px;
+      flex: 0 0 102px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #f0f0f2;
+      background: var(--side);
+    }
+
+    .workspace {
+      height: 96px;
+      display: grid;
+      place-items: center;
+    }
+
+    .workspace-logo {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #7ee8b5;
+      box-shadow: 0 0 0 2px #c7d2fe, 0 0 0 6px #fff;
+    }
+
+    .workspace-logo:after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 22px 0 0 0;
+      background: #09090b;
+    }
+
+    .create-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 32px 0;
+    }
+
+    .create-btn {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #d4d4d8;
+      border-radius: 999px;
+      background: #fff;
+      color: #27272a;
+      box-shadow: 0 8px 18px rgba(20, 20, 40, .12);
+      transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
+    }
+
+    .create-btn:hover { background: #fafafa; transform: translateY(-1px); box-shadow: 0 12px 24px rgba(20,20,40,.14); }
+
+    .side-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+    }
+
+    .side-item {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #d4d4d8;
+      text-decoration: none;
+      line-height: 1.25;
+      font-weight: 500;
+    }
+
+    .side-item.active { color: #09090b; font-weight: 650; }
+    .side-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #d4d4d8;
+    }
+    .side-item.active .side-icon { color: #fff; background: #3545dd; }
+
+    .beta {
+      position: absolute;
+      top: -8px;
+      right: 8px;
+      padding: 2px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: #52525b;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      line-height: 1.25;
+    }
+
+    .side-footer {
+      margin: 0 20px;
+      padding: 16px 0;
+      display: flex;
+      justify-content: space-around;
+      border-top: 1px solid #e7e7ea;
+      color: #a1a1aa;
+    }
+
+    .center {
+      min-width: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #fcfcfd;
+    }
+
+    .topbar {
+      height: 84px;
+      flex: 0 0 84px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      color: #71717a;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .crumb-icon {
+      width: 28px;
+      height: 28px;
+      margin-right: 8px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background: #3545dd;
+      color: #fff;
+    }
+
+    .breadcrumb b { color: #18181b; font-weight: 650; }
+    .breadcrumb span { margin: 0 5px; }
+
+    .filters {
+      padding: 12px 32px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfbfc;
+    }
+
+    .search {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      background: #fff;
+      color: #d4d4d8;
+      font-size: 18px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.7);
+    }
+
+    .search svg { margin-right: 16px; color: #d4d4d8; }
+
+    .filter-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .filter-btn {
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      background: #fff;
+      color: #18181b;
+      font-size: 18px;
+      font-weight: 550;
+      box-shadow: 0 1px 2px rgba(0,0,0,.03);
+    }
+
+    .table-area {
+      min-height: 0;
+      flex: 1;
+      overflow: hidden;
+      padding: 64px 32px 0;
+      background: #fff;
+    }
+
+    .selection-bar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 12px;
+      color: #18181b;
+    }
+
+    .selection-bar input, .track input { width: 16px; height: 16px; accent-color: var(--primary); }
+    .selection-title { font-size: 18px; font-weight: 550; }
+    .selection-bar svg { width: 22px; height: 22px; color: #18181b; }
+    .selection-bar .danger { color: var(--danger); }
+
+    .track-list { overflow: hidden; border-radius: 8px 8px 0 0; }
+    .track {
+      display: grid;
+      grid-template-columns: 28px 440px minmax(130px, 1fr) 90px 180px;
+      align-items: center;
+      min-height: 60px;
+      padding: 8px 0;
+      background: #fff;
+      font-size: 14px;
+    }
+    .track.selected { background: var(--selected); }
+    .track:hover { background: #eef2ff; }
+
+    .track-main { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .cover {
+      width: 44px;
+      height: 44px;
+      flex: 0 0 44px;
+      border-radius: 4px;
+      background:
+        radial-gradient(circle at 28% 20%, rgba(255,255,255,.45), transparent 24%),
+        linear-gradient(135deg, #d94b4b 0%, #e65737 36%, #1b8791 100%);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+    }
+    .title { font-weight: 650; color: #18181b; line-height: 1.2; }
+    .subtitle { margin-top: 3px; color: #71717a; line-height: 1.2; }
+    .date-sub { margin-top: 3px; color: #71717a; font-size: 12px; }
+
+    .details-panel {
+      position: relative;
+      width: 560px;
+      flex: 0 0 560px;
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid var(--line);
+      background: #fcfcfd;
+    }
+
+    .detail-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 24px 32px 0;
+    }
+
+    .song-id { display: flex; gap: 16px; align-items: flex-start; }
+    .song-cover { width: 56px; height: 56px; border-radius: 4px; }
+    .song-title { font-weight: 650; line-height: 1.25; }
+    .song-artist { margin-top: 4px; color: #71717a; font-size: 14px; }
+    .song-artist u { text-underline-offset: 2px; }
+
+    .panel-actions { display: flex; gap: 12px; align-items: center; }
+    .panel-btn {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #e4e4e7;
+      border-radius: 4px;
+      background: #fff;
+      color: #18181b;
+    }
+    .panel-btn.strong { border-color: #d4d4d8; }
+    .panel-x { width: 40px; height: 40px; display: grid; place-items: center; background: transparent; color: #18181b; }
+
+    .tabs {
+      display: flex;
+      margin-top: 24px;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--line);
+      color: #71717a;
+      font-size: 14px;
+    }
+
+    .tab {
+      position: relative;
+      padding: 16px 15px;
+      background: transparent;
+      color: inherit;
+      font-weight: 550;
+    }
+    .tab.active { color: var(--primary); }
+    .tab.active:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    .tab-pro {
+      position: absolute;
+      top: 4px;
+      right: -5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 6px;
+      border: 1px solid #e4e4e7;
+      border-radius: 4px;
+      background: #fff;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .paywall {
+      width: 82%;
+      max-width: 420px;
+      margin: 40px auto 0;
+      padding: 20px;
+      border: 1px solid #e4e4e7;
+      border-radius: 16px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+
+    .pro-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 4px 10px;
+      border: 1px solid #e4e4e7;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .paywall h2 {
+      margin: 0;
+      color: #09090b;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: -.01em;
+    }
+
+    .paywall p {
+      max-width: 320px;
+      margin: 8px auto 0;
+      color: #71717a;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .paywall-actions {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .upgrade {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .upgrade:hover { background: var(--primary-hover); }
+    .learn {
+      padding: 8px 16px;
+      border: 1px solid #e4e4e7;
+      border-radius: 8px;
+      background: #fff;
+      color: #3f3f46;
+      font-size: 14px;
+      font-weight: 550;
+    }
+    .learn:hover { background: #fafafa; }
+
+    .chat {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #312e81;
+      box-shadow: 0 14px 32px rgba(39,39,42,.18);
+    }
+    .grip { position: absolute; right: 96px; bottom: 33px; color: #a1a1aa; }
+
+
+    /* Bridge Pro pill + CTA update */
+    .tab-pro {
+      top: 2px;
+      right: -12px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--primary);
+      line-height: 0;
+    }
+
+    .pro-pill {
+      margin-bottom: 12px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--primary);
+      line-height: 0;
+    }
+
+    .tab-pro .pro-pill-svg {
+      width: 50px;
+      height: auto;
+    }
+
+    .paywall .pro-pill-svg {
+      width: 66px;
+      height: auto;
+    }
+
+    .upgrade {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 36px;
+    }
+
+    .upgrade .cta-diamond {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 1180px) {
+      .details-panel { width: 500px; flex-basis: 500px; }
+      .track { grid-template-columns: 28px 360px minmax(120px,1fr) 80px 150px; }
+    }
+    /* Global Pro benefits modal — shared paywall component */
+    .modal-backdrop {
+      background: rgba(23,23,25,.42);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal {
+      width: min(680px, 100%);
+      border-radius: 26px;
+      border: 1px solid rgba(47,67,222,.10);
+      box-shadow: 0 20px 64px rgba(0,0,0,.18);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .modal-hero {
+      position: relative;
+      padding: 30px 34px 16px;
+      background: #fff;
+      color: var(--text);
+      text-align: center;
+    }
+
+    .modal-hero::after { display: none; }
+
+    .modal-close {
+      right: 18px;
+      top: 18px;
+      color: #85858f;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    .modal-close:hover { background: #f7f7f8; color: var(--text); }
+
+    .modal-hero .pro-badge {
+      height: 26px;
+      padding: 0 10px;
+      border-color: rgba(47,67,222,.18);
+      color: var(--primary);
+      background: #fff;
+      font-size: 11px;
+      box-shadow: none;
+    }
+
+    .modal-hero h2 {
+      position: relative;
+      z-index: 1;
+      margin: 16px 0 8px;
+      color: var(--text);
+      font-size: 30px;
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      font-weight: 760;
+    }
+
+    .modal-hero p {
+      position: relative;
+      z-index: 1;
+      margin: 0 auto;
+      max-width: 450px;
+      color: #73737d;
+      font-size: 14.5px;
+      line-height: 1.45;
+    }
+
+    .social-proof-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      padding: 8px 34px 22px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 820;
+      letter-spacing: -.04em;
+    }
+
+    .stat-label {
+      margin-top: 5px;
+      color: #85858f;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .stat-users .stat-value { color: #59D994; }
+    .stat-tracks .stat-value { color: #FF615A; }
+    .stat-buyers .stat-value { color: var(--primary); }
+
+    .modal-body {
+      display: block;
+      padding: 0 34px 32px;
+    }
+
+    .pro-benefit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 0 0 22px;
+    }
+
+    .pro-benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      text-align: left;
+    }
+
+    .pro-benefit-icon {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(47,67,222,.08);
+      color: var(--primary);
+      flex: 0 0 auto;
+    }
+
+    .pro-benefit-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .pro-benefit strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 760;
+    }
+
+    .pro-benefit span {
+      display: block;
+      color: #73737d;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-actions .turn-pro-button {
+      width: 100%;
+      max-width: 280px;
+      height: 44px;
+      font-size: 14px;
+    }
+
+    .maybe-button {
+      width: auto;
+      margin: 0;
+      padding: 0;
+      color: #73737d;
+      font-size: 13px;
+      border-radius: 0;
+    }
+
+    .maybe-button:hover {
+      background: transparent;
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 760px) {
+      .custom-card-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .custom-paywall-actions {
+        width: 100%;
+        align-items: stretch;
+      }
+      .turn-pro-button {
+        width: 100%;
+      }
+      .pro-info-link {
+        text-align: center;
+      }
+      .modal-backdrop {
+        align-items: stretch;
+        justify-content: stretch;
+        padding: 0;
+      }
+      .modal {
+        width: 100%;
+        min-height: 100dvh;
+        border-radius: 0;
+        border: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .modal-hero {
+        padding: 28px 22px 14px;
+      }
+      .modal-hero h2 {
+        font-size: 26px;
+      }
+      .social-proof-stats {
+        padding: 8px 18px 18px;
+        gap: 8px;
+      }
+      .stat-value {
+        font-size: 21px;
+      }
+      .stat-label {
+        font-size: 11.5px;
+      }
+      .modal-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0 18px calc(18px + env(safe-area-inset-bottom));
+      }
+      .pro-benefit-grid {
+        flex: 1;
+      }
+      .modal-actions {
+        position: sticky;
+        bottom: 0;
+        padding-top: 12px;
+        background: #fff;
+      }
+      .modal-actions .turn-pro-button {
+        max-width: none;
+      }
+    }
+
+
+
+    /* Projects tab contextual paywall — explicit value, shared Pro modal */
+    .paywall {
+      width: 82%;
+      max-width: 430px;
+      margin: 40px auto 0;
+      padding: 22px 20px;
+      border-radius: 16px;
+      border: 1px solid #e4e4e7;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04);
+    }
+
+    .paywall h2 {
+      max-width: 340px;
+      margin: 0 auto;
+      color: #09090b;
+      font-size: 18px;
+      line-height: 1.18;
+      font-weight: 750;
+      letter-spacing: -.02em;
+    }
+
+    .paywall-copy {
+      max-width: 340px;
+      margin: 9px auto 0 !important;
+      color: #71717a;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .paywall-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .paywall .upgrade {
+      min-width: 178px;
+      min-height: 40px;
+      padding: 0 18px;
+      border-radius: 9px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: none;
+    }
+
+    .paywall .upgrade:hover { background: var(--primary-hover); }
+
+    .paywall .learn {
+      height: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #52525b;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .paywall .learn:hover { color: var(--primary); background: transparent; }
+
+    .paywall .cta-diamond {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 auto;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 760px) {
+      .details-panel { width: 100%; flex-basis: 100%; }
+      .paywall { width: calc(100% - 32px); max-width: none; margin-top: 24px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="workspace"><div class="workspace-logo" aria-label="Workspace logo"></div></div>
+      <div class="create-wrap">
+        <button class="create-btn" aria-label="Create">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <nav class="side-nav" aria-label="Main navigation">
+        <a href="#" class="side-item active">
+          <span class="side-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3v14a4 4 0 1 1-2-3.465V6H9v11a4 4 0 1 1-2-3.465V3h13Z"/></svg></span>
+          Library
+        </a>
+        <a href="#" class="side-item">
+          <span class="side-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          Projects
+        </a>
+        <a href="#" class="side-item">
+          <span class="side-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18.75" cy="4.5" r="2.25" stroke="currentColor" stroke-width="1.5"/><circle cx="18.75" cy="19.5" r="2.25" stroke="currentColor" stroke-width="1.5"/><circle cx="5.25" cy="12" r="2.25" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          Shared
+        </a>
+        <a href="#" class="side-item">
+          <span class="side-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512A2.25 2.25 0 0 1 17.89 13.5h3.859M2.25 13.838V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          Received
+        </a>
+        <a href="#" class="side-item">
+          <span class="beta">BETA</span>
+          <span class="side-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M2.25 13.5C2.25 8.944 5.944 5.25 10.5 5.25c.414 0 .75.336.75.75v6.75H18c.414 0 .75.336.75.75 0 4.556-3.694 8.25-8.25 8.25s-8.25-3.694-8.25-8.25Z" stroke="currentColor" stroke-width="1.5"/><path d="M12.75 3c0-.414.336-.75.75-.75 4.556 0 8.25 3.694 8.25 8.25 0 .414-.336.75-.75.75h-7.5a.75.75 0 0 1-.75-.75V3Z" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          Analytics
+        </a>
+      </nav>
+
+      <div class="side-footer">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="1.5"/><path d="M8.82 1h2.36l.45 2.25a7 7 0 0 1 1.7.98l2.18-.74 1.18 2.04-1.73 1.52a7.1 7.1 0 0 1 0 1.96l1.73 1.52-1.18 2.04-2.18-.74a7 7 0 0 1-1.7.98L11.18 19H8.82l-.45-2.25a7 7 0 0 1-1.7-.98l-2.18.74-1.18-2.04 1.73-1.52a7.1 7.1 0 0 1 0-1.96L3.31 5.47l1.18-2.04 2.18.74a7 7 0 0 1 1.7-.98L8.82 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <svg width="20" height="20" viewBox="0 0 18 17" fill="none"><path d="M14 4.75v5M11.5 7.25h5M9.625 3.813A2.813 2.813 0 1 1 4 3.813a2.813 2.813 0 0 1 5.625 0ZM1.5 14.529v-.091a5.313 5.313 0 0 1 10.625 0v.091A10.27 10.27 0 0 1 6.813 16 10.27 10.27 0 0 1 1.5 14.529Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </aside>
+
+    <main class="center">
+      <header class="topbar">
+        <div class="breadcrumb">
+          <span class="crumb-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3v14a4 4 0 1 1-2-3.465V6H9v11a4 4 0 1 1-2-3.465V3h13Z"/></svg></span>
+          Library <span>/</span> <b>Tracks</b>
+        </div>
+      </header>
+
+      <section class="filters">
+        <div class="search">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.35-4.35M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          Search here, or use filters below
+        </div>
+        <div class="filter-row">
+          <button class="filter-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M2.5 3.75A1.25 1.25 0 0 1 3.75 2.5h4.89c.33 0 .65.132.884.366l7.61 7.61a1.25 1.25 0 0 1 0 1.768l-4.89 4.89a1.25 1.25 0 0 1-1.768 0l-7.61-7.61A1.25 1.25 0 0 1 2.5 8.64V3.75Zm3.75 2.5a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Z"/></svg>Tags <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="m5 7.5 5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="filter-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 2.5v2M15 2.5v2M3.5 7.5h13M5 4h10a2 2 0 0 1 2 2v9.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Release year <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="m5 7.5 5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="filter-btn"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 9.5v4M10 6.5h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Metadata <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="m5 7.5 5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </section>
+
+      <section class="table-area">
+        <div class="selection-bar">
+          <input type="checkbox" checked aria-label="Select all" />
+          <div class="selection-title">1 tracks selected</div>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="18.75" cy="4.5" r="2.25" stroke="currentColor" stroke-width="1.5"/><circle cx="18.75" cy="19.5" r="2.25" stroke="currentColor" stroke-width="1.5"/><circle cx="5.25" cy="12" r="2.25" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M10 9.5v4M10 6.5h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 10.5v6m3-3H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3.75 9.776h16.5M3.75 9.776A2.25 2.25 0 0 0 1.867 12.3l.857 6.018a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6.018a2.25 2.25 0 0 0-1.883-2.524M3.75 9.776V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 18 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m12 12 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="danger" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 14h10l1-14M9 7V4h6v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="track-list">
+          <div class="track selected"><input type="checkbox" checked /><div class="track-main"><div class="cover"></div><div><div class="title">Swamp Bait</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:17</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Dive Bar</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:40</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Whiskey Days</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:29</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Cigarette Suzy</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:15</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Can’t Catch Me</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:35</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Highway at Midnight</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:35</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Sweet Tea</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:24</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Raw Deal</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>2:06</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">No Vacancy</div><div class="subtitle">Paul Lenart&nbsp;&nbsp; Gregg A. Allen</div></div></div><div>Electro Blues</div><div>3:06</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">Out of Touch</div><div class="subtitle">Laurent Dury</div></div></div><div>Arts and Culture</div><div>1:47</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+          <div class="track"><input type="checkbox" /><div class="track-main"><div class="cover"></div><div><div class="title">New Vision</div><div class="subtitle">Laurent Dury</div></div></div><div>Arts and Culture</div><div>1:41</div><div><div>26 mai 2026</div><div class="date-sub">Clement S.</div></div></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="details-panel">
+      <div class="detail-head">
+        <div class="song-id">
+          <div class="cover song-cover"></div>
+          <div><div class="song-title">Swamp Bait</div><div class="song-artist">Paul Lenart, <u>Gregg A. Allen</u></div></div>
+        </div>
+        <div class="panel-actions">
+          <button class="panel-btn" aria-label="Previous"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12.5 5 7.5 10l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="panel-btn strong" aria-label="Next"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="m7.5 5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="panel-x" aria-label="Close"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="m6 6 10 10M16 6 6 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab">Details</button>
+        <button class="tab">Album</button>
+        <button class="tab">Tags</button>
+        <button class="tab">Credits</button>
+        <button class="tab">File</button>
+        <button class="tab active">Projects <span class="tab-pro"><svg class="pro-pill-svg" aria-hidden="true" focusable="false" width="77" height="32" viewBox="0 0 77 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.284248" y="0.284248" width="75.6101" height="31.2673" rx="15.6337" fill="white" stroke="#A0AFF2" stroke-width="0.568497"/>
+<path d="M37.7729 21.918V9.87237H42.6413C42.7584 9.87237 42.9034 9.87795 43.0763 9.8891C43.2492 9.89468 43.4137 9.91141 43.5699 9.93929C44.2391 10.0453 44.7967 10.2739 45.2428 10.6252C45.6946 10.9766 46.0319 11.4199 46.255 11.9553C46.4781 12.4906 46.5896 13.0817 46.5896 13.7286C46.5896 14.3811 46.4781 14.975 46.255 15.5104C46.0319 16.0457 45.6946 16.4891 45.2428 16.8404C44.7967 17.1917 44.2391 17.4204 43.5699 17.5263C43.4137 17.5487 43.2464 17.5654 43.068 17.5765C42.8951 17.5877 42.7529 17.5933 42.6413 17.5933H39.5212V21.918H37.7729ZM39.5212 15.937H42.5744C42.6859 15.937 42.8086 15.9314 42.9425 15.9203C43.0819 15.9091 43.2129 15.8896 43.3356 15.8617C43.6925 15.7781 43.9797 15.6247 44.1972 15.4016C44.4147 15.173 44.5709 14.9109 44.6657 14.6153C44.7605 14.3198 44.8079 14.0242 44.8079 13.7286C44.8079 13.4331 44.7605 13.1403 44.6657 12.8503C44.5709 12.5547 44.4147 12.2954 44.1972 12.0724C43.9797 11.8437 43.6925 11.6876 43.3356 11.6039C43.2129 11.5705 43.0819 11.5482 42.9425 11.537C42.8086 11.5259 42.6859 11.5203 42.5744 11.5203H39.5212V15.937ZM48.2618 21.918V12.8838H49.8177V15.0754L49.6002 14.791C49.7118 14.501 49.8568 14.2361 50.0352 13.9963C50.2137 13.7509 50.42 13.5502 50.6542 13.394C50.8829 13.2267 51.1366 13.0985 51.4154 13.0092C51.6998 12.9144 51.9898 12.8587 52.2854 12.8419C52.581 12.8196 52.8654 12.8336 53.1386 12.8838V14.5233C52.8431 14.4452 52.514 14.4229 52.1516 14.4564C51.7946 14.4899 51.4656 14.6042 51.1645 14.7994C50.8801 14.9834 50.6542 15.2065 50.4869 15.4686C50.3252 15.7307 50.2081 16.0234 50.1356 16.3469C50.0631 16.6648 50.0268 17.0021 50.0268 17.359V21.918H48.2618ZM58.6548 22.1689C57.7514 22.1689 56.9679 21.9654 56.3043 21.5583C55.6406 21.1512 55.1276 20.5907 54.7651 19.8769C54.4082 19.1575 54.2297 18.3294 54.2297 17.3925C54.2297 16.45 54.4138 15.6219 54.7818 14.9081C55.1499 14.1887 55.6657 13.631 56.3293 13.2351C56.993 12.8336 57.7681 12.6328 58.6548 12.6328C59.5582 12.6328 60.3418 12.8364 61.0054 13.2435C61.669 13.6506 62.1821 14.211 62.5445 14.9248C62.907 15.6386 63.0883 16.4612 63.0883 17.3925C63.0883 18.335 62.9042 19.1659 62.5362 19.8853C62.1737 20.5991 61.6606 21.1595 60.997 21.5666C60.3334 21.9682 59.5527 22.1689 58.6548 22.1689ZM58.6548 20.521C59.5192 20.521 60.1633 20.231 60.5871 19.6511C61.0165 19.0655 61.2312 18.3127 61.2312 17.3925C61.2312 16.45 61.0137 15.6972 60.5788 15.134C60.1494 14.5651 59.508 14.2807 58.6548 14.2807C58.0693 14.2807 57.5869 14.4146 57.2077 14.6822C56.8285 14.9444 56.5468 15.3096 56.3628 15.7781C56.1788 16.2409 56.0868 16.7791 56.0868 17.3925C56.0868 18.3405 56.3043 19.099 56.7392 19.6678C57.1742 20.2366 57.8127 20.521 58.6548 20.521Z" fill="#2F43DE"/>
+<path d="M15.7043 6.29492L16.7795 8.66211L18.5999 9.48926H26.094L26.178 9.49512C26.3722 9.5194 26.5491 9.62697 26.6594 9.79199L29.3762 13.8682C29.5447 14.1213 29.5253 14.4566 29.3274 14.6875L21.175 24.1982C21.0439 24.351 20.851 24.4373 20.6497 24.4346C20.4485 24.4316 20.2579 24.3398 20.1311 24.1836L12.4319 14.6729C12.258 14.4576 12.2321 14.1571 12.3665 13.915L13.4983 11.877L13.6458 11.6094L11.4065 10.5928L10.467 10.166L11.4065 9.73828L13.7737 8.66211L14.8499 6.29492L15.2776 5.35547L15.7043 6.29492ZM19.3479 14.2324L17.9036 14.8887L19.3479 15.5449L20.0051 16.9893L20.6614 15.5449L22.1057 14.8887L20.6614 14.2324L20.0051 12.7881L19.3479 14.2324ZM14.5559 9.21094L14.4827 9.37109L14.3225 9.44434L12.7346 10.165L14.3225 10.8877L14.4827 10.96L14.5559 11.1201L15.2766 12.708L15.9993 11.1201L16.0715 10.96L16.2317 10.8877L17.8196 10.165L16.2317 9.44434L16.0715 9.37109L15.9993 9.21094L15.2766 7.62305L14.5559 9.21094Z" fill="#2F43DE"/>
+<path d="M15.7043 6.29492L16.7795 8.66211L18.5999 9.48926H26.094L26.178 9.49512C26.3722 9.5194 26.5491 9.62697 26.6594 9.79199L29.3762 13.8682C29.5447 14.1213 29.5253 14.4566 29.3274 14.6875L21.175 24.1982C21.0439 24.351 20.851 24.4373 20.6497 24.4346C20.4485 24.4316 20.2579 24.3398 20.1311 24.1836L12.4319 14.6729C12.258 14.4576 12.2321 14.1571 12.3665 13.915L13.4983 11.877L13.6458 11.6094L11.4065 10.5928L10.467 10.166L11.4065 9.73828L13.7737 8.66211L14.8499 6.29492L15.2776 5.35547L15.7043 6.29492ZM19.3479 14.2324L17.9036 14.8887L19.3479 15.5449L20.0051 16.9893L20.6614 15.5449L22.1057 14.8887L20.6614 14.2324L20.0051 12.7881L19.3479 14.2324ZM14.5559 9.21094L14.4827 9.37109L14.3225 9.44434L12.7346 10.165L14.3225 10.8877L14.4827 10.96L14.5559 11.1201L15.2766 12.708L15.9993 11.1201L16.0715 10.96L16.2317 10.8877L17.8196 10.165L16.2317 9.44434L16.0715 9.37109L15.9993 9.21094L15.2766 7.62305L14.5559 9.21094Z" fill="url(#paint0_linear_33721_12153)"/>
+<defs>
+<linearGradient id="paint0_linear_33721_12153" x1="3.07213" y1="5.33465" x2="29.0996" y2="8.74994" gradientUnits="userSpaceOnUse">
+<stop offset="1" stop-color="#2F43DE"/>
+</linearGradient>
+</defs>
+</svg></span></button>
+        <button class="tab">Hubs</button>
+      </div>
+
+      <section class="paywall">
+        <div class="pro-pill"><svg class="pro-pill-svg" aria-hidden="true" focusable="false" width="77" height="32" viewBox="0 0 77 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.284248" y="0.284248" width="75.6101" height="31.2673" rx="15.6337" fill="white" stroke="#A0AFF2" stroke-width="0.568497"/>
+<path d="M37.7729 21.918V9.87237H42.6413C42.7584 9.87237 42.9034 9.87795 43.0763 9.8891C43.2492 9.89468 43.4137 9.91141 43.5699 9.93929C44.2391 10.0453 44.7967 10.2739 45.2428 10.6252C45.6946 10.9766 46.0319 11.4199 46.255 11.9553C46.4781 12.4906 46.5896 13.0817 46.5896 13.7286C46.5896 14.3811 46.4781 14.975 46.255 15.5104C46.0319 16.0457 45.6946 16.4891 45.2428 16.8404C44.7967 17.1917 44.2391 17.4204 43.5699 17.5263C43.4137 17.5487 43.2464 17.5654 43.068 17.5765C42.8951 17.5877 42.7529 17.5933 42.6413 17.5933H39.5212V21.918H37.7729ZM39.5212 15.937H42.5744C42.6859 15.937 42.8086 15.9314 42.9425 15.9203C43.0819 15.9091 43.2129 15.8896 43.3356 15.8617C43.6925 15.7781 43.9797 15.6247 44.1972 15.4016C44.4147 15.173 44.5709 14.9109 44.6657 14.6153C44.7605 14.3198 44.8079 14.0242 44.8079 13.7286C44.8079 13.4331 44.7605 13.1403 44.6657 12.8503C44.5709 12.5547 44.4147 12.2954 44.1972 12.0724C43.9797 11.8437 43.6925 11.6876 43.3356 11.6039C43.2129 11.5705 43.0819 11.5482 42.9425 11.537C42.8086 11.5259 42.6859 11.5203 42.5744 11.5203H39.5212V15.937ZM48.2618 21.918V12.8838H49.8177V15.0754L49.6002 14.791C49.7118 14.501 49.8568 14.2361 50.0352 13.9963C50.2137 13.7509 50.42 13.5502 50.6542 13.394C50.8829 13.2267 51.1366 13.0985 51.4154 13.0092C51.6998 12.9144 51.9898 12.8587 52.2854 12.8419C52.581 12.8196 52.8654 12.8336 53.1386 12.8838V14.5233C52.8431 14.4452 52.514 14.4229 52.1516 14.4564C51.7946 14.4899 51.4656 14.6042 51.1645 14.7994C50.8801 14.9834 50.6542 15.2065 50.4869 15.4686C50.3252 15.7307 50.2081 16.0234 50.1356 16.3469C50.0631 16.6648 50.0268 17.0021 50.0268 17.359V21.918H48.2618ZM58.6548 22.1689C57.7514 22.1689 56.9679 21.9654 56.3043 21.5583C55.6406 21.1512 55.1276 20.5907 54.7651 19.8769C54.4082 19.1575 54.2297 18.3294 54.2297 17.3925C54.2297 16.45 54.4138 15.6219 54.7818 14.9081C55.1499 14.1887 55.6657 13.631 56.3293 13.2351C56.993 12.8336 57.7681 12.6328 58.6548 12.6328C59.5582 12.6328 60.3418 12.8364 61.0054 13.2435C61.669 13.6506 62.1821 14.211 62.5445 14.9248C62.907 15.6386 63.0883 16.4612 63.0883 17.3925C63.0883 18.335 62.9042 19.1659 62.5362 19.8853C62.1737 20.5991 61.6606 21.1595 60.997 21.5666C60.3334 21.9682 59.5527 22.1689 58.6548 22.1689ZM58.6548 20.521C59.5192 20.521 60.1633 20.231 60.5871 19.6511C61.0165 19.0655 61.2312 18.3127 61.2312 17.3925C61.2312 16.45 61.0137 15.6972 60.5788 15.134C60.1494 14.5651 59.508 14.2807 58.6548 14.2807C58.0693 14.2807 57.5869 14.4146 57.2077 14.6822C56.8285 14.9444 56.5468 15.3096 56.3628 15.7781C56.1788 16.2409 56.0868 16.7791 56.0868 17.3925C56.0868 18.3405 56.3043 19.099 56.7392 19.6678C57.1742 20.2366 57.8127 20.521 58.6548 20.521Z" fill="#2F43DE"/>
+<path d="M15.7043 6.29492L16.7795 8.66211L18.5999 9.48926H26.094L26.178 9.49512C26.3722 9.5194 26.5491 9.62697 26.6594 9.79199L29.3762 13.8682C29.5447 14.1213 29.5253 14.4566 29.3274 14.6875L21.175 24.1982C21.0439 24.351 20.851 24.4373 20.6497 24.4346C20.4485 24.4316 20.2579 24.3398 20.1311 24.1836L12.4319 14.6729C12.258 14.4576 12.2321 14.1571 12.3665 13.915L13.4983 11.877L13.6458 11.6094L11.4065 10.5928L10.467 10.166L11.4065 9.73828L13.7737 8.66211L14.8499 6.29492L15.2776 5.35547L15.7043 6.29492ZM19.3479 14.2324L17.9036 14.8887L19.3479 15.5449L20.0051 16.9893L20.6614 15.5449L22.1057 14.8887L20.6614 14.2324L20.0051 12.7881L19.3479 14.2324ZM14.5559 9.21094L14.4827 9.37109L14.3225 9.44434L12.7346 10.165L14.3225 10.8877L14.4827 10.96L14.5559 11.1201L15.2766 12.708L15.9993 11.1201L16.0715 10.96L16.2317 10.8877L17.8196 10.165L16.2317 9.44434L16.0715 9.37109L15.9993 9.21094L15.2766 7.62305L14.5559 9.21094Z" fill="#2F43DE"/>
+</svg></div>
+        <h2>See where this track is already used</h2>
+        <p class="paywall-copy">Know instantly if this track is already part of a project, pitch, shortlist or delivery.</p>
+        <div class="paywall-actions">
+          <a class="upgrade" href="https://clementsouchier-stack.github.io/pricing-checkout/" target="_blank" rel="noopener noreferrer"><svg class="cta-diamond" width="16" height="16" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="currentColor"/></svg><span>Turn Pro</span></a>
+          <button class="learn" data-open-upgrade type="button">What’s in Pro?</button>
+        </div>
+      </section>
+
+      <button class="chat" aria-label="Open chat"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6a8 8 0 1 1 18-5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="grip"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 5h.01M9 12h.01M9 19h.01M15 5h.01M15 12h.01M15 19h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="upgradeModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="upgradeTitle">
+      <div class="modal-hero">
+        <button class="modal-close" data-close-upgrade aria-label="Close"><svg class="icon" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+        <span class="pro-badge">
+          <svg class="diamond" viewBox="0 0 21 20" fill="none" aria-hidden="true"><use href="#bridge-diamond"/></svg>
+          Pro
+        </span>
+        <h2 id="upgradeTitle">Unlock more with Bridge Pro</h2>
+        <p>Your catalog, organized, secure, and ready to be discovered.</p>
+      </div>
+
+      <div class="social-proof-stats" aria-label="Bridge usage metrics">
+        <div class="stat stat-users"><div class="stat-value">100,000+</div><div class="stat-label">users</div></div>
+        <div class="stat stat-tracks"><div class="stat-value">3M+</div><div class="stat-label">tracks uploaded</div></div>
+        <div class="stat stat-buyers"><div class="stat-value">600+</div><div class="stat-label">buyers to date</div></div>
+      </div>
+
+      <div class="modal-body">
+        <div class="pro-benefit-grid">
+          <div class="pro-benefit"><div class="pro-benefit-icon"><svg viewBox="0 0 24 24"><path d="M3 15.5A4.5 4.5 0 0 0 7.5 20H18a4 4 0 0 0 .5-7.97A6 6 0 0 0 6.4 8.5 4.8 4.8 0 0 0 3 15.5Z"/></svg></div><div><strong>Store larger music catalogs</strong><span>Keep growing without worrying about storage limits.</span></div></div>
+          <div class="pro-benefit"><div class="pro-benefit-icon"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><strong>Collaborate with your whole team</strong><span>Bring everyone into the same workspace.</span></div></div>
+          <div class="pro-benefit"><div class="pro-benefit-icon"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg></div><div><strong>Deliver music professionally</strong><span>Share with advanced delivery and protection tools.</span></div></div>
+          <div class="pro-benefit"><div class="pro-benefit-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 16v-5"/><path d="M13 16V8"/><path d="M18 16v-3"/></svg></div><div><strong>Understand how your music performs</strong><span>Track engagement across your catalog.</span></div></div>
+          <div class="pro-benefit"><div class="pro-benefit-icon"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div><div><strong>Get discovered by active buyers</strong><span>Publish where supervisors, brands and producers already search.</span></div></div>
+        </div>
+        <div class="modal-actions">
+          <a class="turn-pro-button" href="https://clementsouchier-stack.github.io/pricing-checkout/" target="_blank" rel="noopener noreferrer">
+            <svg class="diamond-white" viewBox="0 0 21 20" fill="none" aria-hidden="true"><path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="white"/></svg>
+            Turn Pro
+          </a>
+          <button class="maybe-button" data-close-upgrade>Maybe later</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="bridge-diamond" viewBox="0 0 21 20">
+      <g clip-path="url(#bridgeDiamondClip)">
+        <path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="#2F43DE"/>
+        <path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="url(#bridgeDiamondGradient)"/>
+      </g>
+      <defs>
+        <linearGradient id="bridgeDiamondGradient" x1="-7.44105" y1="0.400929" x2="18.7489" y2="3.83733" gradientUnits="userSpaceOnUse">
+          <stop offset="1" stop-color="#2F43DE"/>
+        </linearGradient>
+        <clipPath id="bridgeDiamondClip">
+          <rect width="19.142" height="19.1993" fill="white" transform="translate(0 0.421875)"/>
+        </clipPath>
+      </defs>
+    </symbol>
+  </svg>
+
+
+
+  <script>
+    const modal = document.getElementById("upgradeModal");
+    const openButtons = document.querySelectorAll("[data-open-upgrade]");
+    const closeButtons = document.querySelectorAll("[data-close-upgrade]");
+
+    openButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+      });
+    });
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+    });
+
+  </script>
+</body>
+</html>

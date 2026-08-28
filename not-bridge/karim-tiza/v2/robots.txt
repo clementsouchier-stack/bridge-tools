@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://karimtiza-hypnl.com/sitemap.xml

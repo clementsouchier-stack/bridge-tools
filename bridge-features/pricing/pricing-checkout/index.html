@@ -1,0 +1,2592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bridge.audio pricing</title>
+<style>
+:root {
+  --bg:#f5f4f6;
+  --card:#fff;
+  --ink:#252428;
+  --muted:#7b7882;
+  --line:#dedce4;
+  --radius:28px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing:border-box }
+body { margin:0; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+button, select { font:inherit }
+main { max-width:1220px; margin:0 auto; padding:42px 24px 80px; }
+.hero { text-align:center; margin:12px auto 44px; }
+.hero h1 { margin:0; font-size:clamp(44px,7vw,82px); line-height:.92; letter-spacing:-.07em; font-weight:850; }
+.hero p { margin:18px auto 0; max-width:640px; color:var(--muted); font-size:18px; line-height:1.35; }
+.step { margin-bottom:18px; }
+.step h2 { margin:0; font-size:34px; letter-spacing:-.055em; line-height:1; }
+.step p { margin:8px 0 0; color:var(--muted); font-size:14px; }
+.personas { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:790px; margin-bottom:30px; }
+.persona { border:1px solid var(--line); background:#fff; border-radius:18px; padding:18px 20px; text-align:left; cursor:pointer; transition:.16s ease; }
+.persona:hover { transform:translateY(-1px); border-color:var(--ink); }
+.persona.active { border:2px solid var(--ink); box-shadow:4px 4px 0 var(--ink); }
+.persona strong { display:block; font-size:18px; letter-spacing:-.04em; line-height:1; }
+.persona span { display:block; margin-top:8px; color:var(--muted); font-size:13px; line-height:1.25; }
+.preselect { max-width:790px; min-height:230px; border:1px solid rgba(37,36,40,.08); border-radius:30px; background:linear-gradient(180deg,#fff,rgba(255,255,255,.5)); padding:34px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+.preselect p { margin:0 0 6px; color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.15em; font-weight:800; }
+.preselect strong { font-size:32px; line-height:1; letter-spacing:-.06em; }
+.cards-title { margin:26px 0 18px; color:var(--muted); font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+.cards { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:28px; align-items:stretch; animation:rise .25s ease both; }
+.plan { --accent:#252428; --accent-text:#fff; display:flex; flex-direction:column; min-height:780px; background:#fff; border:1px solid var(--line); border-radius:28px; overflow:hidden; box-shadow:0 1px 0 rgba(37,36,40,.04); }
+.plan.recommended { border:2px solid var(--ink); box-shadow:8px 8px 0 var(--ink); transform:translateY(-3px); }
+.plan-head { background:linear-gradient(180deg,color-mix(in srgb, var(--accent) 12%, white), white 78%); border-bottom:1px solid color-mix(in srgb, var(--accent) 18%, white); }
+.badge { min-height:50px; display:flex; align-items:center; justify-content:center; gap:10px; padding:14px 20px; background:var(--accent); color:var(--accent-text); font-size:13px; text-transform:uppercase; letter-spacing:.14em; font-weight:850; }
+.diamond { width:18px; height:18px; display:inline-flex; }
+.diamond svg { width:100%; height:100%; }
+.plan-title { padding:19px 23px 18px; text-align:center; }
+.plan-title h3 { margin:0; font-size:23px; letter-spacing:-.05em; line-height:1.05; }
+.plan-title p { margin:11px 0 0; color:var(--muted); font-size:10.5px; text-transform:uppercase; letter-spacing:.13em; line-height:1.25; font-weight:800; }
+.features { padding:14px 23px 16px; flex:1; }
+.feature { display:grid; grid-template-columns:32px 1fr; gap:13px; padding:12px 0; border-bottom:1px solid rgba(37,36,40,.075); }
+.feature:last-child { border-bottom:0; }
+.icon { width:31px; height:31px; border-radius:11px; background:color-mix(in srgb, var(--accent) 13%, white); display:grid; place-items:center; }
+.icon svg, .icon img { width:18px; height:18px; display:block; }
+.feature h4 { margin:0 0 5px; font-size:14px; letter-spacing:-.025em; line-height:1.1; }
+.feature ul { margin:0; padding:0; list-style:none; display:grid; gap:2px; }
+.feature li { color:var(--muted); font-size:12px; line-height:1.32; }
+.options { margin:8px 23px 12px; padding:14px; border:1px solid var(--line); border-radius:18px; background:#fafafa; }
+.options h4 { margin:0 0 5px; font-size:15px; letter-spacing:-.035em; line-height:1; }
+.options p { margin:0; color:var(--muted); font-size:12px; line-height:1.35; }
+.option-toggle { width:100%; height:42px; margin-top:12px; border:1.5px solid var(--ink); border-radius:13px; background:#fff; color:var(--ink); font-weight:800; cursor:pointer; }
+.field { margin-top:12px; display:grid; gap:7px; }
+.field label { display:flex; gap:8px; align-items:center; font-size:12px; font-weight:800; }
+.field label svg, .field label img { width:16px; height:16px; }
+.select-wrap { position:relative; }
+.select-wrap:after { content:"⌄"; position:absolute; right:13px; top:50%; transform:translateY(-55%); color:var(--muted); pointer-events:none; font-weight:800; }
+select { appearance:none; width:100%; border:1px solid var(--line); border-radius:12px; background:#fff; padding:11px 32px 11px 12px; font-size:13px; font-weight:650; color:var(--ink); cursor:pointer; }
+.footer { margin-top:auto; padding:12px 23px 17px; border-top:1px solid rgba(37,36,40,.08); background:#fff; }
+.footer-row { display:flex; align-items:flex-end; gap:12px; }
+.footer-row.free { display:block; }
+.price-col { flex:0 0 112px; }
+.billing { display:inline-flex; gap:2px; padding:2px; margin-bottom:5px; border:1px solid var(--line); border-radius:999px; background:#fff; }
+.billing button { border:0; background:transparent; color:var(--muted); border-radius:999px; padding:5px 6px; font-size:9px; font-weight:800; cursor:pointer; white-space:nowrap; }
+.billing button.active { background:var(--accent); color:var(--accent-text); }
+.price-main { display:flex; align-items:flex-end; gap:3px; }
+.price { font-size:34px; line-height:.86; letter-spacing:-.06em; font-weight:850; }
+.suffix { color:var(--muted); font-size:12px; font-weight:800; margin-bottom:4px; }
+.year { margin-top:3px; color:var(--muted); font-size:10.5px; line-height:1.2; white-space:nowrap; font-weight:650; }
+.cta-stack { flex:1; min-width:0; }
+.cta { width:100%; min-height:50px; border:2px solid var(--ink); border-radius:14px; background:var(--accent); color:var(--accent-text); font-weight:850; font-size:15px; box-shadow:0 4px 0 var(--ink); cursor:pointer; }
+.cta.secondary { background:#fff; color:var(--ink); }
+.reassurance { margin-top:8px; text-align:center; color:var(--muted); font-size:11.5px; line-height:1.15; font-weight:650; }
+@keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+@media (max-width:980px) {
+  main { padding:26px 16px 56px; }
+  .hero { text-align:left; margin-bottom:34px; }
+  .hero h1 { font-size:46px; }
+  .personas { grid-template-columns:1fr; max-width:none; }
+  .cards { grid-template-columns:1fr; gap:18px; }
+  .plan { min-height:0; }
+  .plan.recommended { transform:none; box-shadow:5px 5px 0 var(--ink); }
+  .preselect { max-width:none; min-height:190px; }
+  .preselect strong { font-size:25px; }
+  .footer-row { flex-direction:column; align-items:stretch; }
+  .price-col { flex:0 0 auto; text-align:center; }
+  .price-main { justify-content:center; }
+}
+
+/* Bridge design-system refinement */
+body{
+  background:#f7f7f8;
+}
+main{
+  max-width:1240px;
+}
+.hero{
+  margin-top:22px;
+}
+.hero h1{
+  font-size:clamp(48px,7.2vw,96px);
+  line-height:.88;
+  letter-spacing:-.085em;
+  font-weight:900;
+}
+.hero p{
+  font-size:18px;
+  max-width:580px;
+}
+.step{
+  text-align:center;
+  max-width:790px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.step h2{
+  font-size:42px;
+  letter-spacing:-.075em;
+  font-weight:900;
+}
+.personas{
+  margin-left:auto;
+  margin-right:auto;
+}
+.persona{
+  border-radius:22px;
+  padding:20px 22px;
+  min-height:100px;
+  box-shadow:0 10px 28px rgba(37,36,40,.035);
+}
+.persona strong{
+  font-size:20px;
+  letter-spacing:-.055em;
+  font-weight:850;
+}
+.persona.active{
+  box-shadow:5px 6px 0 #252428;
+}
+.preselect{
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+  align-items:center;
+  background:#fff;
+  box-shadow:0 18px 60px rgba(37,36,40,.055);
+}
+.preselect strong{
+  font-size:34px;
+  font-weight:900;
+}
+.cards-title{
+  text-align:center;
+  margin-top:34px;
+}
+.cards{
+  align-items:stretch;
+}
+.plan{
+  border-radius:30px;
+}
+.plan-head{
+  display:flex;
+  flex-direction:column;
+}
+.card-top{
+  display:flex;
+  flex-direction:column;
+  min-height:155px;
+}
+.badge{
+  font-weight:900;
+  min-height:52px;
+}
+.plan-title{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:103px;
+}
+.plan-title h3{
+  font-size:25px;
+  font-weight:900;
+}
+.plan-title p{
+  font-weight:900;
+}
+.features{
+  display:flex;
+  flex-direction:column;
+}
+.feature{
+  min-height:83px;
+}
+.icon img{
+  width:19px;
+  height:19px;
+  object-fit:contain;
+}
+.footer{
+  min-height:126px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+}
+.footer-row{
+  min-height:92px;
+}
+.plan[data-plan="free"] .badge,
+.plan.free-plan .badge{
+  color:#252428!important;
+}
+.plan[data-plan="free"] .cta,
+.plan.free-plan .cta{
+  background:#ECEBF0!important;
+  color:#252428!important;
+}
+@media (min-width:981px){
+  .cards{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media (max-width:980px){
+  .step{
+    text-align:left;
+  }
+  .personas{
+    margin-left:0;
+    margin-right:0;
+  }
+  .preselect{
+    text-align:left;
+    align-items:flex-start;
+  }
+}
+
+
+/* V4 visual tuning, Manrope, lighter premium typography */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root{
+  font-family: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+body,
+button,
+select{
+  font-family: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.hero h1{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-size:clamp(42px,6.2vw,78px) !important;
+  line-height:.94 !important;
+  letter-spacing:-.055em !important;
+  font-weight:700 !important;
+}
+
+.hero p{
+  font-weight:500 !important;
+}
+
+.step h2{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-size:36px !important;
+  letter-spacing:-.045em !important;
+  font-weight:700 !important;
+}
+
+.persona{
+  box-shadow:none !important;
+}
+
+.persona strong{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-size:19px !important;
+  letter-spacing:-.035em !important;
+  font-weight:650 !important;
+}
+
+.persona span{
+  font-weight:500 !important;
+}
+
+.persona.active{
+  box-shadow:none !important;
+  border:2px solid #252428 !important;
+}
+
+.preselect{
+  box-shadow:none !important;
+}
+
+.preselect p{
+  font-weight:650 !important;
+  letter-spacing:.09em !important;
+}
+
+.preselect strong{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-size:30px !important;
+  font-weight:650 !important;
+  letter-spacing:-.045em !important;
+}
+
+.cards-title{
+  font-weight:650 !important;
+  letter-spacing:.09em !important;
+}
+
+.plan{
+  box-shadow:none !important;
+}
+
+.plan.recommended{
+  box-shadow:none !important;
+  transform:none !important;
+  border:2px solid #252428 !important;
+}
+
+.badge{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:.09em !important;
+}
+
+.plan-title h3{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-size:24px !important;
+  letter-spacing:-.035em !important;
+  font-weight:700 !important;
+}
+
+.plan-title p{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-weight:600 !important;
+  letter-spacing:.08em !important;
+}
+
+.feature h4{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-weight:650 !important;
+  letter-spacing:-.015em !important;
+}
+
+.feature li{
+  font-weight:500 !important;
+}
+
+.options h4{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-weight:650 !important;
+  letter-spacing:-.02em !important;
+}
+
+.field label{
+  font-weight:650 !important;
+}
+
+select{
+  font-weight:550 !important;
+}
+
+.cta,
+.option-toggle{
+  border:0 !important;
+  box-shadow:none !important;
+  font-weight:700 !important;
+}
+
+.cta.secondary{
+  background:#252428 !important;
+  color:#fff !important;
+}
+
+.plan.free-plan .cta{
+  background:#ECEBF0 !important;
+  color:#252428 !important;
+}
+
+.price{
+  font-family: Manrope, Inter, sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:-.045em !important;
+}
+
+.suffix,
+.year,
+.reassurance{
+  font-weight:550 !important;
+}
+
+/* Card vertical alignment: footer always pinned, CTA aligned */
+.cards{
+  align-items:stretch !important;
+}
+
+.plan{
+  display:flex !important;
+  flex-direction:column !important;
+  height:100% !important;
+}
+
+.features{
+  flex:1 1 auto !important;
+}
+
+.options{
+  flex:0 0 auto !important;
+}
+
+.footer{
+  margin-top:auto !important;
+  min-height:136px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-end !important;
+}
+
+.footer-row{
+  min-height:100px !important;
+  display:flex !important;
+  align-items:flex-end !important;
+}
+
+.cta-stack{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-end !important;
+}
+
+.cta{
+  min-height:50px !important;
+}
+
+@media(max-width:980px){
+  .hero h1{
+    font-size:42px !important;
+  }
+  .step h2{
+    font-size:32px !important;
+  }
+  .footer-row{
+    min-height:auto !important;
+    align-items:stretch !important;
+  }
+}
+
+
+/* V5 card stack: fixed header and footer, scrollable middle */
+.cards{
+  align-items:stretch !important;
+}
+
+.plan{
+  height:clamp(720px, 78vh, 860px) !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  display:flex !important;
+  flex-direction:column !important;
+  box-shadow:none !important;
+}
+
+.plan.recommended{
+  box-shadow:none !important;
+}
+
+.plan-head{
+  flex:0 0 auto !important;
+  z-index:2;
+}
+
+.badge{
+  font-weight:850 !important;
+  letter-spacing:.08em !important;
+}
+
+.plan-title h3{
+  font-weight:760 !important;
+}
+
+.card-scroll{
+  flex:1 1 auto !important;
+  overflow-y:auto !important;
+  min-height:0 !important;
+  padding-bottom:6px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(37,36,40,.28) transparent;
+}
+
+.card-scroll::-webkit-scrollbar{
+  width:7px;
+}
+.card-scroll::-webkit-scrollbar-track{
+  background:transparent;
+}
+.card-scroll::-webkit-scrollbar-thumb{
+  background:rgba(37,36,40,.22);
+  border-radius:999px;
+}
+
+.features{
+  flex:none !important;
+}
+
+.footer{
+  flex:0 0 auto !important;
+  margin-top:0 !important;
+  min-height:136px !important;
+  z-index:2;
+  box-shadow:0 -10px 24px rgba(255,255,255,.9);
+}
+
+.footer-row{
+  min-height:100px !important;
+}
+
+.customize-mini{
+  width:100%;
+  min-height:32px;
+  margin-bottom:8px;
+  border:0;
+  background:rgba(37,36,40,.06);
+  color:#252428;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:650;
+  cursor:pointer;
+}
+
+.customize-mini:hover{
+  background:rgba(37,36,40,.1);
+}
+
+.options{
+  margin-top:8px !important;
+}
+
+.option-toggle{
+  display:none !important;
+}
+
+@media(max-width:980px){
+  .plan{
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+  .card-scroll{
+    overflow:visible !important;
+  }
+}
+
+
+/* V6 preselect inspiration + checkout modal */
+body.modal-open{overflow:hidden}
+
+.preselect{
+  display:grid !important;
+  grid-template-columns:1.1fr .9fr;
+  gap:28px;
+  text-align:left !important;
+  align-items:center !important;
+  padding:34px !important;
+}
+
+.preselect-copy{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.preselect-benefits{
+  display:grid;
+  gap:14px;
+}
+
+.preselect-benefit{
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:13px;
+  align-items:center;
+}
+
+.preselect-benefit span{
+  width:38px;
+  height:38px;
+  border-radius:14px;
+  background:#f1f0f4;
+  display:grid;
+  place-items:center;
+}
+
+.preselect-benefit span img,
+.preselect-benefit span svg{
+  width:21px;
+  height:21px;
+}
+
+.preselect-benefit strong{
+  font-size:25px !important;
+  line-height:1.02 !important;
+}
+
+.preselect-art{
+  position:relative;
+  min-height:210px;
+  border-radius:26px;
+  background:linear-gradient(135deg,#f5f4f7,#ffffff);
+  overflow:hidden;
+  border:1px solid rgba(37,36,40,.08);
+}
+
+.art-card{
+  position:absolute;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid rgba(37,36,40,.08);
+  box-shadow:0 18px 60px rgba(37,36,40,.08);
+}
+
+.art-card:before,
+.art-card:after{
+  content:"";
+  position:absolute;
+  left:18px;
+  right:18px;
+  height:9px;
+  border-radius:999px;
+  background:#e7e5ed;
+}
+
+.art-card:before{top:22px}
+.art-card:after{top:42px;width:54%}
+
+.art-card-a{
+  width:58%;
+  height:112px;
+  left:24px;
+  top:34px;
+}
+
+.art-card-b{
+  width:54%;
+  height:96px;
+  right:20px;
+  bottom:26px;
+}
+
+.art-orbit{
+  position:absolute;
+  width:190px;
+  height:190px;
+  right:-70px;
+  top:-70px;
+  border-radius:50%;
+  border:30px solid rgba(47,67,222,.1);
+}
+
+.customize-mini{
+  background:rgba(37,36,40,.065) !important;
+}
+
+.checkout-modal{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:none;
+}
+
+.checkout-modal.visible{
+  display:block;
+}
+
+.checkout-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(17,17,20,.42);
+  backdrop-filter:blur(14px);
+}
+
+.checkout-dialog{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:min(720px,calc(100vw - 28px));
+  max-height:calc(100vh - 42px);
+  overflow:auto;
+  background:#fff;
+  border-radius:30px;
+  border:1px solid rgba(37,36,40,.12);
+  box-shadow:0 30px 90px rgba(0,0,0,.24);
+}
+
+.modal-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  z-index:2;
+  width:36px;
+  height:36px;
+  border:0;
+  border-radius:999px;
+  background:rgba(37,36,40,.08);
+  color:#252428;
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.modal-plan-head{
+  padding:30px 32px 20px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 12%,white),#fff 85%);
+  text-align:center;
+}
+
+.modal-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:36px;
+  border-radius:999px;
+  padding:0 15px;
+  background:var(--accent);
+  color:var(--accent-text);
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:750;
+}
+
+.modal-plan-head h3{
+  margin:18px 0 8px;
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-.045em;
+  font-weight:720;
+}
+
+.modal-plan-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.modal-billing{
+  display:flex;
+  justify-content:center;
+  gap:4px;
+  padding:0 32px 22px;
+}
+
+.modal-billing button{
+  border:1px solid var(--line);
+  background:#fff;
+  color:#252428;
+  border-radius:999px;
+  padding:9px 15px;
+  font-size:13px;
+  font-weight:650;
+  cursor:pointer;
+}
+
+.modal-billing button.active{
+  background:var(--accent);
+  color:var(--accent-text);
+  border-color:var(--accent);
+}
+
+.modal-options{
+  padding:0 32px 24px;
+  display:grid;
+  gap:20px;
+}
+
+.modal-field label{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:680;
+  margin-bottom:10px;
+}
+
+.modal-field label img,
+.modal-field label svg{
+  width:18px;
+  height:18px;
+}
+
+.modal-choices{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+
+.modal-choices button{
+  min-height:78px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:16px;
+  text-align:left;
+  padding:13px;
+  cursor:pointer;
+}
+
+.modal-choices button.active{
+  border:2px solid #252428;
+}
+
+.modal-choices strong{
+  display:block;
+  font-size:14px;
+  letter-spacing:-.02em;
+  font-weight:720;
+}
+
+.modal-choices span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.modal-total{
+  position:sticky;
+  bottom:0;
+  background:#fff;
+  border-top:1px solid rgba(37,36,40,.1);
+  padding:18px 32px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.modal-total span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:700;
+}
+
+.modal-total strong{
+  display:block;
+  font-size:42px;
+  letter-spacing:-.055em;
+  line-height:.9;
+  font-weight:720;
+}
+
+.modal-total small{
+  font-size:14px;
+  color:var(--muted);
+  letter-spacing:0;
+}
+
+.modal-total em{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  font-style:normal;
+}
+
+.modal-cta{
+  width:auto !important;
+  min-width:190px;
+  box-shadow:none !important;
+  border:0 !important;
+}
+
+@media(max-width:980px){
+  .preselect{
+    grid-template-columns:1fr;
+  }
+  .preselect-art{
+    min-height:160px;
+  }
+  .modal-choices{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .modal-total{
+    align-items:stretch;
+    flex-direction:column;
+  }
+  .modal-cta{
+    width:100% !important;
+  }
+}
+
+
+/* V7 requested visual corrections */
+.plan-head,
+.modal-plan-head{
+  background:#fff !important;
+  box-shadow:none !important;
+}
+
+.plan-head{
+  border-bottom:1px solid rgba(37,36,40,.08) !important;
+}
+
+.plan{
+  border:1.5px solid var(--line) !important;
+  box-shadow:none !important;
+}
+
+.plan.recommended{
+  border:2px solid var(--accent) !important;
+  box-shadow:none !important;
+  transform:none !important;
+}
+
+.plan.free-plan{
+  border-color:#d9d8dc !important;
+}
+
+.plan[data-plan="enterprise"]{
+  border-color:#252428 !important;
+}
+
+.customize-mini,
+.option-toggle{
+  display:none !important;
+}
+
+.cta{
+  border:0 !important;
+  box-shadow:none !important;
+}
+
+.price{
+  font-weight:640 !important;
+  letter-spacing:-.035em !important;
+}
+
+.plan[data-plan="enterprise"] .price{
+  font-size:30px !important;
+  font-weight:560 !important;
+  letter-spacing:-.02em !important;
+}
+
+.footer .price-col .price-main .price{
+  white-space:nowrap;
+}
+
+.badge{
+  box-shadow:none !important;
+}
+
+.modal-total strong{
+  font-weight:640 !important;
+}
+
+.modal-plan-head{
+  border-bottom:1px solid rgba(37,36,40,.08);
+}
+
+.modal-badge{
+  box-shadow:none !important;
+}
+
+
+/* V8 pixel-perfect premium, webapp/mobile first */
+:root{
+  --bg:#f6f6f7 !important;
+  --card:#ffffff !important;
+  --ink:#1f1e22 !important;
+  --muted:#73707a !important;
+  --line:#e4e2e8 !important;
+  --hairline:rgba(31,30,34,.09);
+  --radius-xl:32px;
+  --radius-lg:22px;
+}
+
+body{
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255,255,255,.9), transparent 38%),
+    linear-gradient(180deg,#fafafa 0%,#f5f4f6 46%,#f3f2f5 100%) !important;
+  color:var(--ink) !important;
+}
+
+main{
+  max-width:1280px !important;
+  padding:38px 22px 86px !important;
+}
+
+.hero{
+  max-width:940px !important;
+  margin:24px auto 48px !important;
+}
+
+.hero h1{
+  font-size:clamp(46px,7vw,88px) !important;
+  line-height:.93 !important;
+  letter-spacing:-.064em !important;
+  font-weight:680 !important;
+  color:#111014 !important;
+}
+
+.hero p{
+  max-width:560px !important;
+  margin-top:20px !important;
+  color:#74717b !important;
+  font-size:17px !important;
+  line-height:1.48 !important;
+  font-weight:460 !important;
+}
+
+.step{
+  margin-bottom:18px !important;
+}
+
+.step h2{
+  font-size:36px !important;
+  line-height:1 !important;
+  letter-spacing:-.05em !important;
+  font-weight:680 !important;
+}
+
+.step p{
+  margin-top:10px !important;
+  font-size:14px !important;
+  color:#7b7882 !important;
+  font-weight:450 !important;
+}
+
+.personas{
+  max-width:840px !important;
+  gap:12px !important;
+  margin-bottom:32px !important;
+}
+
+.persona{
+  min-height:106px !important;
+  border:1px solid var(--hairline) !important;
+  border-radius:24px !important;
+  background:rgba(255,255,255,.78) !important;
+  backdrop-filter:blur(18px);
+  padding:22px 23px !important;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset !important;
+}
+
+.persona:hover{
+  transform:translateY(-1px) !important;
+  background:#fff !important;
+  border-color:rgba(31,30,34,.18) !important;
+}
+
+.persona.active{
+  border:1.5px solid #1f1e22 !important;
+  background:#fff !important;
+  box-shadow:0 0 0 4px rgba(31,30,34,.045) !important;
+}
+
+.persona strong{
+  font-size:19px !important;
+  line-height:1.05 !important;
+  letter-spacing:-.035em !important;
+  font-weight:660 !important;
+  color:#161519 !important;
+}
+
+.persona span{
+  margin-top:9px !important;
+  color:#7b7882 !important;
+  font-size:13px !important;
+  line-height:1.35 !important;
+  font-weight:450 !important;
+}
+
+.preselect{
+  max-width:840px !important;
+  min-height:280px !important;
+  border-radius:34px !important;
+  border:1px solid var(--hairline) !important;
+  background:rgba(255,255,255,.72) !important;
+  backdrop-filter:blur(24px);
+  box-shadow:0 20px 70px rgba(31,30,34,.055) !important;
+  padding:34px !important;
+}
+
+.preselect p{
+  color:#817e87 !important;
+  font-size:11px !important;
+  letter-spacing:.13em !important;
+  font-weight:650 !important;
+}
+
+.preselect-benefit{
+  grid-template-columns:42px 1fr !important;
+  gap:14px !important;
+}
+
+.preselect-benefit span{
+  width:42px !important;
+  height:42px !important;
+  border-radius:16px !important;
+  background:#f4f3f6 !important;
+}
+
+.preselect-benefit strong{
+  font-size:27px !important;
+  line-height:1.08 !important;
+  letter-spacing:-.045em !important;
+  font-weight:620 !important;
+  color:#17161a !important;
+}
+
+.preselect-art{
+  min-height:224px !important;
+  border-radius:30px !important;
+  background:
+    radial-gradient(circle at 75% 12%, rgba(47,67,222,.1), transparent 34%),
+    linear-gradient(145deg,#fbfbfc,#f4f3f6) !important;
+  border:1px solid rgba(31,30,34,.07) !important;
+}
+
+.art-card{
+  border:1px solid rgba(31,30,34,.07) !important;
+  box-shadow:0 18px 46px rgba(31,30,34,.07) !important;
+}
+
+.cards-title{
+  margin:38px 0 20px !important;
+  font-size:11px !important;
+  color:#817e87 !important;
+  letter-spacing:.14em !important;
+  font-weight:650 !important;
+}
+
+.cards{
+  gap:22px !important;
+}
+
+.plan{
+  height:min(820px,78vh) !important;
+  border-radius:32px !important;
+  border:1px solid rgba(31,30,34,.1) !important;
+  background:#fff !important;
+  box-shadow:0 16px 48px rgba(31,30,34,.045) !important;
+}
+
+.plan.recommended{
+  border:1.5px solid var(--accent) !important;
+  box-shadow:0 18px 58px rgba(31,30,34,.06) !important;
+}
+
+.plan-head{
+  background:#fff !important;
+  border-bottom:1px solid rgba(31,30,34,.08) !important;
+}
+
+.badge{
+  min-height:50px !important;
+  font-size:12px !important;
+  font-weight:720 !important;
+  letter-spacing:.105em !important;
+}
+
+.plan-title{
+  min-height:112px !important;
+  padding:20px 24px 20px !important;
+}
+
+.plan-title h3{
+  font-size:24px !important;
+  line-height:1.09 !important;
+  letter-spacing:-.04em !important;
+  font-weight:660 !important;
+  color:#141317 !important;
+}
+
+.plan-title p{
+  margin-top:12px !important;
+  font-size:10px !important;
+  line-height:1.32 !important;
+  letter-spacing:.105em !important;
+  font-weight:650 !important;
+  color:#7c7983 !important;
+}
+
+.card-scroll{
+  padding:2px 2px 4px !important;
+}
+
+.features{
+  padding:12px 22px 14px !important;
+}
+
+.feature{
+  grid-template-columns:34px 1fr !important;
+  gap:13px !important;
+  min-height:82px !important;
+  padding:13px 0 !important;
+  border-bottom:1px solid rgba(31,30,34,.07) !important;
+}
+
+.feature:last-child{
+  border-bottom:0 !important;
+}
+
+.icon{
+  width:32px !important;
+  height:32px !important;
+  border-radius:13px !important;
+  background:color-mix(in srgb,var(--accent) 11%,#f8f8f9) !important;
+}
+
+.feature h4{
+  margin-bottom:5px !important;
+  color:#19181c !important;
+  font-size:14px !important;
+  line-height:1.12 !important;
+  letter-spacing:-.018em !important;
+  font-weight:650 !important;
+}
+
+.feature li{
+  color:#706d77 !important;
+  font-size:12px !important;
+  line-height:1.35 !important;
+  font-weight:430 !important;
+}
+
+.footer{
+  min-height:134px !important;
+  padding:14px 22px 18px !important;
+  border-top:1px solid rgba(31,30,34,.08) !important;
+  box-shadow:0 -18px 30px rgba(255,255,255,.92) !important;
+}
+
+.footer-row{
+  min-height:98px !important;
+}
+
+.billing{
+  border:1px solid rgba(31,30,34,.1) !important;
+  background:#f7f7f8 !important;
+  gap:2px !important;
+}
+
+.billing button{
+  font-size:9px !important;
+  font-weight:650 !important;
+  padding:5px 7px !important;
+}
+
+.billing button.active{
+  background:var(--accent) !important;
+  color:var(--accent-text) !important;
+}
+
+.price{
+  font-size:33px !important;
+  line-height:.9 !important;
+  letter-spacing:-.04em !important;
+  font-weight:660 !important;
+  color:#141317 !important;
+}
+
+.suffix{
+  color:#74717b !important;
+  font-size:12px !important;
+  font-weight:560 !important;
+}
+
+.year{
+  color:#817e87 !important;
+  font-size:10.5px !important;
+  font-weight:500 !important;
+}
+
+.cta{
+  min-height:50px !important;
+  border-radius:15px !important;
+  border:0 !important;
+  box-shadow:none !important;
+  font-weight:680 !important;
+  letter-spacing:-.01em !important;
+}
+
+.cta:hover{
+  filter:brightness(.98);
+}
+
+.reassurance{
+  color:#817e87 !important;
+  font-size:11px !important;
+  font-weight:500 !important;
+}
+
+/* Modal premium */
+.checkout-backdrop{
+  background:rgba(18,17,22,.36) !important;
+  backdrop-filter:blur(22px) saturate(120%) !important;
+}
+
+.checkout-dialog{
+  border-radius:34px !important;
+  border:1px solid rgba(255,255,255,.6) !important;
+  box-shadow:0 36px 120px rgba(0,0,0,.26) !important;
+  overflow:hidden !important;
+}
+
+.modal-close{
+  background:rgba(31,30,34,.07) !important;
+  font-weight:400 !important;
+}
+
+.modal-plan-head{
+  background:#fff !important;
+  padding-top:34px !important;
+}
+
+.modal-plan-head h3{
+  font-size:36px !important;
+  letter-spacing:-.05em !important;
+  font-weight:660 !important;
+}
+
+.modal-plan-head p{
+  font-weight:450 !important;
+}
+
+.modal-badge{
+  font-weight:700 !important;
+  letter-spacing:.095em !important;
+}
+
+.modal-billing button{
+  font-weight:620 !important;
+}
+
+.modal-choices button{
+  border-radius:18px !important;
+  border:1px solid rgba(31,30,34,.1) !important;
+}
+
+.modal-choices button.active{
+  border:1.5px solid #1f1e22 !important;
+  box-shadow:0 0 0 4px rgba(31,30,34,.045) !important;
+}
+
+.modal-total strong{
+  font-weight:660 !important;
+  letter-spacing:-.04em !important;
+}
+
+.modal-cta{
+  border-radius:16px !important;
+}
+
+@media(max-width:980px){
+  main{
+    padding:24px 14px 60px !important;
+  }
+  .hero{
+    text-align:left !important;
+    margin:12px 0 34px !important;
+  }
+  .hero h1{
+    font-size:44px !important;
+    line-height:.96 !important;
+    letter-spacing:-.055em !important;
+  }
+  .hero p{
+    font-size:16px !important;
+    margin-left:0 !important;
+  }
+  .step{
+    text-align:left !important;
+  }
+  .step h2{
+    font-size:32px !important;
+  }
+  .preselect{
+    grid-template-columns:1fr !important;
+    min-height:0 !important;
+    padding:24px !important;
+    border-radius:28px !important;
+  }
+  .preselect-benefit strong{
+    font-size:22px !important;
+  }
+  .preselect-art{
+    min-height:150px !important;
+  }
+  .cards{
+    gap:18px !important;
+  }
+  .plan{
+    height:auto !important;
+    max-height:none !important;
+    min-height:0 !important;
+    border-radius:28px !important;
+  }
+  .card-scroll{
+    overflow:visible !important;
+  }
+  .footer{
+    box-shadow:none !important;
+  }
+  .footer-row{
+    min-height:auto !important;
+  }
+  .modal-options{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+  .modal-plan-head{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+  .modal-total{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+}
+
+
+/* V10 accent consistency */
+.plan.recommended,
+.plan[data-plan="music"],
+.plan[data-plan="talent"],
+.plan[data-plan="supervisor"]{
+  border-color:var(--accent) !important;
+}
+
+
+/* V10 simplified Apple-like checkout modal */
+.modal-plan-head.compact{
+  padding-bottom:18px !important;
+}
+
+.modal-plan-head.compact h3{
+  margin-top:16px !important;
+}
+
+.modal-included{
+  padding:22px 32px 12px;
+}
+
+.modal-included h4{
+  margin:0 0 14px;
+  font-size:18px;
+  line-height:1;
+  letter-spacing:-.03em;
+  font-weight:680;
+}
+
+.modal-included ul{
+  margin:0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+
+.modal-included li{
+  position:relative;
+  padding:13px 14px 13px 38px;
+  border:1px solid rgba(31,30,34,.09);
+  border-radius:16px;
+  background:#fafafa;
+  color:#252428;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:520;
+}
+
+.modal-included li:before{
+  content:"✓";
+  position:absolute;
+  left:14px;
+  top:12px;
+  width:16px;
+  height:16px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  background:#252428;
+  color:#fff;
+  font-size:10px;
+  font-weight:700;
+}
+
+.modal-boost{
+  margin:0 32px 22px;
+  border:1px solid rgba(31,30,34,.09);
+  border-radius:22px;
+  background:#fbfbfc;
+  overflow:hidden;
+}
+
+.modal-boost-toggle{
+  width:100%;
+  border:0;
+  background:#fff;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+
+.modal-boost-toggle span{
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:650;
+}
+
+.modal-boost-toggle strong{
+  font-size:15px;
+  letter-spacing:-.02em;
+  font-weight:680;
+}
+
+.boost-help{
+  margin:0;
+  padding:0 18px 18px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+}
+
+.modal-options{
+  padding:0 18px 18px !important;
+}
+
+.modal-actions{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  min-width:210px;
+}
+
+.later-link{
+  border:0;
+  background:transparent;
+  color:#6f6d76;
+  font-size:13px;
+  font-weight:560;
+  cursor:pointer;
+  padding:4px;
+}
+
+.later-link:hover{
+  color:#252428;
+}
+
+.modal-total{
+  align-items:center !important;
+}
+
+@media(max-width:720px){
+  .modal-included{
+    padding-left:22px;
+    padding-right:22px;
+  }
+  .modal-included ul{
+    grid-template-columns:1fr;
+  }
+  .modal-boost{
+    margin-left:22px;
+    margin-right:22px;
+  }
+  .modal-actions{
+    min-width:0;
+    width:100%;
+  }
+}
+
+
+/* V11 final product-card polish */
+.hero h1{
+  max-width:980px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.cards{
+  gap:26px !important;
+}
+
+.plan{
+  background:#fff !important;
+  border:1px solid rgba(31,30,34,.08) !important;
+  box-shadow:none !important;
+}
+
+.plan.recommended,
+.plan[data-plan="music"],
+.plan[data-plan="talent"],
+.plan[data-plan="supervisor"]{
+  border:1.5px solid var(--accent) !important;
+}
+
+.plan-head{
+  background:#fff !important;
+}
+
+.badge{
+  min-height:48px !important;
+}
+
+.plan-title{
+  min-height:126px !important;
+  padding-left:28px !important;
+  padding-right:28px !important;
+}
+
+.plan-title h3{
+  font-size:25px !important;
+  font-weight:640 !important;
+}
+
+.plan-title p{
+  max-width:270px;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+.features{
+  padding:18px 28px 20px !important;
+  gap:18px !important;
+}
+
+.feature{
+  min-height:auto !important;
+  padding:0 !important;
+  border-bottom:0 !important;
+  grid-template-columns:34px 1fr !important;
+}
+
+.feature h4{
+  font-size:15px !important;
+  margin-bottom:7px !important;
+}
+
+.feature ul{
+  gap:4px !important;
+}
+
+.feature li{
+  font-size:12.5px !important;
+  line-height:1.42 !important;
+}
+
+.icon{
+  background:color-mix(in srgb,var(--accent) 9%,#f8f8f9) !important;
+}
+
+.footer{
+  border-top:1px solid rgba(31,30,34,.06) !important;
+  padding-left:28px !important;
+  padding-right:28px !important;
+}
+
+.cta{
+  background:var(--accent) !important;
+  color:var(--accent-text) !important;
+}
+
+/* Enterprise remains understated */
+.plan[data-plan="enterprise"]{
+  border:1.5px solid #252428 !important;
+}
+.plan[data-plan="enterprise"] .cta.secondary,
+.plan[data-plan="enterprise"] .cta{
+  background:#252428 !important;
+  color:#fff !important;
+}
+
+/* Free remains quiet */
+.plan.free-plan{
+  border:1px solid rgba(31,30,34,.08) !important;
+}
+.plan.free-plan .badge,
+.plan.free-plan .cta{
+  background:#ECEBF0 !important;
+  color:#252428 !important;
+}
+
+/* Simpler modal: included first, boosts secondary */
+.modal-included li{
+  background:#fff !important;
+}
+
+.modal-boost{
+  background:#fff !important;
+}
+
+.modal-boost-toggle{
+  background:#fafafa !important;
+}
+
+.modal-total{
+  background:#fff !important;
+}
+
+.modal-actions .later-link{
+  order:2;
+}
+
+.modal-cta{
+  order:1;
+}
+
+/* Native-app feel */
+.persona,
+.plan,
+.preselect,
+.checkout-dialog{
+  transition:transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.persona:active,
+.cta:active,
+.modal-choices button:active{
+  transform:scale(.99);
+}
+
+@media(max-width:980px){
+  .features{
+    padding:18px 22px 20px !important;
+  }
+  .plan-title{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+  .footer{
+    padding-left:22px !important;
+    padding-right:22px !important;
+  }
+}
+
+
+.bridge-intro{
+max-width:720px;
+margin:0 auto 30px;
+text-align:center;
+}
+.bridge-intro p{
+margin:0;
+font-size:22px;
+line-height:1.35;
+letter-spacing:-.03em;
+font-weight:600;
+color:#252428;
+}
+.bridge-sub{
+display:block;
+margin-top:10px;
+font-size:15px;
+font-weight:450;
+color:#73707a;
+line-height:1.5;
+}
+
+
+/* V13 final intro copy rhythm */
+.hero h1{
+  max-width:1040px !important;
+}
+.hero p{
+  max-width:560px !important;
+}
+.bridge-sub{
+  display:block;
+  margin-top:8px;
+  font-size:14px;
+  font-weight:450;
+  color:#73707a;
+  line-height:1.45;
+  letter-spacing:0;
+  text-transform:none;
+}
+.preselect p{
+  line-height:1.45 !important;
+}
+.preselect-benefit strong{
+  letter-spacing:-.04em !important;
+}
+
+
+/* V15 hero sizing, webapp two-line fit */
+.hero{
+  max-width:980px !important;
+}
+
+.hero h1{
+  font-size:clamp(36px,4.7vw,58px) !important;
+  line-height:1.02 !important;
+  letter-spacing:-.045em !important;
+  max-width:900px !important;
+}
+
+@media (min-width:1180px){
+  .hero h1{
+    font-size:56px !important;
+  }
+}
+
+@media (max-width:980px){
+  .hero h1{
+    font-size:38px !important;
+    line-height:1.04 !important;
+  }
+}
+
+
+/* V16 persona audience + lean card headers */
+.cards-audience{
+  text-align:center !important;
+  margin:34px auto 22px !important;
+  max-width:760px;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+}
+.cards-audience strong{
+  display:block;
+  color:#19181c;
+  font-size:24px;
+  line-height:1;
+  letter-spacing:-.04em;
+  font-weight:680;
+}
+.cards-audience span{
+  display:block;
+  margin-top:9px;
+  color:#73707a;
+  font-size:15px;
+  line-height:1.35;
+  font-weight:460;
+}
+.plan{
+  height:min(760px,74vh) !important;
+}
+.plan-title{
+  min-height:84px !important;
+  padding:19px 24px 18px !important;
+}
+.plan-title h3{
+  font-size:24px !important;
+  line-height:1.08 !important;
+}
+.plan-title p{
+  display:none !important;
+}
+.card-top{
+  min-height:auto !important;
+}
+@media(max-width:980px){
+  .cards-audience{
+    text-align:left !important;
+    margin-top:28px !important;
+  }
+  .cards-audience strong{
+    font-size:22px;
+  }
+  .cards-audience span{
+    font-size:14px;
+  }
+  .plan{
+    height:auto !important;
+  }
+}
+
+
+/* V17 final polish, mobile-first, cleaner audience bridge */
+.cards-audience{
+  max-width:760px !important;
+  margin:32px auto 24px !important;
+  text-align:center !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+}
+
+.cards-audience strong{
+  display:none !important;
+}
+
+.cards-audience span{
+  display:block !important;
+  margin:0 auto !important;
+  color:#514e58 !important;
+  font-size:17px !important;
+  line-height:1.45 !important;
+  font-weight:520 !important;
+  letter-spacing:-.01em !important;
+}
+
+.cards{
+  gap:18px !important;
+}
+
+.plan-title h3{
+  font-size:27px !important;
+  line-height:1.07 !important;
+  letter-spacing:-.04em !important;
+  font-weight:680 !important;
+}
+
+.plan-title{
+  min-height:92px !important;
+  padding:21px 24px 20px !important;
+}
+
+@media (min-width: 980px){
+  .cards{
+    gap:22px !important;
+  }
+
+  .cards-audience{
+    margin-top:38px !important;
+    margin-bottom:26px !important;
+  }
+
+  .cards-audience span{
+    font-size:18px !important;
+    max-width:780px !important;
+  }
+
+  .plan-title h3{
+    font-size:28px !important;
+  }
+
+  .plan-title{
+    min-height:96px !important;
+  }
+}
+
+@media (max-width: 980px){
+  .cards-audience{
+    text-align:left !important;
+    margin:28px 0 18px !important;
+  }
+
+  .cards-audience span{
+    font-size:16px !important;
+    line-height:1.42 !important;
+  }
+
+  .plan-title h3{
+    font-size:25px !important;
+  }
+}
+
+
+/* V18 mobile-first carousel + radius repair */
+.mobile-reco{
+  display:none;
+}
+
+@media (max-width: 980px){
+  main{
+    padding-left:0 !important;
+    padding-right:0 !important;
+  }
+
+  .hero,
+  .step,
+  .personas,
+  .preselect,
+  .cards-title{
+    margin-left:16px !important;
+    margin-right:16px !important;
+  }
+
+  .personas{
+    gap:10px !important;
+  }
+
+  .preselect{
+    padding:20px !important;
+    border-radius:26px !important;
+  }
+
+  .preselect-art{
+    display:none !important;
+  }
+
+  .preselect-benefits{
+    gap:10px !important;
+  }
+
+  .preselect-benefit{
+    grid-template-columns:36px 1fr !important;
+  }
+
+  .preselect-benefit span{
+    width:36px !important;
+    height:36px !important;
+    border-radius:14px !important;
+  }
+
+  .preselect-benefit strong{
+    font-size:20px !important;
+  }
+
+  .mobile-reco{
+    display:block;
+    margin:0 16px 10px;
+    color:#817e87;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+
+  .cards{
+    display:flex !important;
+    gap:14px !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    scroll-snap-type:x mandatory !important;
+    scroll-padding:16px !important;
+    padding:0 16px 22px !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+
+  .cards::-webkit-scrollbar{
+    display:none;
+  }
+
+  .plan{
+    flex:0 0 min(86vw,390px) !important;
+    width:min(86vw,390px) !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    scroll-snap-align:center !important;
+    border-radius:28px !important;
+    overflow:hidden !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+
+  .plan.recommended{
+    transform:none !important;
+  }
+
+  .plan-head,
+  .card-top,
+  .badge{
+    border-top-left-radius:0 !important;
+    border-top-right-radius:0 !important;
+  }
+
+  .card-scroll{
+    overflow:visible !important;
+    min-height:0 !important;
+  }
+
+  .features{
+    padding:18px 20px 18px !important;
+  }
+
+  .feature{
+    min-height:auto !important;
+    padding:11px 0 !important;
+  }
+
+  .footer{
+    position:relative !important;
+    min-height:0 !important;
+    border-bottom-left-radius:28px !important;
+    border-bottom-right-radius:28px !important;
+    padding:14px 20px 18px !important;
+    box-shadow:none !important;
+  }
+
+  .footer-row{
+    min-height:auto !important;
+  }
+
+  .plan-title{
+    min-height:84px !important;
+    padding:18px 20px 16px !important;
+  }
+
+  .plan-title h3{
+    font-size:24px !important;
+  }
+
+  .cards-audience{
+    margin-bottom:14px !important;
+  }
+
+  .cards-audience span{
+    max-width:92vw !important;
+  }
+}
+
+@media (min-width: 981px){
+  .cards{
+    overflow:visible !important;
+  }
+}
+
+
+/* V19 best mobile UX: horizontal snap + fixed card header/footer + internal scroll */
+@media (max-width: 980px){
+  .cards{
+    align-items:stretch !important;
+    height:auto !important;
+  }
+
+  .plan{
+    height:82vh !important;
+    max-height:760px !important;
+    min-height:620px !important;
+    overflow:hidden !important;
+    display:flex !important;
+    flex-direction:column !important;
+    border-radius:28px !important;
+    background:#fff !important;
+  }
+
+  .plan-head{
+    flex:0 0 auto !important;
+    position:relative !important;
+    z-index:2 !important;
+    background:#fff !important;
+    border-bottom:1px solid rgba(31,30,34,.08) !important;
+  }
+
+  .card-scroll{
+    flex:1 1 auto !important;
+    min-height:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior:contain !important;
+    scrollbar-width:thin !important;
+    scrollbar-color:rgba(31,30,34,.22) transparent !important;
+  }
+
+  .card-scroll::-webkit-scrollbar{
+    width:5px;
+  }
+
+  .card-scroll::-webkit-scrollbar-track{
+    background:transparent;
+  }
+
+  .card-scroll::-webkit-scrollbar-thumb{
+    background:rgba(31,30,34,.2);
+    border-radius:999px;
+  }
+
+  .footer{
+    flex:0 0 auto !important;
+    position:relative !important;
+    z-index:3 !important;
+    margin-top:0 !important;
+    background:#fff !important;
+    border-top:1px solid rgba(31,30,34,.08) !important;
+    box-shadow:0 -16px 24px rgba(255,255,255,.92) !important;
+  }
+
+  .footer-row{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:12px !important;
+  }
+
+  .price-col{
+    text-align:center !important;
+  }
+
+  .billing{
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  .price-main{
+    justify-content:center !important;
+  }
+
+  .cta{
+    min-height:48px !important;
+  }
+
+  .reassurance{
+    margin-top:7px !important;
+  }
+
+  .features{
+    padding-bottom:22px !important;
+  }
+
+  .feature:first-child{
+    padding-top:2px !important;
+  }
+
+  .mobile-reco{
+    margin-top:4px !important;
+  }
+}
+
+@media (max-width: 420px){
+  .plan{
+    flex-basis:88vw !important;
+    width:88vw !important;
+    height:81vh !important;
+    min-height:590px !important;
+  }
+
+  .plan-title{
+    min-height:78px !important;
+  }
+
+  .plan-title h3{
+    font-size:22px !important;
+  }
+
+  .badge{
+    min-height:46px !important;
+    font-size:11px !important;
+  }
+
+  .features{
+    padding:16px 18px 20px !important;
+  }
+
+  .footer{
+    padding:12px 18px 16px !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <h1>Where creators, music professionals and entertainment teams connect.</h1>
+    <p id="phaseText">Choose the plan that fits the way you work.</p>
+  </section>
+
+  <section><div class="step">
+      <h2>Who are you?</h2>
+      <p id="stepText">Choose how you work.</p>
+    </div>
+    <div class="personas" id="personas"></div>
+    <div id="plansArea"></div>
+  </section>
+
+  <div class="checkout-modal" id="checkoutModal" aria-hidden="true">
+    <div class="checkout-backdrop" data-close-modal></div>
+    <div class="checkout-dialog" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <button class="modal-close" data-close-modal aria-label="Close">×</button>
+      <div id="checkoutContent"></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const iconData = {"support": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iOTAiIGhlaWdodD0iOTAiIHZpZXdCb3g9IjAgMCA5MCA5MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CjxyZWN0IHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCIgZmlsbD0idXJsKCNwYXR0ZXJuMF8zNDAzMV8zNzk2KSIvPgo8ZGVmcz4KPHBhdHRlcm4gaWQ9InBhdHRlcm4wXzM0MDMxXzM3OTYiIHBhdHRlcm5Db250ZW50VW5pdHM9Im9iamVjdEJvdW5kaW5nQm94IiB3aWR0aD0iMSIgaGVpZ2h0PSIxIj4KPHVzZSB4bGluazpocmVmPSIjaW1hZ2UwXzM0MDMxXzM3OTYiIHRyYW5zZm9ybT0ic2NhbGUoMC4wMTExMTExKSIvPgo8L3BhdHRlcm4+CjxpbWFnZSBpZD0iaW1hZ2UwXzM0MDMxXzM3OTYiIHdpZHRoPSI5MCIgaGVpZ2h0PSI5MCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgeGxpbms6aHJlZj0iZGF0YTppbWFnZS9wbmc7YmFzZTY0LGlWQk9SdzBLR2dvQUFBQU5TVWhFVWdBQUFGb0FBQUJhQ0FZQUFBQTRxRUVDQUFBQUNYQklXWE1BQUFzVEFBQUxFd0VBbXB3WUFBQUNra2xFUVZSNG5PM2NUMjlOUVJqSDhTK05QN1hCRGpzSlc0dTdGcUd2QTYyRlAwbWpYU0xlQU5HRm9GRXZRbGdnTm9RM1FJSkdkV1ZUQzM5dWExR0pSajB5eVN5azZhVzNkK2JNYzg3NWZaTGY1cWIzSk0rVFpzN01tWE1IUkVSRVJFUkVSRVFrcDEzQU5MQUVXSjlaQk80QXc2V0xxSU9aVFRSNGJjSTE1QisyQWo4U05IbzVYa3Q2VUtOck5uVGNMVjFFSFF3RHQrT05yZDhHZDRGYnVobUtpSWlJZURJRWRJRHp3QlR3RUpnRlBzYnAyMHBNTjM0MkcvL21SdnhPSjE1RDFyRWZtQVNlQU44VExGakNOUjRERS9IYXJiWURHQVdlQTZzSm10c3J2NEJud0dsZ095MnlGN2dDZk1yWTNGNVpBQzREZTJpd2JjQTU0SE9CQnErM1ZML1V4UC93RVdET1FZUFg1ajF3Z2diWUNWekxQQVlQbXQvQXZiaXpVMHVINDlUTGFwSzN3Q0ZxNXFpVHNkajZ6TGM0ek5YQ3FiaWdzSnBtSmRiZzJwano4ZGcybU5VNHgzZHB0Q0ZOdHI4V09pZHg1aGp3MDBGekxNTXc0bWJNUGdoOGNkQVV5M2lETEQ0YkNadWc3eHcwd3pMblRWd1RGSFBUUVJPc29vVEhzRVdNTk96bVovOUpxUFY0aVFkRUh4d1Vid1dlallUYUt6UHBvR2dybFBHcW1oeWU1WDUxVUxBVlNwaGg3YTZpMFZjZEZHdUZFellQc204L2xkZ1pNV2RaeUwxcE1PYWdTSE9Tck12emx3NEtOQ2NKRzc1WjdJc1BXa29YYUk3bTFRZHlOSHJDUVhIV2hxbmVVd2VGbWJNOFN0M2tvVTMrSEszcFdVcjkrbG5IUVZIbU5FZFNOdnFDZzRMTWFjNm1iUFNVZzRMTWFhNm5iUFFEQndXWjA5eFAyZWpYRGdveXAzbVZzdEV2SEJSa1RoTmVPMDdtaklPQ3pHbkNlOWZKYkFFdUF2TU9Dak1ubVk4cnc5QWJFUkVSa1lhZjF0VzJMQTV5T2xtS0kzZmFscGxTaDBpMUxjdjlIcHFsUmxOTm93TU5IVlJ6T3RrZ3AzVzFMVjJkVGlZaUlpSWlJaUlpSWlJaUlrSmlmd0FJR1JSalBrN0VSUUFBQUFCSlJVNUVya0pnZ2c9PSIvPgo8L2RlZnM+Cjwvc3ZnPgo=", "chart": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zIDZDMyA0LjM0MzE1IDQuMzQzMTUgMyA2IDNIMThDMTkuNjU2OSAzIDIxIDQuMzQzMTUgMjEgNlYxOEMyMSAxOS42NTY5IDE5LjY1NjkgMjEgMTggMjFINkM0LjM0MzE1IDIxIDMgMTkuNjU2OSAzIDE4VjZaTTcuNSAxMy41QzcuOTE0MjEgMTMuNSA4LjI1IDEzLjgzNTggOC4yNSAxNC4yNVYxNi41QzguMjUgMTYuOTE0MiA3LjkxNDIxIDE3LjI1IDcuNSAxNy4yNUM3LjA4NTc5IDE3LjI1IDYuNzUgMTYuOTE0MiA2Ljc1IDE2LjVWMTQuMjVDNi43NSAxMy44MzU4IDcuMDg1NzkgMTMuNSA3LjUgMTMuNVpNMTEuMjUgMTJDMTEuMjUgMTEuNTg1OCAxMC45MTQyIDExLjI1IDEwLjUgMTEuMjVDMTAuMDg1OCAxMS4yNSA5Ljc1IDExLjU4NTggOS43NSAxMlYxNi41QzkuNzUgMTYuOTE0MiAxMC4wODU4IDE3LjI1IDEwLjUgMTcuMjVDMTAuOTE0MiAxNy4yNSAxMS4yNSAxNi45MTQyIDExLjI1IDE2LjVWMTJaTTEzLjUgOUMxMy45MTQyIDkgMTQuMjUgOS4zMzU3OSAxNC4yNSA5Ljc1VjE2LjVDMTQuMjUgMTYuOTE0MiAxMy45MTQyIDE3LjI1IDEzLjUgMTcuMjVDMTMuMDg1OCAxNy4yNSAxMi43NSAxNi45MTQyIDEyLjc1IDE2LjVWOS43NUMxMi43NSA5LjMzNTc5IDEzLjA4NTggOSAxMy41IDlaTTE3LjI1IDcuNUMxNy4yNSA3LjA4NTc5IDE2LjkxNDIgNi43NSAxNi41IDYuNzVDMTYuMDg1OCA2Ljc1IDE1Ljc1IDcuMDg1NzkgMTUuNzUgNy41VjE2LjVDMTUuNzUgMTYuOTE0MiAxNi4wODU4IDE3LjI1IDE2LjUgMTcuMjVDMTYuOTE0MiAxNy4yNSAxNy4yNSAxNi45MTQyIDE3LjI1IDE2LjVWNy41WiIgZmlsbD0iIzFFMUQyMCIvPgo8L3N2Zz4K", "cloud": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik00LjUgOS43NUM0LjUgNi40MzYyOSA3LjE4NjI5IDMuNzUgMTAuNSAzLjc1QzEzLjAyOCAzLjc1IDE1LjE4OTMgNS4zMTI4MiAxNi4wNzMzIDcuNTI0MDhDMTYuMjEzNSA3LjUwODE2IDE2LjM1NTkgNy41IDE2LjUgNy41QzE4LjU3MTEgNy41IDIwLjI1IDkuMTc4OTMgMjAuMjUgMTEuMjVDMjAuMjUgMTEuNDQ1OSAyMC4yMzQ5IDExLjYzODYgMjAuMjA1OCAxMS44MjdDMjEuNTc0NCAxMi41OTgxIDIyLjUgMTQuMDY1MyAyMi41IDE1Ljc1QzIyLjUgMTguMjM1MyAyMC40ODUzIDIwLjI1IDE4IDIwLjI1SDYuNzVDMy44NTA1MSAyMC4yNSAxLjUgMTcuODk5NSAxLjUgMTVDMS41IDEyLjg5NjggMi43MzYyNyAxMS4wODQgNC41MjAyNCAxMC4yNDU5QzQuNTA2ODMgMTAuMDgyMiA0LjUgOS45MTY4NiA0LjUgOS43NVoiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg==", "eye": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEyIDE1QzEzLjY1NjkgMTUgMTUgMTMuNjU2OSAxNSAxMkMxNSAxMC4zNDMxIDEzLjY1NjkgOSAxMiA5QzEwLjM0MzEgOSA5IDEwLjM0MzEgOSAxMkM5IDEzLjY1NjkgMTAuMzQzMSAxNSAxMiAxNVoiIGZpbGw9IiMxRTFEMjAiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xLjMyMzQxIDExLjQ0NjdDMi44MTA2NiA2Ljk3NTcxIDcuMDI3OTEgMy43NSAxMi4wMDA1IDMuNzVDMTYuOTcwOCAzLjc1IDIxLjE4NjQgNi45NzI3MSAyMi42NzU1IDExLjQ0MDVDMjIuNzk1OSAxMS44MDE1IDIyLjc5NiAxMi4xOTIyIDIyLjY3NTkgMTIuNTUzM0MyMS4xODg2IDE3LjAyNDMgMTYuOTcxNCAyMC4yNSAxMS45OTg4IDIwLjI1QzcuMDI4NDcgMjAuMjUgMi44MTI4NCAxNy4wMjczIDEuMzIzNzQgMTIuNTU5NUMxLjIwMzQgMTIuMTk4NSAxLjIwMzI4IDExLjgwNzggMS4zMjM0MSAxMS40NDY3Wk0xNy4yNSAxMkMxNy4yNSAxNC44OTk1IDE0Ljg5OTUgMTcuMjUgMTIgMTcuMjVDOS4xMDA1IDE3LjI1IDYuNzUgMTQuODk5NSA2Ljc1IDEyQzYuNzUgOS4xMDA1IDkuMTAwNSA2Ljc1IDEyIDYuNzVDMTQuODk5NSA2Ljc1IDE3LjI1IDkuMTAwNSAxNy4yNSAxMloiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg==", "share": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMuNDc4MDQgMi40MDQzQzMuMjEzMyAyLjMyNzQgMi45Mjc3MSAyLjQwMTkzIDIuNzM0MzIgMi41OTg0QzIuNTQwOTMgMi43OTQ4NyAyLjQ3MDkxIDMuMDgxNiAyLjU1MTk4IDMuMzQ1MUw0Ljk4NDI2IDExLjI1SDEzLjVDMTMuOTE0MiAxMS4yNSAxNC4yNSAxMS41ODU4IDE0LjI1IDEyQzE0LjI1IDEyLjQxNDIgMTMuOTE0MiAxMi43NSAxMy41IDEyLjc1SDQuOTg0MjdMMi41NTIwNyAyMC42NTQ2QzIuNDcxIDIwLjkxODEgMi41NDEwMiAyMS4yMDQ5IDIuNzM0NDEgMjEuNDAxM0MyLjkyNzgxIDIxLjU5NzggMy4yMTM0IDIxLjY3MjMgMy40NzgxNCAyMS41OTU0QzEwLjE3NjcgMTkuNjQ5NCAxNi4zOTc0IDE2LjU4MTQgMjEuOTIzMyAxMi42MDg3QzIyLjExOTMgMTIuNDY3OCAyMi4yMzU1IDEyLjI0MTIgMjIuMjM1NSAxMS45OTk4QzIyLjIzNTUgMTEuNzU4MyAyMi4xMTkzIDExLjUzMTcgMjEuOTIzMyAxMS4zOTA4QzE2LjM5NzQgNy40MTgxNyAxMC4xNzY3IDQuMzUwMjEgMy40NzgwNCAyLjQwNDNaIiBmaWxsPSIjMUUxRDIwIi8+Cjwvc3ZnPgo=", "team": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02Ljg3NSA1LjYyNUM2Ljg3NSAzLjg5OTExIDguMjc0MTEgMi41IDEwIDIuNUMxMS43MjU5IDIuNSAxMy4xMjUgMy44OTkxMSAxMy4xMjUgNS42MjVDMTMuMTI1IDcuMzUwODkgMTEuNzI1OSA4Ljc1IDEwIDguNzVDOC4yNzQxMSA4Ljc1IDYuODc1IDcuMzUwODkgNi44NzUgNS42MjVaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTMuMTI1IDguMTI1QzEzLjEyNSA2Ljc0NDI5IDE0LjI0NDMgNS42MjUgMTUuNjI1IDUuNjI1QzE3LjAwNTcgNS42MjUgMTguMTI1IDYuNzQ0MjkgMTguMTI1IDguMTI1QzE4LjEyNSA5LjUwNTcxIDE3LjAwNTcgMTAuNjI1IDE1LjYyNSAxMC42MjVDMTQuMjQ0MyAxMC42MjUgMTMuMTI1IDkuNTA1NzEgMTMuMTI1IDguMTI1WiIgZmlsbD0iIzFFMUQyMCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTEuODc1IDguMTI1QzEuODc1IDYuNzQ0MjkgMi45OTQyOSA1LjYyNSA0LjM3NSA1LjYyNUM1Ljc1NTcxIDUuNjI1IDYuODc1IDYuNzQ0MjkgNi44NzUgOC4xMjVDNi44NzUgOS41MDU3MSA1Ljc1NTcxIDEwLjYyNSA0LjM3NSAxMC42MjVDMi45OTQyOSAxMC42MjUgMS44NzUgOS41MDU3MSAxLjg3NSA4LjEyNVoiIGZpbGw9IiMxRTFEMjAiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik01LjI1ODIyIDEyLjU5NzlDNi4yNTY1MyAxMS4wMzcgOC4wMDY5NiAxMCAxMCAxMEMxMS45OTMzIDEwIDEzLjc0MzkgMTEuMDM3MyAxNC43NDIyIDEyLjU5ODVDMTUuNDMyMyAxMy42Nzc5IDE1LjczMDkgMTQuOTc5MyAxNS41OTA4IDE2LjI0ODNDMTUuNTY4OSAxNi40NDY2IDE1LjQ1MzcgMTYuNjIyNSAxNS4yODA2IDE2LjcyMThDMTMuNzI0NSAxNy42MTQ3IDExLjkyMDkgMTguMTI1IDEwIDE4LjEyNUM4LjA3OTEgMTguMTI1IDYuMjc1NDkgMTcuNjE0NyA0LjcxOTM3IDE2LjcyMThDNC41NDYzMyAxNi42MjI1IDQuNDMxMDggMTYuNDQ2NiA0LjQwOTE5IDE2LjI0ODNDNC4yNjkxMSAxNC45NzkxIDQuNTY3ODQgMTMuNjc3NCA1LjI1ODIyIDEyLjU5NzlaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGQ9Ik00LjIzNTI0IDExLjg3ODFDNC4yMjUyIDExLjg5MzUgNC4yMTUyMyAxMS45MDg5IDQuMjA1MzEgMTEuOTI0NEMzLjQwMDc2IDEzLjE4MjQgMy4wMzI1NyAxNC42ODA2IDMuMTQ1NTkgMTYuMTU3NUMyLjYzODg5IDE2LjA4MDUgMi4xNDcyNSAxNS45NTY3IDEuNjc1MzYgMTUuNzkwNkwxLjU3OTU2IDE1Ljc1NjhDMS40MDQ4IDE1LjY5NTMgMS4yODI2OSAxNS41MzY2IDEuMjY3OTkgMTUuMzUxOUwxLjI1OTk0IDE1LjI1MDZDMS4yNTMzNSAxNS4xNjc4IDEuMjUgMTUuMDg0MiAxLjI1IDE1QzEuMjUgMTMuMzIwOSAyLjU3NDIgMTEuOTUxMiA0LjIzNTI0IDExLjg3ODFaIiBmaWxsPSIjMUUxRDIwIi8+CjxwYXRoIGQ9Ik0xNi44NTQ3IDE2LjE1NzVDMTYuOTY3NyAxNC42ODA4IDE2LjU5OTcgMTMuMTgzIDE1Ljc5NTQgMTEuOTI1MUMxNS43ODU0IDExLjkwOTQgMTUuNzc1MyAxMS44OTM3IDE1Ljc2NTEgMTEuODc4MUMxNy40MjYgMTEuOTUxMyAxOC43NSAxMy4zMjEgMTguNzUgMTVDMTguNzUgMTUuMDg0MiAxOC43NDY3IDE1LjE2NzggMTguNzQwMSAxNS4yNTA2TDE4LjczMiAxNS4zNTE5QzE4LjcxNzMgMTUuNTM2NiAxOC41OTUyIDE1LjY5NTMgMTguNDIwNCAxNS43NTY4TDE4LjMyNDYgMTUuNzkwNkMxNy44NTI4IDE1Ljk1NjcgMTcuMzYxMyAxNi4wODA1IDE2Ljg1NDcgMTYuMTU3NVoiIGZpbGw9IiMxRTFEMjAiLz4KPC9zdmc+Cg=="};
+const plans = {"free": {"id": "free", "color": "#ECEBF0", "text": "#252428", "badge": "FREE", "title": "Start building your catalog", "loved": "LOVED BY EVERYONE", "cta": "Start for free now", "type": "free", "annual": 0, "monthly": 0, "features": [["Build your workspace", ["2 GB workspace", "Up to 25 tracks", "Unlimited projects"], "cloud"], ["Work with your team", ["3 member seats", "Access on desktop and mobile"], "team"], ["Pitch beautifully", ["Basic sharing options", "Smart inbox to receive music"], "share"], ["Grow your audience", ["Basic auto-tagging", "No Discovery Hub"], "eye"]]}, "talent": {"id": "talent", "color": "#FFC833", "text": "#252428", "badge": "TALENT PRO", "title": "Get heard, get opportunities", "loved": "LOVED BY ARTISTS, COMPOSERS & VOICE-OVER", "cta": "Get started", "type": "fixed", "annual": 5, "monthly": 8, "options": {"visibilityLabel": "Grow your audience", "visibilityUnit": 20, "visibilityAnnual": 2, "visibilityMonthly": 3, "visibilityChoices": [0, 20, 60, 100], "userAnnual": 2, "userMonthly": 3, "userChoices": [0, 1, 3, 5]}, "features": [["Build your workspace", ["Unlimited tracks, videos & files", "250 GB workspace capacity", "Keep demos, masters, videos, PDFs and artwork in one place."], "cloud"], ["Work with your team", ["5 member seats", "Access on desktop and mobile", "Add more seats at checkout."], "team"], ["Pitch beautifully", ["Advanced sharing options", "Password protection", "Smart inbox to receive music"], "share"], ["Grow your audience", ["Advanced auto-tagging and smart search", "Feature 10 titles on Bridge Talent", "Grow your audience anytime."], "eye"], ["Measure what matters", ["Full tracking of your shared links", "Insights on Workspace activities"], "chart"]]}, "music": {"id": "music", "color": "#2F43DE", "text": "#fff", "badge": "MUSIC PRO", "title": "Manage, discover, get discovered", "loved": "LOVED BY LABELS, PUBLISHERS, SUPERVISORS & AGENCIES", "cta": "Get started", "type": "fixed", "annual": 49, "monthly": 75, "options": {"visibilityLabel": "Grow your catalog reach", "visibilityUnit": 250, "visibilityAnnual": 10, "visibilityMonthly": 15, "visibilityChoices": [0, 250, 500, 1000], "userAnnual": 5, "userMonthly": 8, "userChoices": [0, 1, 3, 5]}, "features": [["Build your workspace", ["Unlimited tracks, videos & files", "2 TB workspace capacity", "Centralize masters, edits, instrumentals, videos, PDFs and artwork."], "cloud"], ["Work with your team", ["5 users included", "Add more seats at checkout."], "team"], ["Pitch beautifully", ["Advanced sharing options", "Password protection", "Smart inbox to receive music"], "share"], ["Grow your audience", ["Advanced auto-tagging and smart search", "Promote 250 titles", "Grow your catalog reach anytime."], "eye"], ["Measure what matters", ["Full tracking of your shared links", "Insights on Workspace and Discovery Hubs activities"], "chart"], ["Concierge", ["White-glove onboarding", "Easy catalog ingestion, DDEX, FTP, Disco, \u2026"], "support"]]}, "supervisor": {"id": "supervisor", "color": "#FF3364", "text": "#fff", "badge": "SUPERVISOR / MEDIA PRO", "title": "Find the perfect track, fast.", "loved": "LOVED BY SUPERVISORS, FILM, TV, ADS & GAMES", "cta": "Get started", "type": "fixed", "annual": 19, "monthly": 29, "options": {"storageLabel": "Grow your workspace", "storageAnnual": 10, "storageMonthly": 15, "storageChoices": [0, 1, 2, 3], "userAnnual": 5, "userMonthly": 8, "userChoices": [0, 1, 3, 5]}, "features": [["Find the perfect music", ["With smart search, find:<br>Commercial music on Bridge Sync", "Production music on Bridge Library", "Composers on Bridge Score", "Next talents on Bridge Talent"], "eye"], ["Build your workspace", ["Unlimited tracks, videos & files", "2 TB media workspace", "Grow your workspace up to 5 TB total."], "cloud"], ["Work with your team", ["5 users included", "Add more seats at checkout."], "team"], ["Pitch beautifully", ["Advanced sharing options", "Password protection", "Smart inbox to receive music"], "share"], ["Measure what matters", ["Full tracking of your shared links", "Workspace insights"], "chart"], ["Concierge", ["White-glove onboarding", "Easy catalog ingestion, DDEX, FTP, Disco, \u2026"], "support"]]}, "enterprise": {"id": "enterprise", "color": "#252428", "text": "#fff", "badge": "ENTERPRISE", "title": "Full custom plans", "loved": "LOVED BY MAJORS, BROADCASTERS & MEDIA GROUPS", "cta": "Talk to Sales", "type": "custom", "annual": null, "monthly": null, "features": [["Build at scale", ["Custom storage", "Custom users", "Custom publication capacity"], "cloud"], ["Work your way", ["SSO and security on request", "Dedicated onboarding"], "team"], ["Get dedicated help", ["Custom ingestion", "Custom workflows"], "support"]]}};
+const personas = [
+  { id:"create", title:"I create music", copy:"Create, organize and grow your audience.", cards:["free","talent","music"], label:"Recommended for artists, composers, beatmakers, voice talent and musicians." },
+  { id:"manage", title:"I manage music", copy:"Organize, pitch and promote your catalog.", cards:["free","music","enterprise"], label:"Recommended for labels, publishers, managers, PR teams, distributors and venues." },
+  { id:"find", title:"I find music", copy:"Find the perfect tracks, faster.", cards:["free","supervisor","enterprise"], label:"Recommended for supervisors, agencies, directors, editors, brands and producers." }
+];
+
+const state = {
+  persona: null,
+  opts: {
+    talent: { billing:"annual", visibility:0, users:0, open:false },
+    music: { billing:"annual", visibility:0, users:0, open:false },
+    supervisor: { billing:"annual", storage:0, users:0, open:false }
+  }
+};
+
+function svg(name) {
+  const src = iconData[name] || iconData.cloud;
+  return `<img src="${src}" alt="">`;
+}
+
+function diamond() {
+  return `<span class="diamond"><svg viewBox="0 0 21 20"><path d="M5.27 1.37 6.35 3.75l1.84.83h7.54c.23 0 .44.12.57.31l2.73 4.1c.17.25.15.59-.05.82l-8.2 9.57a.68.68 0 0 1-1.05-.01L1.98 9.8a.68.68 0 0 1-.07-.76l1.29-2.32L.95 5.69 0 5.26l.95-.43 2.38-1.08 1.08-2.38L4.84.42l.43.95Zm3.66 7.99-1.45.66 1.45.66.67 1.45.66-1.45 1.45-.66-1.45-.66-.66-1.45-.67 1.45Z" fill="currentColor"/></svg></span>`;
+}
+
+const eur = n => `${Math.round(n)}€`;
+const opt = id => state.opts[id] || { billing:"annual", open:false };
+function unit(plan,key) {
+  const o = opt(plan.id), ops = plan.options || {};
+  if (key === "visibility") return o.billing === "annual" ? ops.visibilityAnnual : ops.visibilityMonthly;
+  if (key === "users") return o.billing === "annual" ? ops.userAnnual : ops.userMonthly;
+  if (key === "storage") return o.billing === "annual" ? ops.storageAnnual : ops.storageMonthly;
+  return 0;
+}
+function total(plan) {
+  if (plan.type === "free") return 0;
+  if (plan.type === "custom") return null;
+  const o = opt(plan.id), ops = plan.options || {};
+  let t = o.billing === "annual" ? plan.annual : plan.monthly;
+  if (ops.visibilityUnit) t += (o.visibility / ops.visibilityUnit) * unit(plan,"visibility");
+  if (ops.userAnnual) t += o.users * unit(plan,"users");
+  if (ops.storageAnnual) t += o.storage * unit(plan,"storage");
+  return Math.round(t);
+}
+function starting(plan) {
+  if (plan.type === "custom") return "Custom";
+  if (plan.type === "free") return "Free";
+  return eur(plan.annual);
+}
+
+function renderPersonas() {
+  document.getElementById("personas").innerHTML = personas.map(p => `
+    <button class="persona ${state.persona === p.id ? "active" : ""}" data-persona="${p.id}">
+      <strong>${p.title}</strong>
+      <span>${p.copy}</span>
+    </button>
+  `).join("");
+  document.querySelectorAll("[data-persona]").forEach(btn => {
+    btn.onclick = () => {
+      state.persona = btn.dataset.persona;
+      render();
+      setTimeout(() => {
+        const carousel = document.getElementById("cardsCarousel");
+        const recommended = carousel?.querySelector(".plan.recommended");
+        if (window.matchMedia("(max-width: 980px)").matches && carousel && recommended) {
+          carousel.scrollTo({ left: recommended.offsetLeft - (carousel.clientWidth - recommended.clientWidth) / 2, behavior: "smooth" });
+          document.getElementById("cardsTitle")?.scrollIntoView({ behavior:"smooth", block:"start" });
+        } else {
+          document.getElementById("cardsTitle")?.scrollIntoView({ behavior:"smooth", block:"start" });
+        }
+      }, 160);
+    };
+  });
+}
+
+function renderFeature(f) {
+  return `<div class="feature">
+    <span class="icon">${svg(f[2])}</span>
+    <div><h4>${f[0]}</h4><ul>${f[1].map(x => `<li>${x}</li>`).join("")}</ul></div>
+  </div>`;
+}
+
+function optionSelect(plan, field, label, choices, unitSize, price, word) {
+  const o = opt(plan.id);
+  const value = o[field] || 0;
+  return `<div class="field">
+    <label>${field === "users" ? svg("team") : field === "storage" ? svg("cloud") : svg("eye")}${label}</label>
+    <div class="select-wrap"><select data-plan="${plan.id}" data-field="${field}">
+      ${choices.map(v => {
+        const cost = unitSize ? (v / unitSize) * price : v * price;
+        const label = v === 0 ? (field === "users" ? "No extra seats" : "Choose an option") : `+${v} ${word} — +${eur(cost)}/mo`;
+        return `<option value="${v}" ${v === value ? "selected" : ""}>${label}</option>`;
+      }).join("")}
+    </select></div>
+  </div>`;
+}
+
+function renderOptions(plan) {
+  if (!plan.options) return "";
+  const o = opt(plan.id), ops = plan.options;
+  if (!o.open) return "";
+  return `<div class="options">
+    <h4>Checkout options</h4>
+    <p>Add only what you need. You can change this later.</p>
+    ${ops.visibilityLabel ? optionSelect(plan,"visibility",ops.visibilityLabel,ops.visibilityChoices,ops.visibilityUnit,unit(plan,"visibility"),"titles") : ""}
+    ${ops.storageLabel ? optionSelect(plan,"storage",ops.storageLabel,ops.storageChoices,1,unit(plan,"storage"),"TB") : ""}
+    ${optionSelect(plan,"users","Add seats",ops.userChoices,1,unit(plan,"users"),"seat")}
+  </div>`;
+}
+
+function renderFooter(plan) {
+  if (plan.type === "free") return `<div class="footer"><div class="footer-row free"><div class="cta-stack"><button class="cta">Start for free now</button><div class="reassurance">No credit card required</div></div></div></div>`;
+  if (plan.type === "custom") return `<div class="footer"><div class="footer-row"><div class="price-col"><div class="price-main"><span class="price">Custom</span></div><div class="year">Talk to Sales</div></div><div class="cta-stack"><button class="cta secondary">Talk to Sales</button></div></div></div>`;
+  const o = opt(plan.id);
+  return `<div class="footer"><div class="footer-row">
+    <div class="price-col">
+      <div class="billing">
+        <button class="${o.billing === "annual" ? "active" : ""}" data-billing="annual" data-plan="${plan.id}">Yearly -35%</button>
+        <button class="${o.billing === "monthly" ? "active" : ""}" data-billing="monthly" data-plan="${plan.id}">Monthly</button>
+      </div>
+      <div class="price-main"><span class="price">${eur(total(plan))}</span><span class="suffix">/mo</span></div>
+      <div class="year">${o.billing === "annual" ? eur(total(plan) * 12) + "/yr" : "Monthly billing"}</div>
+    </div>
+    <div class="cta-stack">
+          <button class="cta" ${plan.options ? `data-modal="${plan.id}"` : ""}>Get started</button>
+      <div class="reassurance">Cancel anytime</div>
+    </div>
+  </div></div>`;
+}
+
+function renderCard(plan, recommended) {
+  return `<article class="plan ${recommended ? "recommended" : ""} ${plan.id === "free" ? "free-plan" : ""}" data-plan="${plan.id}" style="--accent:${plan.color};--accent-text:${plan.text}">
+    <div class="plan-head card-top">
+      <div class="badge">${plan.type === "fixed" ? diamond() : ""}${plan.badge}</div>
+      <div class="plan-title"><h3>${plan.title}</h3></div>
+    </div>
+    <div class="card-scroll">
+      <div class="features">${plan.features.map(renderFeature).join("")}</div>
+    </div>
+    ${renderFooter(plan)}
+  </article>`;
+}
+
+function renderPlans() {
+  const area = document.getElementById("plansArea");
+  if (!state.persona) {
+    area.innerHTML = `
+      <div class="preselect">
+        <div class="preselect-copy">
+          <p>Organize. Discover. Pitch. Collaborate.<br><span class="bridge-sub">Powered by ethical AI.</span></p>
+          <div class="preselect-benefits">
+            <div class="preselect-benefit"><span>${svg("cloud")}</span><strong>Keep everything in one place.</strong></div>
+            <div class="preselect-benefit"><span>${svg("share")}</span><strong>Share beautifully.</strong></div>
+            <div class="preselect-benefit"><span>${svg("eye")}</span><strong>Grow your opportunities.</strong></div>
+          </div>
+        </div>
+        <div class="preselect-art" aria-hidden="true">
+          <div class="art-card art-card-a"></div>
+          <div class="art-card art-card-b"></div>
+          <div class="art-orbit"></div>
+        </div>
+      </div>`;
+    document.getElementById("phaseText").textContent = "Where creators, music professionals and entertainment teams connect.";
+    document.getElementById("stepText").textContent = "Choose how you work.";
+    return;
+  }
+  const persona = personas.find(p => p.id === state.persona);
+  const cards = persona.cards.map(id => plans[id]);
+  area.innerHTML = `<div class="cards-title cards-audience" id="cardsTitle"><span>${persona.label}</span></div><div class="mobile-reco">Recommended plan</div><div class="cards" id="cardsCarousel">${cards.map((p,i) => renderCard(p, i === 1)).join("")}</div>`;
+  document.getElementById("phaseText").textContent = "Choose the plan that fits the way you work.";
+  document.getElementById("stepText").textContent = "Choose how you work.";
+  document.querySelectorAll("[data-billing]").forEach(btn => btn.onclick = () => { opt(btn.dataset.plan).billing = btn.dataset.billing; render(); });
+  document.querySelectorAll("[data-modal]").forEach(btn => btn.onclick = () => openModal(btn.dataset.modal));
+}
+
+
+
+let activeModalPlan = null;
+let modalBoostOpen = false;
+
+const includedByPlan = {
+  talent: [
+    "Unlimited tracks, videos & files",
+    "250 GB workspace capacity",
+    "Feature 10 titles on Bridge Talent",
+    "5 seats included"
+  ],
+  music: [
+    "Unlimited tracks, videos & files",
+    "2 TB workspace capacity",
+    "Promote 250 titles",
+    "5 seats included"
+  ],
+  supervisor: [
+    "Unlimited tracks, videos & files",
+    "2 TB media workspace",
+    "Full discovery access",
+    "5 seats included"
+  ]
+};
+
+function modalOptionSelect(plan, field, label, choices, unitSize, price, word) {
+  const o = opt(plan.id);
+  const value = o[field] || 0;
+  return `<div class="modal-field">
+    <label>${field === "users" ? svg("team") : field === "storage" ? svg("cloud") : svg("eye")}${label}</label>
+    <div class="modal-choices">
+      ${choices.map(v => {
+        const cost = v === 0 ? 0 : (unitSize ? (v / unitSize) * price : v * price);
+        const isActive = v === value ? "active" : "";
+        const title = v === 0 ? "Included" : field === "users" ? `+${v} seat${v > 1 ? "s" : ""}` : field === "storage" ? `+${v} TB` : `+${v} titles`;
+        const sub = v === 0 ? "No boost for now" : `+${eur(cost)}/mo`;
+        return `<button class="${isActive}" data-modal-plan="${plan.id}" data-modal-field="${field}" data-modal-value="${v}">
+          <strong>${title}</strong><span>${sub}</span>
+        </button>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+
+function renderBoostOptions(plan) {
+  const ops = plan.options || {};
+  const visibility = ops.visibilityLabel ? modalOptionSelect(plan, "visibility", "Grow your audience", ops.visibilityChoices, ops.visibilityUnit, unit(plan, "visibility"), "titles") : "";
+  const storage = ops.storageLabel ? modalOptionSelect(plan, "storage", "Grow your workspace", ops.storageChoices, 1, unit(plan, "storage"), "TB") : "";
+  const users = modalOptionSelect(plan, "users", "Grow your team", ops.userChoices, 1, unit(plan, "users"), "seat");
+  return `<div class="modal-options">${visibility}${storage}${users}</div>`;
+}
+
+function renderCheckoutModal(planId) {
+  const plan = plans[planId];
+  if (!plan || !plan.options) return;
+  const o = opt(plan.id);
+  const price = eur(total(plan));
+  const yearly = o.billing === "annual" ? `${eur(total(plan) * 12)}/yr` : "Monthly billing";
+  const included = (includedByPlan[plan.id] || []).map(x => `<li>${x}</li>`).join("");
+
+  document.getElementById("checkoutContent").innerHTML = `
+    <div class="modal-plan-head compact" style="--accent:${plan.color};--accent-text:${plan.text}">
+      <div class="modal-badge">${diamond()}${plan.badge}</div>
+      <h3 id="checkoutTitle">Start with ${plan.badge.replace(" / MEDIA", "")}</h3>
+      <p>Everything below is included in your base plan.</p>
+    </div>
+
+    <div class="modal-included">
+      <h4>Your plan includes</h4>
+      <ul>${included}</ul>
+    </div>
+
+    <div class="modal-billing" style="--accent:${plan.color};--accent-text:${plan.text}">
+      <button class="${o.billing === "annual" ? "active" : ""}" data-modal-billing="annual" data-modal-plan="${plan.id}">Yearly -35%</button>
+      <button class="${o.billing === "monthly" ? "active" : ""}" data-modal-billing="monthly" data-modal-plan="${plan.id}">Monthly</button>
+    </div>
+
+    <div class="modal-boost">
+      <button class="modal-boost-toggle" data-boost-toggle>
+        <span>Need more?</span>
+        <strong>${modalBoostOpen ? "Hide boosts" : "Boost your plan"}</strong>
+      </button>
+      ${modalBoostOpen ? renderBoostOptions(plan) : `<p class="boost-help">You can add more visibility, seats or storage now, or do it later from your workspace.</p>`}
+    </div>
+
+    <div class="modal-total">
+      <div>
+        <span>Total</span>
+        <strong>${price}<small>/mo</small></strong>
+        <em>${yearly}</em>
+      </div>
+      <div class="modal-actions">
+        <button class="cta modal-cta" data-close-modal style="--accent:${plan.color};--accent-text:${plan.text}">Get started</button>
+        <button class="later-link" data-close-modal>I'll boost my plan later</button>
+      </div>
+    </div>
+  `;
+
+  const boost = document.querySelector("[data-boost-toggle]");
+  if (boost) boost.onclick = () => {
+    modalBoostOpen = !modalBoostOpen;
+    renderCheckoutModal(plan.id);
+  };
+
+  document.querySelectorAll("[data-modal-field]").forEach(btn => btn.onclick = () => {
+    opt(btn.dataset.modalPlan)[btn.dataset.modalField] = Number(btn.dataset.modalValue);
+    render();
+    renderCheckoutModal(btn.dataset.modalPlan);
+  });
+  document.querySelectorAll("[data-modal-billing]").forEach(btn => btn.onclick = () => {
+    opt(btn.dataset.modalPlan).billing = btn.dataset.modalBilling;
+    render();
+    renderCheckoutModal(btn.dataset.modalPlan);
+  });
+  document.querySelectorAll("[data-close-modal]").forEach(btn => btn.onclick = closeModal);
+}
+
+function openModal(planId) {
+  activeModalPlan = planId;
+  modalBoostOpen = false;
+  renderCheckoutModal(planId);
+  document.getElementById("checkoutModal").classList.add("visible");
+  document.getElementById("checkoutModal").setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+}
+
+function closeModal() {
+  document.getElementById("checkoutModal").classList.remove("visible");
+  document.getElementById("checkoutModal").setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  activeModalPlan = null;
+  modalBoostOpen = false;
+}
+
+function render() {
+  renderPersonas();
+  renderPlans();
+}
+render();
+</script>
+</body>
+</html>
