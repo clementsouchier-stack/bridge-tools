@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bridge Library – Corrected Dropdown + Mobile FAB + Player</title>
+  <style>
+    :root{
+      --app-bg:#f5f5f6;
+      --surface:#ffffff;
+      --line:#dedee5;
+      --line-soft:#ececf0;
+      --text:#24262d;
+      --muted:#777a85;
+      --muted-2:#a0a2aa;
+      --blue:#3741f4;
+      --blue-dark:#2029d9;
+      --soft:#f2f2f4;
+      --soft-hover:#ebebee;
+      --shadow:0 14px 34px rgba(23,24,31,.14),0 2px 8px rgba(23,24,31,.08);
+      --shadow-soft:0 2px 8px rgba(22,23,30,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--app-bg);
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      overflow:hidden;
+    }
+    .app{
+      height:100vh;
+      display:grid;
+      grid-template-columns:112px 1fr;
+      grid-template-rows:72px 1fr 64px;
+      grid-template-areas:"nav header" "nav main" "player player";
+    }
+
+    /* Header */
+    header{
+      grid-area:header;
+      height:58px;
+      margin:14px 14px 0 0;
+      padding:0 24px;
+      background:var(--surface);
+      border-radius:28px 28px 0 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .crumb{display:flex;align-items:center;gap:7px;font-size:14px;color:#737682;min-width:0}
+    .crumb-icon{width:24px;height:24px;border-radius:4px;background:#eef0ff;display:grid;place-items:center;color:var(--blue)}
+    .crumb a{color:#2f35d8;text-decoration:none}
+    .crumb strong{font-weight:650;color:#2a2c33}
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .header-button{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;color:#8f929c}
+    .header-button:hover{background:#f1f1f3}
+    .avatar{width:40px;height:40px;border-radius:999px;object-fit:cover}
+
+    /* Current left sidebar */
+    nav{
+      grid-area:nav;
+      width:112px;
+      height:calc(100vh - 64px);
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      position:relative;
+      z-index:1000;
+      overflow:visible;
+    }
+    .workspace{height:56px;margin:16px 0 0;padding:0 16px;display:grid;place-items:center;flex-shrink:0}
+    .workspace img{
+      width:48px;height:48px;border-radius:10px;object-fit:cover;background:#fff;
+      outline:2px solid #d7d9ff;outline-offset:2px;
+    }
+    .nav-scroll{flex:1;overflow:visible;padding-top:32px}
+    .plus-zone{display:flex;justify-content:center;margin-bottom:32px;position:relative}
+    .plus-button{
+      width:64px;height:64px;border-radius:999px;border:1px solid var(--line);
+      background:#f2f2f4;box-shadow:var(--shadow-soft);
+      display:grid;place-items:center;cursor:pointer;color:#333640;
+      transition:background .12s, transform .12s, box-shadow .12s;
+      position:relative;z-index:2;
+    }
+    .plus-button:hover{background:#e9e9ed;box-shadow:0 4px 12px rgba(20,20,30,.12)}
+    .plus-button:active{transform:scale(.98)}
+    .plus-button svg{width:24px;height:24px;fill:currentColor}
+
+    .nav-items{display:flex;flex-direction:column;align-items:center}
+    .nav-item{
+      position:relative;
+      width:100%;
+      margin-bottom:16px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:4px;
+      color:#858895;
+      text-decoration:none;
+      font-size:14px;
+      line-height:18px;
+    }
+    .nav-icon{
+      width:40px;height:40px;border-radius:9px;
+      display:grid;place-items:center;
+      color:#8c8f9b;
+    }
+    .nav-icon svg{width:24px;height:24px}
+    .nav-icon.stroke svg{fill:none;stroke:currentColor;stroke-width:1.5}
+    .nav-icon.fill svg{fill:currentColor}
+    .nav-item:hover .nav-icon{background:#eeeeF1}
+    .nav-item.active{font-weight:650;color:#292b32}
+    .nav-item.active .nav-icon{background:var(--blue);color:white}
+    .badge{
+      position:absolute;top:-8px;right:18px;z-index:3;
+      border:1px solid #e4e4e9;background:#f6f6ff;color:#282b35;
+      border-radius:999px;padding:4px 8px;font-size:8px;font-weight:700;line-height:1;
+    }
+    .nav-bottom{border-top:1px solid #dedee5;margin:0 20px;padding:16px 0;display:flex;justify-content:space-around;gap:12px}
+    .nav-bottom a{width:24px;height:24px;color:#a6a8b1;display:grid;place-items:center}
+    .nav-bottom a:hover{color:#777a84}
+
+    /* Overlay dropdown: covers the plus button */
+    .plus-menu{
+      position:absolute;
+      left:16px;
+      top:0;
+      transform:none;
+      width:228px;
+      padding:8px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+      z-index:30;
+      display:none;
+    }
+    .plus-zone.open .plus-menu{display:block}
+    .plus-zone.open .plus-button{opacity:0;pointer-events:none}
+    .plus-menu::before{display:none}
+    .menu-action{
+      width:100%;
+      min-height:38px;
+      border:0;
+      background:transparent;
+      border-radius:9px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 10px;
+      color:#2f3138;
+      font-size:14px;
+      font-weight:520;
+      text-align:left;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .menu-action:hover{background:#f2f2f4}
+    .menu-action svg{width:20px;height:20px;color:#7d808b;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.6}
+    .menu-separator{height:1px;background:#eeeeF2;margin:6px 4px}
+
+    /* Main Library mock */
+    main{
+      grid-area:main;
+      background:var(--surface);
+      margin:0 14px 0 0;
+      border-radius:0 0 22px 22px;
+      overflow:hidden;
+      border-top:1px solid #f0f0f2;
+      display:flex;
+      flex-direction:column;
+    }
+    .library-head{padding:24px 30px 16px;display:flex;align-items:flex-end;justify-content:space-between}
+    h1{font-size:32px;line-height:1.1;margin:0 0 8px;font-weight:760;letter-spacing:-.03em}
+    .sub{margin:0;color:#8b8e98;font-size:14px}
+    .tabs{display:flex;gap:8px}
+    .tab{height:36px;border:1px solid #e5e5eb;background:#fff;border-radius:999px;padding:0 14px;font-weight:600;color:#696c76}
+    .tab.active{background:#272a32;color:white;border-color:#272a32}
+    .toolbar{padding:0 30px 16px;display:flex;gap:12px;align-items:center}
+    .search{height:42px;max-width:360px;flex:1;border:1px solid #e4e4ea;border-radius:12px;padding:0 14px;color:#8b8e98;display:flex;align-items:center;gap:9px}
+    .filter{height:42px;border:1px solid #e4e4ea;border-radius:12px;background:white;padding:0 14px;color:#60636e;font-weight:600}
+    .table{margin:0 30px;border:1px solid #ececf1;border-radius:16px;overflow:hidden;background:#fff}
+    .row{display:grid;grid-template-columns:40px 1.5fr 1fr 1fr 92px;align-items:center;min-height:62px;padding:0 16px;border-bottom:1px solid #f0f0f3;font-size:14px}
+    .row.header{min-height:44px;color:#9a9ca5;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;background:#fafafa}
+    .row:last-child{border-bottom:0}
+    .cover{width:34px;height:34px;border-radius:7px;background:linear-gradient(135deg,#ececf4,#cfd2ef)}
+    .track strong{display:block;font-weight:650}
+    .track span{display:block;color:#9699a3;font-size:12px;margin-top:2px}
+    .muted{color:#888b96}
+    .pill{width:max-content;border-radius:999px;background:#f1f1f4;color:#696c77;padding:5px 9px;font-size:12px;font-weight:650}
+    .player{
+      grid-area:player;
+      height:64px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      border-top:1px solid var(--line);
+      background:var(--surface);
+      color:var(--text);
+      padding:0 40px;
+      min-width:0;
+      z-index:800;
+    }
+    .player-track{width:17%;min-width:210px;display:flex;align-items:center;gap:14px;overflow:hidden;margin-right:10px}
+    .player-cover{width:48px;height:48px;border-radius:4px;object-fit:cover;background:#e3e3e8;flex:0 0 auto}
+    .player-meta{min-width:0}
+    .player-meta strong{display:block;font-size:14px;font-weight:650;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .player-meta span{display:block;color:#737682;font-size:12px;line-height:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .player-controls{height:48px;display:flex;align-items:center;gap:10px;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+    .icon-btn{border:0;background:transparent;color:var(--text);display:grid;place-items:center;border-radius:6px;cursor:pointer}
+    .icon-btn:hover{background:#f1f1f4}
+    .icon-btn svg{fill:currentColor}
+    .prev-next{width:22px;height:42px}
+    .play-main{width:48px;height:48px}
+    .repeat,.volume{width:32px;height:32px;margin-left:2px}
+    .player-time{width:44px;flex:0 0 auto;font-size:14px;font-variant-numeric:tabular-nums;color:#2d3037}
+    .player-time.elapsed{text-align:right}
+    .waveform{height:40px;flex:1;min-width:140px;display:flex;align-items:center;gap:2px;overflow:hidden;background:var(--surface);padding:0 6px}
+    .bar{width:3px;border-radius:999px;background:#cfd1d8;opacity:.95}
+    .bar.played{background:#2f35d8}
+    .volume-range{width:96px;position:relative;height:36px;display:flex;align-items:center}
+    .volume-range input{width:100%;appearance:none;background:transparent;position:relative;z-index:2;cursor:pointer}
+    .volume-range input::-webkit-slider-thumb{appearance:none;width:0;height:0}
+    .volume-bg,.volume-fill{position:absolute;height:4px;border-radius:999px;left:0}
+    .volume-bg{width:100%;background:#dfe3ff}
+    .volume-fill{width:82%;background:#3741f4}
+    .quality{margin-left:12px;border:0;background:transparent;color:#4b54f6;border-radius:6px;height:32px;padding:0 9px;font-size:12px;font-weight:650;cursor:pointer}
+    .quality:hover{background:#eef0ff}
+
+    .mobile-create-zone{display:none}
+
+    @media(max-width:760px){
+      .app{grid-template-columns:1fr;grid-template-rows:58px 1fr 64px;grid-template-areas:"header" "main" "player"}
+      nav{display:none}
+      header{margin:0;border-radius:0;height:58px}
+      main{margin:0;border-radius:0}
+      .library-head{padding:20px 18px 12px}.toolbar{padding:0 18px 12px}.table{margin:0 18px}
+      .row{grid-template-columns:36px 1fr 70px}.row > :nth-child(3),.row > :nth-child(4){display:none}
+      .mobile-create-zone{display:block;position:fixed;right:18px;bottom:82px;width:64px;height:64px;z-index:1200}
+      .mobile-create-zone .plus-button{position:absolute;right:0;bottom:0}
+      .mobile-create-zone .plus-menu{left:auto;right:0;top:auto;bottom:0;width:228px}
+      .mobile-create-zone.open .plus-menu{display:block}
+      .mobile-create-zone.open .plus-button{opacity:0;pointer-events:none}
+      .player{padding:0 14px;gap:8px}
+      .player-track{width:auto;min-width:0;flex:1}
+      .player-controls,.repeat,.player-time,.waveform,.volume,.volume-range,.quality{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <nav aria-label="Primary navigation">
+      <div class="workspace">
+        <img src="https://images.bridge.audio/6it9k4Qas5Ft9fKpBkMTn6CApWkQRALQYlnTwPHPOiE/fill/400/400/ce/0/czM6Ly9iZGdhLXByZC1wdWIvZDAvMWEvZjYvNzUvNmI2ZTA3M2EtZDU5Ny00NjE3LWFiYWUtYTQ1Njc1ZjYxYWQwLg.jpg" alt="My Label workspace">
+      </div>
+
+      <div class="nav-scroll">
+        <div class="plus-zone create-zone" id="plusZone">
+          <button class="plus-button create-button" id="plusButton" aria-label="Create" aria-haspopup="menu" aria-expanded="false">
+            <svg viewBox="0 0 20 20"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"/></svg>
+          </button>
+
+          <div class="plus-menu" id="plusMenu" role="menu" aria-label="Create menu">
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Upload File
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M3.75 7.5A2.25 2.25 0 0 1 6 5.25h3.88a1.5 1.5 0 0 1 1.06.44l1.12 1.12c.28.28.66.44 1.06.44H18A2.25 2.25 0 0 1 20.25 9.5v7A2.25 2.25 0 0 1 18 18.75H6a2.25 2.25 0 0 1-2.25-2.25v-9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Upload Folder
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Create Project
+            </button>
+            <div class="menu-separator"></div>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M4.5 8.25 12 4l7.5 4.25M4.5 8.25V16L12 20.25 19.5 16V8.25M4.5 8.25 12 12.5m7.5-4.25L12 12.5m0 7.75V12.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Create New Workspace
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 18 17"><path d="M14 4.75V9.75M16.5 7.25H11.5M9.625 3.8125C9.625 5.3658 8.3658 6.625 6.8125 6.625C5.2592 6.625 4 5.3658 4 3.8125C4 2.2592 5.2592 1 6.8125 1C8.3658 1 9.625 2.2592 9.625 3.8125ZM1.5 14.5286C1.5 11.5035 3.87849 9.125 6.8125 9.125C9.74651 9.125 12.125 11.5035 12.125 14.4375" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Invite Team Member
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M6 17.25A4.5 4.5 0 0 1 6.75 8.3a5.25 5.25 0 0 1 10.12 1.48A3.75 3.75 0 0 1 18 17.25h-3.75M12 12v8m0-8-3 3m3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Import from FTP / Disco
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-items">
+          <a class="nav-item active" href="#">
+            <span class="nav-icon fill">
+              <svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M17.721 1.599a.75.75 0 0 1 .279.583v11.29a2.25 2.25 0 0 1-1.774 2.2l-2.041.44a2.216 2.216 0 0 1-.938-4.332l2.662-.577a.75.75 0 0 0 .591-.733V6.112l-8 1.73v7.684a2.25 2.25 0 0 1-1.774 2.2l-2.042.44a2.216 2.216 0 1 1-.935-4.331l2.659-.573A.75.75 0 0 0 7 12.529V4.236a.75.75 0 0 1 .591-.733l9.5-2.054a.75.75 0 0 1 .63.15Z" clip-rule="evenodd"/></svg>
+            </span>
+            <span>Library</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <span class="nav-icon stroke">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776"/></svg>
+            </span>
+            <span>Projects</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <span class="nav-icon stroke">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"/></svg>
+            </span>
+            <span>Shared</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <span class="nav-icon stroke">
+              <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"/></svg>
+            </span>
+            <span>Received</span>
+          </a>
+
+          <a class="nav-item" href="#">
+            <span class="badge">BETA</span>
+            <span class="nav-icon fill" style="color:#8c8f9b">
+              <svg viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 13.5C2.25 8.94365 5.94365 5.25 10.5 5.25C10.9142 5.25 11.25 5.58579 11.25 6V12.75H18C18.4142 12.75 18.75 13.0858 18.75 13.5C18.75 18.0563 15.0563 21.75 10.5 21.75C5.94365 21.75 2.25 18.0563 2.25 13.5Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12.75 3C12.75 2.58579 13.0858 2.25 13.5 2.25C18.0563 2.25 21.75 5.94365 21.75 10.5C21.75 10.9142 21.4142 11.25 21 11.25H13.5C13.0858 11.25 12.75 10.9142 12.75 10.5V3Z"/></svg>
+            </span>
+            <span>Analytics</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-bottom">
+        <a href="#" aria-label="Settings">
+          <svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path fill-rule="evenodd" d="M7.84 1.804A1 1 0 0 1 8.82 1h2.36a1 1 0 0 1 .98.804l.331 1.652a6.993 6.993 0 0 1 1.929 1.115l1.598-.54a1 1 0 0 1 1.186.447l1.18 2.044a1 1 0 0 1-.205 1.251l-1.267 1.113a7.047 7.047 0 0 1 0 2.228l1.267 1.113a1 1 0 0 1 .206 1.25l-1.18 2.045a1 1 0 0 1-1.187.447l-1.598-.54a6.993 6.993 0 0 1-1.929 1.115l-.33 1.652a1 1 0 0 1-.98.804H8.82a1 1 0 0 1-.98-.804l-.331-1.652a6.993 6.993 0 0 1-1.929-1.115l-1.598.54a1 1 0 0 1-1.186-.447l-1.18-2.044a1 1 0 0 1 .205-1.251l1.267-1.114a7.05 7.05 0 0 1 0-2.227L1.821 7.773a1 1 0 0 1-.206-1.25l1.18-2.045a1 1 0 0 1 1.187-.447l1.598.54A6.992 6.992 0 0 1 7.51 3.456l.33-1.652ZM10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" clip-rule="evenodd"/></svg>
+        </a>
+        <a href="#" aria-label="Invite">
+          <svg viewBox="0 0 18 17" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 4.75V7.25M14 7.25V9.75M14 7.25H16.5M14 7.25H11.5M9.625 3.8125C9.625 5.3658 8.3658 6.625 6.8125 6.625C5.2592 6.625 4 5.3658 4 3.8125C4 2.2592 5.2592 1 6.8125 1C8.3658 1 9.625 2.2592 9.625 3.8125ZM1.50077 14.5286C1.50026 14.4983 1.5 14.4679 1.5 14.4375C1.5 11.5035 3.87849 9.125 6.8125 9.125C9.74651 9.125 12.125 11.5035 12.125 14.4375V14.4396C12.125 14.4693 12.1247 14.499 12.1242 14.5286C10.5728 15.4627 8.7554 16 6.8125 16C4.8696 16 3.0522 15.4627 1.50077 14.5286Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </nav>
+
+    <header>
+      <div class="crumb">
+        <span class="crumb-icon">
+          <svg viewBox="0 0 20 20" width="15" height="15" fill="currentColor"><path d="M17.7 1.6a.75.75 0 0 1 .3.58v11.29a2.25 2.25 0 0 1-1.77 2.2l-2.04.44a2.22 2.22 0 0 1-.94-4.33l2.66-.58a.75.75 0 0 0 .59-.73V6.11l-8 1.73v7.69a2.25 2.25 0 0 1-1.77 2.2l-2.04.44a2.22 2.22 0 1 1-.94-4.33l2.66-.58A.75.75 0 0 0 7 12.53V4.24a.75.75 0 0 1 .59-.74l9.5-2.05a.75.75 0 0 1 .61.15Z"/></svg>
+        </span>
+        <a href="#">Library</a><span>/</span><strong>Tracks</strong>
+      </div>
+      <div class="header-actions">
+        <span class="header-button">?</span>
+        <span class="header-button">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20 17h2v2H2v-2h2v-7a8 8 0 1 1 16 0v7ZM9 21h6v2H9v-2Z"/></svg>
+        </span>
+        <img class="avatar" src="https://images.bridge.audio/EjJAjuZ4GBlkz4ws4q6uJf-gNv3PbKHBNQiO5Dnu-R0/rs:fit:400:400:1/g:sm/q:80/czM6Ly9iZGdhLXByZC1wdWIvODIvODMvMGMvOWEvMjY2YjJmMzktN2M4NS00NTViLWFkYzItYTFmZTlhMGM4MzgyLg.jpg" alt="User">
+      </div>
+    </header>
+
+    <main>
+      <section class="library-head">
+        <div>
+          <h1>Library</h1>
+          <p class="sub">Manage tracks, folders and workspace content.</p>
+        </div>
+        <div class="tabs">
+          <button class="tab active">Tracks</button>
+          <button class="tab">Playlists</button>
+          <button class="tab">Folders</button>
+        </div>
+      </section>
+      <section class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m21 21-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke-linecap="round"/></svg>
+          Search tracks
+        </div>
+        <button class="filter">Sort</button>
+        <button class="filter">Filter</button>
+      </section>
+      <section class="table">
+        <div class="row header"><span></span><span>Title</span><span>Artist</span><span>Album</span><span>Status</span></div>
+        <div class="row"><span class="cover"></span><span class="track"><strong>Golden Hour</strong><span>03:42 · WAV</span></span><span class="muted">Ada Miles</span><span class="muted">Demos 2026</span><span class="pill">Ready</span></div>
+        <div class="row"><span class="cover"></span><span class="track"><strong>Night Drive</strong><span>02:58 · MP3</span></span><span class="muted">The Lines</span><span class="muted">Singles</span><span class="pill">Shared</span></div>
+        <div class="row"><span class="cover"></span><span class="track"><strong>Soft Landing</strong><span>04:16 · WAV</span></span><span class="muted">Milo Rae</span><span class="muted">Archive</span><span class="pill">Private</span></div>
+      </section>
+    </main>
+
+    
+    <div class="mobile-create-zone create-zone" id="mobilePlusZone">
+      <button class="plus-button create-button" id="mobilePlusButton" aria-label="Create" aria-haspopup="menu" aria-expanded="false">
+        <svg viewBox="0 0 20 20"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"/></svg>
+      </button>
+      <div class="plus-menu" id="mobilePlusMenu" role="menu" aria-label="Create menu">
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0 4 4m-4-4-4 4M4 16v2.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Upload File
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M3.75 7.5A2.25 2.25 0 0 1 6 5.25h3.88a1.5 1.5 0 0 1 1.06.44l1.12 1.12c.28.28.66.44 1.06.44H18A2.25 2.25 0 0 1 20.25 9.5v7A2.25 2.25 0 0 1 18 18.75H6a2.25 2.25 0 0 1-2.25-2.25v-9Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Upload Folder
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Create Project
+            </button>
+            <div class="menu-separator"></div>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M4.5 8.25 12 4l7.5 4.25M4.5 8.25V16L12 20.25 19.5 16V8.25M4.5 8.25 12 12.5m7.5-4.25L12 12.5m0 7.75V12.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Create New Workspace
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 18 17"><path d="M14 4.75V9.75M16.5 7.25H11.5M9.625 3.8125C9.625 5.3658 8.3658 6.625 6.8125 6.625C5.2592 6.625 4 5.3658 4 3.8125C4 2.2592 5.2592 1 6.8125 1C8.3658 1 9.625 2.2592 9.625 3.8125ZM1.5 14.5286C1.5 11.5035 3.87849 9.125 6.8125 9.125C9.74651 9.125 12.125 11.5035 12.125 14.4375" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Invite Team Member
+            </button>
+            <button class="menu-action" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M6 17.25A4.5 4.5 0 0 1 6.75 8.3a5.25 5.25 0 0 1 10.12 1.48A3.75 3.75 0 0 1 18 17.25h-3.75M12 12v8m0-8-3 3m3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Import from FTP / Disco
+            </button>
+          </div>
+    </div>
+
+    <footer class="player" data-test="player" data-jimo-banner-push-down-exclude="true">
+      <div class="player-track">
+        <img src="https://images.bridge.audio/QQcvhCKbquveGWO3prThUZXPxU1RlrcjmeCLult9FLk/fill/200/200/ce/0/czM6Ly9iZGdhLXByZC1wdWIvMDcvMmEvODMvM2EvOTQ5ZGMxZDUtZDJjMS00NTBlLTkzODEtZTY2YzNhODMyYTA3LmpwZw.jpg" class="player-cover" alt="Support cover of 'Bout Love'" draggable="false">
+        <div class="player-meta">
+          <strong>Love</strong>
+          <span>Bill Withers • 'Bout Love</span>
+        </div>
+      </div>
+
+      <div class="player-controls">
+        <button class="icon-btn prev-next" aria-label="Previous">
+          <svg viewBox="0 0 24 24" width="20"><path d="M7 6a1 1 0 0 1 1 1v10a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1zm2.079 6.408a.5.5 0 0 1 0-.816l7.133-5.036a.5.5 0 0 1 .788.409v10.07a.5.5 0 0 1-.788.409l-7.133-5.036z"/></svg>
+        </button>
+        <button class="icon-btn play-main" aria-label="Play">
+          <svg viewBox="0 0 20 20" width="48"><path fill-rule="evenodd" d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm6.39-2.908a.75.75 0 0 1 .766.027l3.5 2.25a.75.75 0 0 1 0 1.262l-3.5 2.25A.75.75 0 0 1 8 12.25v-4.5a.75.75 0 0 1 .39-.658Z" clip-rule="evenodd"/></svg>
+        </button>
+        <button class="icon-btn prev-next" aria-label="Next">
+          <svg viewBox="0 0 24 24" width="20"><path d="M7.788 17.444A.5.5 0 0 1 7 17.035V6.965a.5.5 0 0 1 .788-.409l7.133 5.036a.5.5 0 0 1 0 .816l-7.133 5.036zM16 7a1 1 0 0 1 2 0v10a1 1 0 1 1-2 0V7z"/></svg>
+        </button>
+      </div>
+
+      <button class="icon-btn repeat" aria-label="Repeat off">
+        <svg viewBox="0 0 24 24" width="16"><path d="M8 20v1.932a.5.5 0 0 1-.82.385l-4.12-3.433A.5.5 0 0 1 3.382 18H18a2 2 0 0 0 2-2V8h2v8a4 4 0 0 1-4 4H8zm8-16V2.068a.5.5 0 0 1 .82-.385l4.12 3.433a.5.5 0 0 1-.321.884H6a2 2 0 0 0-2 2v8H2V8a4 4 0 0 1 4-4h10z"/></svg>
+      </button>
+      <time class="player-time elapsed">0:01</time>
+      <div class="waveform" aria-hidden="true"><span class="bar played" style="height:8px"></span><span class="bar played" style="height:14px"></span><span class="bar played" style="height:22px"></span><span class="bar played" style="height:30px"></span><span class="bar played" style="height:18px"></span><span class="bar played" style="height:12px"></span><span class="bar played" style="height:26px"></span><span class="bar played" style="height:34px"></span><span class="bar played" style="height:20px"></span><span class="bar played" style="height:10px"></span><span class="bar played" style="height:16px"></span><span class="bar played" style="height:28px"></span><span class="bar played" style="height:36px"></span><span class="bar played" style="height:24px"></span><span class="bar played" style="height:14px"></span><span class="bar played" style="height:18px"></span><span class="bar played" style="height:32px"></span><span class="bar played" style="height:40px"></span><span class="bar " style="height:26px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:20px"></span><span class="bar " style="height:30px"></span><span class="bar " style="height:22px"></span><span class="bar " style="height:12px"></span><span class="bar " style="height:18px"></span><span class="bar " style="height:34px"></span><span class="bar " style="height:26px"></span><span class="bar " style="height:16px"></span><span class="bar " style="height:10px"></span><span class="bar " style="height:24px"></span><span class="bar " style="height:32px"></span><span class="bar " style="height:18px"></span><span class="bar " style="height:28px"></span><span class="bar " style="height:36px"></span><span class="bar " style="height:22px"></span><span class="bar " style="height:12px"></span><span class="bar " style="height:16px"></span><span class="bar " style="height:30px"></span><span class="bar " style="height:24px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:20px"></span><span class="bar " style="height:34px"></span><span class="bar " style="height:26px"></span><span class="bar " style="height:18px"></span><span class="bar " style="height:12px"></span><span class="bar " style="height:28px"></span><span class="bar " style="height:38px"></span><span class="bar " style="height:20px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:22px"></span><span class="bar " style="height:32px"></span><span class="bar " style="height:16px"></span><span class="bar " style="height:10px"></span><span class="bar " style="height:26px"></span><span class="bar " style="height:34px"></span><span class="bar " style="height:24px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:18px"></span><span class="bar " style="height:30px"></span><span class="bar " style="height:20px"></span><span class="bar " style="height:12px"></span><span class="bar " style="height:28px"></span><span class="bar " style="height:36px"></span><span class="bar " style="height:22px"></span><span class="bar " style="height:16px"></span><span class="bar " style="height:10px"></span><span class="bar " style="height:24px"></span><span class="bar " style="height:32px"></span><span class="bar " style="height:18px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:26px"></span><span class="bar " style="height:34px"></span><span class="bar " style="height:20px"></span><span class="bar " style="height:12px"></span><span class="bar " style="height:16px"></span><span class="bar " style="height:28px"></span><span class="bar " style="height:36px"></span><span class="bar " style="height:22px"></span><span class="bar " style="height:14px"></span><span class="bar " style="height:18px"></span></div>
+      <time class="player-time">4:57</time>
+      <button class="icon-btn volume" aria-label="Volume">
+        <svg viewBox="0 0 24 24" width="16"><path d="M10 7.22L6.603 10H3v4h3.603L10 16.78V7.22zM5.889 16H2a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h3.889l5.294-4.332a.5.5 0 0 1 .817.387v15.89a.5.5 0 0 1-.817.387L5.89 16zm13.517 4.134l-1.416-1.416A8.978 8.978 0 0 0 21 12a8.982 8.982 0 0 0-3.304-6.968l1.42-1.42A10.976 10.976 0 0 1 23 12c0 3.223-1.386 6.122-3.594 8.134zm-3.543-3.543l-1.422-1.422A3.993 3.993 0 0 0 16 12c0-1.43-.75-2.685-1.88-3.392l1.439-1.439A5.991 5.991 0 0 1 18 12c0 1.842-.83 3.49-2.137 4.591z"/></svg>
+      </button>
+      <div class="volume-range">
+        <input type="range" min="0" max="100" value="82" aria-label="Volume">
+        <span class="volume-fill"></span>
+        <span class="volume-bg"></span>
+      </div>
+      <button class="quality">Normal</button>
+    </footer>
+  </div>
+
+  <script>
+    const zones = Array.from(document.querySelectorAll('.create-zone'));
+
+    function setOpen(zone, isOpen){
+      zones.forEach((candidate) => {
+        const open = candidate === zone && isOpen;
+        candidate.classList.toggle('open', open);
+        const button = candidate.querySelector('.create-button');
+        if (button) button.setAttribute('aria-expanded', String(open));
+      });
+    }
+
+    zones.forEach((zone) => {
+      const button = zone.querySelector('.create-button');
+      button.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setOpen(zone, !zone.classList.contains('open'));
+      });
+      zone.querySelector('.plus-menu').addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
+    });
+
+    document.addEventListener('click', () => zones.forEach((zone) => setOpen(zone, false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') zones.forEach((zone) => setOpen(zone, false));
+    });
+  </script>
+</body>
+</html>
