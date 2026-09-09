@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>SACEM Cloud × Bridge.audio  -  Le cloud de l’industrie musicale</title>
+<meta content="SACEM Cloud × Bridge.audio : le cloud de l’industrie musicale avec un espace de travail pour organiser et partager votre musique, et des Hubs de découvrabilité pour être trouvé par les bons professionnels." name="description"/>
+<meta content="#ffffff" name="theme-color"/>
+<style id="design-system">
+:root{
+  --ink:#111114; --muted:#696970; --line:rgba(17,17,20,.08); --soft:#f6f6f8;
+  --page:min(1280px,calc(100% - 48px)); --header-h:70px;
+  --shadow:0 18px 60px rgba(17,17,21,.07);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:#fff;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+img{max-width:100%} a{color:inherit;text-decoration:none} button{font:inherit}.wrap{width:var(--page);margin:0 auto}.center{text-align:center}
+.site-header{position:sticky;top:0;z-index:500;height:var(--header-h);background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border-bottom:1px solid rgba(17,17,20,.055)}
+.site-header>.wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:28px}.brand img{display:block;width:auto;height:42px;object-fit:contain}.nav{display:flex;align-items:center;gap:22px;font-size:12.5px;color:#5d5d63}.nav a:hover{color:#111}.actions{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 17px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid transparent;transition:.2s ease}.btn-primary{background:#111;color:#fff}.btn-primary:hover{transform:translateY(-1px);background:#26262a}.btn-secondary{background:#fff;border-color:var(--line)}
+.kicker,.feature-eyebrow{display:inline-block;color:#707078}.section{padding:92px 0}.section--tight{padding:78px 0}.section-head{max-width:880px;margin:0 auto 42px}.section-head--compact{margin-bottom:30px}.section-head--compact-lg{margin-bottom:54px}
+.hero{padding:58px 0 76px;overflow:hidden}.hero-copy{max-width:980px;margin:0 auto}.hero-actions{display:flex;justify-content:center;gap:9px;margin-top:22px}.cta-note{margin:10px auto 0;color:#77777d;font-size:12.5px;text-align:center}
+.hero-stage-wrap{position:relative;margin-top:28px;padding-bottom:38px}.hero-stage{position:relative;min-height:clamp(360px,48vw,660px)}.hero-slide{position:absolute;inset:0;display:grid;place-items:center;margin:0;opacity:0;transform:scale(.992);pointer-events:none;transition:opacity .55s ease,transform .55s ease}.hero-slide.is-active{opacity:1;transform:none;pointer-events:auto}.hero-slide img{display:block;width:min(1220px,100%);height:auto;border:0;border-radius:0;box-shadow:none;background:transparent}.hero-tabs{position:absolute;left:50%;bottom:0;transform:translateX(-50%);z-index:5;display:flex;gap:2px;padding:3px;border-radius:999px;border:1px solid rgba(17,17,20,.06);background:rgba(255,255,255,.82);backdrop-filter:blur(14px);box-shadow:0 7px 22px rgba(17,17,21,.06)}.hero-tab{border:0;background:transparent;color:#666;padding:8px 12px;border-radius:999px;font-size:11.5px;font-weight:600;cursor:pointer}.hero-tab.is-active{background:#111;color:#fff}
+
+.project-cloud-section{overflow:hidden}.project-cloud-head{margin-bottom:22px}.project-cloud-stage{position:relative;height:840px;margin-top:20px;isolation:isolate}.project-cloud-glow{position:absolute;border-radius:50%;filter:blur(80px);opacity:.10;pointer-events:none}.project-cloud-glow--1{width:320px;height:320px;background:#7282ff;left:8%;top:10%}.project-cloud-glow--2{width:280px;height:280px;background:#ff829d;right:8%;top:38%}.project-cloud-glow--3{width:310px;height:310px;background:#79dda8;left:40%;bottom:0}.project-cloud-card{position:absolute;width:clamp(220px,22vw,292px);height:222px;padding:8px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.95);box-shadow:0 15px 42px rgba(17,17,21,.075);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease;animation:float-card 13s ease-in-out infinite alternate}.project-cloud-card:nth-of-type(2n){animation-duration:15s;animation-delay:-4s}.project-cloud-card:nth-of-type(3n){animation-duration:17s;animation-delay:-7s}.project-cloud-card:hover{z-index:50!important;transform:translateY(-10px) scale(1.06)!important;box-shadow:0 30px 90px rgba(17,17,21,.15)}.project-cloud-card__media{height:172px;display:grid;place-items:center;overflow:hidden;border-radius:15px;background:#fff}.project-cloud-card__media img{width:100%;height:100%;object-fit:contain}.project-cloud-card__meta{height:34px;display:flex;align-items:center;padding:0 5px}.project-cloud-card--1{left:5%;top:58px;transform:rotate(-2.5deg)}.project-cloud-card--2{left:36%;top:28px;transform:rotate(1.4deg)}.project-cloud-card--3{right:5%;top:62px;transform:rotate(2.8deg)}.project-cloud-card--4{left:9%;top:296px;transform:rotate(2.1deg)}.project-cloud-card--5{left:36%;top:272px;transform:rotate(-1.1deg)}.project-cloud-card--6{right:9%;top:304px;transform:rotate(-2.4deg)}.project-cloud-card--7{left:6%;top:548px;transform:rotate(-1.8deg)}.project-cloud-card--8{left:35%;top:520px;transform:rotate(2.3deg)}.project-cloud-card--9{right:6%;top:556px;transform:rotate(-1.3deg)}@keyframes float-card{0%{translate:0 0}100%{translate:4px -10px}}
+.feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}.feature-card{padding:18px;border:1px solid var(--line);border-radius:26px;background:#fff;box-shadow:0 10px 34px rgba(17,17,21,.045)}.feature-card__copy{min-height:120px}.feature-card__media{margin-top:16px;cursor:pointer}.feature-card__media img{display:block;width:100%;height:auto;object-fit:contain;border-radius:13px}
+.search-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.search-card{padding:16px;border:1px solid var(--line);border-radius:26px;background:#fff}.search-card .media{cursor:pointer;overflow:hidden;border-radius:16px}.search-card .media img{display:block;width:100%;height:auto;border-radius:16px}
+.hub-list--logos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.hub-card{display:grid;grid-template-columns:68px minmax(0,1fr);gap:16px;align-items:center;padding:16px 18px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 28px rgba(17,17,21,.035)}.hub-card img{width:68px;height:68px;object-fit:contain;border-radius:16px;flex:0 0 auto}.hub-simple__copy{min-width:0}.hub-card strong{display:block;font-weight:600}
+.hubs-reassurance{padding-top:30px}
+.proof-capsules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.proof-capsule{display:flex;flex-direction:column;align-items:center;text-align:center;min-height:0;padding:28px 20px 22px;border-radius:30px;background:#f7f7f8}.ecosystem-logo-grid{width:100%;margin-top:4px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:center}.ecosystem-logo-grid img{display:block;width:100%;aspect-ratio:1/1;height:auto;padding:7px;object-fit:contain;object-position:center;border-radius:18px;background:#fff}.proof-capsule:first-child .ecosystem-logo-grid img{padding:0;border-radius:50%;aspect-ratio:1/1;object-fit:cover;height:auto}
+.switch-grid{display:grid;grid-template-columns:1fr .86fr;gap:58px;align-items:center}.switch-copy ul{margin:22px 0 0;padding:0;list-style:none;display:grid;gap:10px;color:#444}.switch-copy li:before{content:"✓";margin-right:9px}.switch-media{cursor:pointer;display:flex;justify-content:center}.switch-media img{display:block;width:min(100%,520px);height:auto;border-radius:22px;box-shadow:var(--shadow)}
+.partner-card{overflow:hidden;border:1px solid var(--line);border-radius:32px;background:#fff;box-shadow:var(--shadow)}.partner-top{display:grid;grid-template-columns:.7fr 1.3fr;gap:34px;align-items:center;padding:38px;cursor:pointer}.partner-top>img{width:100%;max-height:250px;object-fit:contain}.partner-offer-copy{margin:16px 0 0;color:var(--muted);font-size:16px}.partner-points{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}.partner-point{padding:23px 26px;border-right:1px solid var(--line)}.partner-point:last-child{border-right:0}.partner-point strong{font-size:13px}.partner-point p{margin:7px 0 0;line-height:1.45}
+.faq-list{max-width:900px;margin:0 auto}.faq-list details{border-bottom:1px solid var(--line)}.faq-list summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;padding:20px 0;font-weight:600}.faq-list summary::-webkit-details-marker{display:none}.faq-icon{font-size:22px;font-weight:400}.faq-answer{padding:0 36px 21px 0;line-height:1.6}.faq-more-wrap{padding-left:18px}.faq-list details[open]>summary .faq-icon{transform:rotate(45deg)}
+.cta{padding:110px 0;background:#111;color:#fff}.cta-inner{text-align:center;max-width:900px;margin:0 auto}.cta .btn-primary{background:#fff;color:#111}.cta .btn-secondary{color:#fff;background:transparent;border-color:rgba(255,255,255,.2)}.cta .cta-note{color:rgba(255,255,255,.58)}
+.footer{padding:54px 0 28px;border-top:1px solid var(--line)}.footer-top{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:30px}.footer-brand img{width:180px;height:auto;object-fit:contain}.footer-col{display:grid;align-content:start;gap:8px}.footer-col strong{margin-bottom:4px;font-size:12px}.footer-col a{font-size:12px;color:var(--muted)}.footer-bottom{display:flex;justify-content:space-between;gap:20px;margin-top:42px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:#888}
+.lightbox-modal{position:fixed;inset:0;z-index:1000;display:none;place-items:center;padding:18px}.lightbox-modal.is-open{display:grid}.lightbox-modal__backdrop{position:absolute;inset:0;background:rgba(8,8,10,.72);backdrop-filter:blur(9px)}.lightbox-modal__dialog{position:relative;z-index:1;width:min(1120px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;border-radius:26px;background:#fff;box-shadow:0 40px 120px rgba(0,0,0,.28)}.lightbox-modal__body{padding:12px}.lightbox-modal__image-wrap{display:grid;place-items:center;min-height:300px;border-radius:19px;background:#f7f7f8;overflow:hidden;touch-action:pan-y}.lightbox-modal__image{display:block;max-width:100%;max-height:calc(100vh - 190px);object-fit:contain}.lightbox-modal__meta{display:flex;justify-content:space-between;gap:22px;padding:16px 8px 8px}.lightbox-modal__title{margin:0;font-size:24px}.lightbox-modal__copy{margin:5px 0 0;color:var(--muted);font-size:13px}.lightbox-modal__counter,.lightbox-modal__hint{font-size:11px;color:#888}.lightbox-modal__close,.lightbox-modal__nav{position:absolute;z-index:3;border:1px solid rgba(17,17,20,.08);background:rgba(255,255,255,.94);box-shadow:0 8px 24px rgba(0,0,0,.08);cursor:pointer}.lightbox-modal__close{right:15px;top:15px;width:40px;height:40px;border-radius:50%;font-size:24px}.lightbox-modal__nav{top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;font-size:28px}.lightbox-modal__nav--prev{left:15px}.lightbox-modal__nav--next{right:15px}
+@media(max-width:1100px){.nav{display:none}.feature-grid{grid-template-columns:repeat(2,1fr)}.hub-list--logos{grid-template-columns:repeat(2,1fr)}.footer-top{grid-template-columns:1.4fr repeat(2,1fr)}.footer-col:nth-last-child(-n/**/+2){margin-top:18px}}
+@media(max-width:920px){:root{--page:calc(100% - 28px);--header-h:62px}.site-header .actions .btn-secondary{display:none}.brand img{height:34px}.section{padding:70px 0}.hero{padding:38px 0 54px}.hero-copy{text-align:left}.hero-actions{justify-content:flex-start;flex-wrap:wrap}.cta-note{text-align:left;margin-left:0}.hero-stage{min-height:54vw}.hero-tabs{max-width:calc(100% - 10px)}.focus-intro{padding:70px 0 24px}.focus-intro__inner{text-align:left}.focus-story,.focus-story--hubs{height:auto;padding:8px 0 58px}.focus-story__sticky{position:static;height:auto}.focus-story__grid{display:flex;flex-direction:column;gap:20px}.focus-story__copy{width:100%;min-height:150px}.focus-step{display:none;position:static}.focus-step.is-active{display:block}.focus-story__meter{position:static;margin-top:18px}.focus-story__media{width:100%;min-height:0}.focus-media{display:none;position:static}.focus-media.is-active{display:block}.focus-media img{max-height:none;border-radius:18px}.project-cloud-stage{height:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.project-cloud-glow{display:none}.project-cloud-card,.project-cloud-card--1,.project-cloud-card--2,.project-cloud-card--3,.project-cloud-card--4,.project-cloud-card--5,.project-cloud-card--6,.project-cloud-card--7,.project-cloud-card--8,.project-cloud-card--9{position:relative;inset:auto;width:auto;height:auto;transform:none;animation:none}.project-cloud-card__media{height:auto;aspect-ratio:1.58/1}.feature-grid,.search-trio{grid-template-columns:1fr}.hubs-reassurance__panel,.switch-grid,.partner-top{grid-template-columns:1fr}.switch-media img{width:min(100%,430px)}.proof-capsules{grid-template-columns:1fr}.proof-capsule{min-height:0}.partner-points{grid-template-columns:1fr}.partner-point{border-right:0;border-bottom:1px solid var(--line)}.partner-point:last-child{border-bottom:0}.lightbox-modal{padding:0}.lightbox-modal__dialog{width:100vw;height:100vh;max-height:none;border-radius:0}.lightbox-modal__body{height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:10px}.lightbox-modal__image-wrap{height:100%;min-height:0}.lightbox-modal__image{max-height:100%;width:100%}.lightbox-modal__meta{padding:12px 5px 54px}.lightbox-modal__nav{display:none}.footer-top{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}}
+@media(max-width:640px){:root{--page:calc(100% - 22px)}.actions .btn-primary{font-size:11px;padding:0 12px}.hero-tabs{width:max-content}.hero-tab{padding:7px 9px;font-size:10.5px}.hub-list--logos{grid-template-columns:1fr}.hub-card{grid-template-columns:58px minmax(0,1fr);gap:13px;padding:13px 14px}.hub-card img{width:58px;height:58px;border-radius:14px}.hub-card strong{font-size:17px}.ecosystem-logo-grid img{width:100%;height:auto;aspect-ratio:1/1}.proof-capsule:first-child .ecosystem-logo-grid img{height:auto}.footer-top{grid-template-columns:1fr}.footer-bottom{display:block;line-height:1.8}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+@media(max-width:760px){}
+
+@media (max-width: 720px){
+  
+  
+  
+}
+
+/* integrate the opportunity thumbs into the black module */
+
+
+
+/* ensure no secondary outer layout remains */
+
+
+
+/* Unified product focus  -  intro + tabs + product view */
+.product-focus{padding:118px 0 126px;background:#fff;overflow:hidden}
+.product-focus__shell{max-width:1220px}
+.product-focus__head{max-width:900px;margin:0 0 64px}
+
+.product-focus__layout{display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr);gap:64px;align-items:center}
+.product-focus__controls{min-width:0}
+.product-tabs{border-top:1px solid var(--line)}
+.product-tab{width:100%;display:grid;grid-template-columns:36px minmax(0,1fr) 20px;gap:12px;align-items:center;padding:18px 0;border:0;border-bottom:1px solid var(--line);background:transparent;color:#8b8b91;text-align:left;cursor:pointer;transition:color .22s ease}
+.product-tab:hover{color:#111}
+.product-tab.is-active{color:#111}
+.product-tab__num{font-size:11px;letter-spacing:.04em;color:#9a9aa0;font-variant-numeric:tabular-nums}
+.product-tab__title{font-size:20px;line-height:1.1;letter-spacing:-.025em;font-weight:560}
+.product-tab__arrow{font-size:17px;opacity:0;transform:translateX(-6px);transition:.22s ease}
+.product-tab.is-active .product-tab__arrow{opacity:1;transform:none}
+.product-focus__detail{min-height:108px;padding-top:25px}
+
+.product-focus__frame{position:relative;min-height:520px;display:grid;place-items:center;touch-action:pan-y}
+.product-focus__visual{position:absolute;inset:0;display:grid;place-items:center;margin:0;opacity:0;transform:translateY(8px) scale(.995);pointer-events:none;transition:opacity .34s ease,transform .34s ease}
+.product-focus__visual.is-active{opacity:1;transform:none;pointer-events:auto}
+.product-focus__visual img{display:block;width:100%;max-height:650px;object-fit:contain;border-radius:22px;box-shadow:0 18px 52px rgba(17,17,21,.06)}
+#hubs.product-focus{padding-top:132px}
+@media(max-width:920px){
+  .product-focus{padding:82px 0 88px}
+  .product-focus__head{margin-bottom:38px}
+  
+  
+  .product-focus__layout{display:flex;flex-direction:column;gap:28px;align-items:stretch}
+  .product-focus__controls{display:contents}
+  .product-tabs{order:1;display:flex;gap:8px;overflow-x:auto;padding:0 0 4px;border:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .product-tabs::-webkit-scrollbar{display:none}
+  .product-tab{flex:0 0 auto;width:auto;grid-template-columns:auto auto;padding:10px 14px;border:1px solid var(--line);border-radius:999px;gap:7px;white-space:nowrap}
+  .product-tab.is-active{background:#111;color:#fff;border-color:#111}
+  .product-tab.is-active .product-tab__num{color:rgba(255,255,255,.62)}
+  .product-tab__title{font-size:13px;font-weight:600}
+  .product-tab__arrow{display:none}
+  .product-focus__frame{order:2;min-height:0;aspect-ratio:1.54/1}
+  .product-focus__visual img{max-height:none;border-radius:17px}
+  .product-focus__detail{order:3;min-height:76px;padding-top:0}
+  
+  
+  #hubs.product-focus{padding-top:92px}
+}
+@media(max-width:640px){
+  .product-focus{padding:72px 0 78px}
+  .product-focus__head{margin-bottom:30px}
+  
+  .product-focus__frame{aspect-ratio:1.42/1}
+}
+
+@media (min-width:921px){
+  .product-focus[data-scroll-focus="true"]{
+    /* Enough vertical travel for every frame without trapping the wheel. */
+    height:calc(100vh + (var(--focus-steps) - 1) * 54vh);
+    min-height:calc(820px + (var(--focus-steps) - 1) * 420px);
+    padding:0;
+    overflow:visible;
+    background:#fff;
+  }
+  .product-focus[data-scroll-focus="true"] .product-focus__shell{
+    position:sticky;
+    top:64px;
+    min-height:calc(100vh - 64px);
+    padding-top:72px;
+    padding-bottom:56px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .product-focus[data-scroll-focus="true"] .product-focus__head{
+    margin-bottom:42px;
+  }
+  
+  .product-focus[data-scroll-focus="true"] .product-focus__layout{
+    grid-template-columns:minmax(245px,310px) minmax(0,1fr);
+    gap:58px;
+  }
+  .product-focus[data-scroll-focus="true"] .product-focus__frame{
+    min-height:440px;
+    height:min(55vh,610px);
+  }
+  .product-focus[data-scroll-focus="true"] .product-focus__visual img{
+    max-height:100%;
+  }
+  .product-focus[data-scroll-focus="true"] .product-tab{
+    transition:color .2s ease, opacity .2s ease;
+  }
+  .product-focus[data-scroll-focus="true"] .product-tab:not(.is-active){opacity:.7}
+  .product-focus[data-scroll-focus="true"] .product-tab.is-active{opacity:1}
+}
+@media (max-width:920px){
+  
+  
+  
+  
+}
+
+
+/* =========================================================
+   SACEM Cloud × Bridge.audio  -  final visual system V48
+   One typographic hierarchy / one rhythm / one spacing logic
+   ========================================================= */
+:root{
+  --font-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --font-text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  --text:#1d1d1f;
+  --secondary:#6e6e73;
+  --tertiary:#86868b;
+  --soft:#f5f5f7;
+  --hairline:rgba(0,0,0,.075);
+  --display-xl:clamp(58px,6.15vw,84px);
+  --display-lg:clamp(44px,4.55vw,60px);
+  --display-md:clamp(34px,3.25vw,44px);
+  --title-lg:28px;
+  --title-md:20px;
+  --body-lg:19px;
+  --body:16px;
+  --body-sm:14px;
+  --label:12px;
+}
+html{font-family:var(--font-text)}
+body{
+  font-family:var(--font-text);
+  color:var(--text);
+  font-size:16px;
+  line-height:1.47;
+  letter-spacing:-.011em;
+  font-weight:400;
+}
+button,input,textarea,select{font:inherit}
+
+/* Global rhythm */
+.section{padding:112px 0}
+.section--tight{padding:88px 0}
+.section-head{max-width:860px;margin:0 auto 50px}
+.section-head--compact{margin-bottom:34px}
+.section-head--compact-lg{margin-bottom:46px}
+.section-head.center{text-align:center}
+.kicker,.feature-eyebrow{
+  display:inline-block;
+  color:var(--secondary);
+  font-size:12px;
+  line-height:1.2;
+  font-weight:600;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+}
+
+/* Hero: strongest hierarchy, restrained weight */
+.hero{padding:64px 0 86px}
+.hero-copy{max-width:1080px;margin:0 auto}
+.hero-copy .kicker{
+  color:var(--secondary);
+  font-size:14px;
+  line-height:1.2;
+  font-weight:560;
+  letter-spacing:-.008em;
+  text-transform:none;
+}
+.hero-copy h1{max-width:1180px;margin:20px auto 0}
+.hero-title-main,.hero-title-sub{
+  display:block;
+  font-family:var(--font-display);
+  font-size:var(--display-xl);
+  line-height:.975;
+  letter-spacing:-.052em;
+}
+.hero-title-main{color:var(--text);font-weight:600}
+.hero-title-sub{margin-top:7px;color:#86868b;font-weight:400}
+.hero-lead{
+  max-width:760px;
+  margin:25px auto 0;
+  color:var(--secondary);
+  font-size:18px;
+  line-height:1.48;
+  letter-spacing:-.018em;
+  font-weight:400;
+}
+.hero-actions{margin-top:27px;gap:10px}
+.hero-stage-wrap{margin-top:36px}
+.btn{min-height:44px;padding:0 19px;font-size:14px;font-weight:560;letter-spacing:-.012em}
+.cta-note{margin-top:10px;font-size:12px;color:var(--tertiary)}
+
+/* H2 hierarchy */
+.section-head h2,
+.product-focus__head h2,
+.switch-copy h2,
+.partner-copy h2,
+.cta h2{
+  margin:0;
+  font-family:var(--font-display);
+  color:var(--text);
+  font-size:var(--display-lg);
+  line-height:1.015;
+  letter-spacing:-.043em;
+  font-weight:560;
+}
+.section-head--compact h2,
+.section-head--compact-lg h2,
+.hubs-reassurance__copy h2{
+  font-size:var(--display-md);
+  line-height:1.04;
+  letter-spacing:-.037em;
+  font-weight:560;
+}
+.section-head p,
+.product-focus__head p,
+.switch-copy>p,
+.partner-copy>p,
+.cta-inner>p,
+.hubs-reassurance__copy p{
+  color:var(--secondary);
+  font-size:var(--body);
+  line-height:1.52;
+  letter-spacing:-.012em;
+  font-weight:400;
+}
+.section-head p{max-width:680px;margin:15px auto 0}
+
+/* Product focus: the two flagship product sections */
+.product-focus{padding:128px 0 134px}
+.product-focus__shell{max-width:1220px}
+.product-focus__head{max-width:850px;margin:0 0 60px}
+.product-focus__head h2{font-size:clamp(48px,4.85vw,64px);font-weight:560}
+.product-focus__head p{max-width:650px;margin:17px 0 0;font-size:18px;line-height:1.5}
+.product-focus__layout{grid-template-columns:minmax(260px,318px) minmax(0,1fr);gap:72px}
+.product-tabs{border-top:1px solid var(--hairline)}
+.product-tab{
+  grid-template-columns:32px minmax(0,1fr) 18px;
+  gap:12px;
+  min-height:61px;
+  padding:17px 0;
+  border-bottom:1px solid var(--hairline);
+  color:#86868b;
+}
+.product-tab__num{font-size:11px;line-height:1;font-weight:500;letter-spacing:.02em;color:#a1a1a6}
+.product-tab__title{font-size:19px;line-height:1.12;letter-spacing:-.022em;font-weight:500}
+.product-tab.is-active .product-tab__title{font-weight:600}
+.product-tab__arrow{font-size:16px}
+.product-focus__detail{min-height:106px;padding-top:25px}
+.product-focus__detail h3{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:26px;
+  line-height:1.08;
+  letter-spacing:-.032em;
+  font-weight:560;
+}
+.product-focus__detail p{max-width:31ch;margin:9px 0 0;color:var(--secondary);font-size:15px;line-height:1.5}
+.product-focus__visual img{border-radius:20px;box-shadow:0 14px 42px rgba(17,17,21,.055)}
+#hubs.product-focus{padding-top:138px}
+
+/* Project cloud */
+.project-cloud-section{padding-top:108px;padding-bottom:106px}
+.project-cloud-head{margin-bottom:12px}
+.project-cloud-stage{height:790px;margin-top:16px}
+.project-cloud-card{border-radius:20px;box-shadow:0 14px 38px rgba(17,17,21,.065)}
+.project-cloud-card__meta h3{margin:0;font-size:13px;line-height:1.2;font-weight:600;letter-spacing:-.012em}
+.project-cloud-card__meta p{font-size:12px;line-height:1.3}
+
+/* Functional cards: intentionally quieter than sections */
+.workspace-plus{background:var(--soft)}
+.feature-grid{gap:14px}
+.feature-card{padding:19px;border-radius:23px;border-color:var(--hairline);box-shadow:none}
+.feature-card__copy{min-height:108px}
+.feature-card__copy h3,.search-card h3{
+  margin:0;
+  font-family:var(--font-display);
+  font-size:20px;
+  line-height:1.12;
+  letter-spacing:-.025em;
+  font-weight:560;
+}
+.feature-card__copy p,.search-card p{margin:8px 0 0;color:var(--secondary);font-size:14px;line-height:1.46}
+.feature-eyebrow{margin-bottom:9px;color:var(--tertiary);font-size:11px}
+.search-card{padding:14px;border-radius:22px;border-color:var(--hairline);box-shadow:none}
+.search-card .media,.search-card .media img{border-radius:14px}
+.search-trio{gap:16px}
+
+/* Hubs: compact and editorial */
+.hub-list--logos{gap:14px}
+.hub-card{
+  grid-template-columns:64px minmax(0,1fr);
+  gap:15px;
+  padding:14px 15px;
+  border-radius:18px;
+  border-color:var(--hairline);
+  box-shadow:none;
+}
+.hub-card img{width:64px;height:64px;border-radius:15px}
+.hub-simple__copy strong{display:block;font-family:var(--font-display);font-size:20px;line-height:1.08;letter-spacing:-.027em;font-weight:560}
+.hub-simple__tagline{margin:6px 0 0;color:var(--secondary);font-size:13.5px;line-height:1.36}
+
+/* Black proof module */
+.hubs-reassurance{padding:32px 0 108px}
+
+
+
+.hubs-reassurance__copy h2{color:#fff;margin:0}
+.hubs-reassurance__copy p{max-width:60ch;margin:11px 0 0;color:rgba(255,255,255,.66);font-size:15px;line-height:1.48}
+.hubs-reassurance__panel 
+
+
+
+
+
+
+
+
+/* Ecosystem reassurance */
+#proof{background:var(--soft)}
+.proof-capsules{gap:14px}
+.proof-capsule{padding:27px 20px 20px;border-radius:26px;background:#fff}
+.proof-number,.ecosystem-stat-number{font-family:var(--font-display);font-size:48px;line-height:.95;letter-spacing:-.047em;font-weight:600}
+.ecosystem-stat-title{margin:12px 0 0;font-family:var(--font-display);font-size:19px;line-height:1.12;letter-spacing:-.026em;font-weight:560}
+.ecosystem-stat-copy{min-height:42px;margin:7px auto 9px;color:var(--secondary);font-size:13.5px;line-height:1.4}
+.ecosystem-logo-grid{margin-top:0;gap:8px}
+.ecosystem-logo-grid img{padding:6px;border-radius:15px}
+.proof-capsule:first-child .ecosystem-logo-grid img{padding:0;border-radius:50%}
+
+/* Multiple workspaces */
+.switch-grid{grid-template-columns:.88fr 1.12fr;gap:76px}
+.switch-copy{max-width:520px}
+.switch-copy ul{margin-top:25px;gap:11px;color:#4d4d52;font-size:15px;line-height:1.45}
+.switch-media img{width:min(100%,470px);border-radius:19px;box-shadow:0 16px 46px rgba(17,17,21,.065)}
+
+/* SACEM offer */
+.partnership{background:var(--soft)}
+.partner-card{border:0;border-radius:28px;box-shadow:none;background:#fff}
+.partner-top{grid-template-columns:.62fr 1.38fr;gap:46px;padding:42px 44px}
+.partner-offer-copy{margin-top:14px;color:var(--secondary);font-size:15px;line-height:1.5}
+.partner-points{border-top:1px solid var(--hairline)}
+.partner-point{padding:22px 25px;border-right:1px solid var(--hairline)}
+.partner-point strong{font-size:12px;line-height:1.25;font-weight:600}
+.partner-point p{margin:7px 0 0;color:var(--secondary);font-size:13px;line-height:1.45}
+
+/* FAQ */
+.faq-list{max-width:860px}
+.faq-list details{border-bottom:1px solid var(--hairline)}
+.faq-list summary{padding:21px 0;font-size:16px;line-height:1.35;font-weight:560;letter-spacing:-.013em}
+.faq-answer{padding:0 42px 22px 0;color:var(--secondary);font-size:14px;line-height:1.58}
+
+/* Final CTA */
+.cta{padding:122px 0}
+.cta h2{color:#fff;font-size:clamp(44px,4.8vw,62px);font-weight:560}
+.cta-inner>p{max-width:620px;margin:16px auto 0;color:rgba(255,255,255,.64);font-size:17px;line-height:1.5}
+.cta .hero-actions{margin-top:27px}
+
+/* Footer */
+.footer{padding:50px 0 26px}
+.footer-col strong{font-size:11.5px;font-weight:600;letter-spacing:.005em}
+.footer-col a{font-size:12.5px;line-height:1.4}
+.footer-brand p{color:var(--secondary);font-size:12.5px;line-height:1.5}
+.footer-bottom{font-size:11px}
+
+@media(max-width:1100px){
+  .section{padding:96px 0}
+  .product-focus__layout{gap:48px}
+}
+@media(max-width:920px){
+  :root{--display-xl:clamp(43px,10.7vw,58px);--display-lg:clamp(36px,8.1vw,46px);--display-md:clamp(30px,7vw,38px)}
+  .section{padding:76px 0}.section--tight{padding:66px 0}
+  .hero{padding:42px 0 62px}.hero-copy{text-align:left}.hero-copy h1{margin-top:17px}
+  .hero-title-main,.hero-title-sub{line-height:.99;letter-spacing:-.047em}.hero-title-sub{margin-top:5px}
+  .hero-lead{margin:20px 0 0;font-size:16px;line-height:1.5}
+  .hero-actions{justify-content:flex-start;margin-top:22px}.cta-note{text-align:left;margin-left:0}
+  .product-focus{padding:84px 0 90px}.product-focus__head{margin-bottom:35px}.product-focus__head h2{font-size:var(--display-lg)}.product-focus__head p{font-size:16px}
+  .product-focus__layout{gap:26px}.product-focus__detail{min-height:92px;padding-top:18px}.product-focus__detail h3{font-size:23px}
+  .product-tab{min-height:auto;padding:10px 14px}.product-tab__title{font-size:15px}.product-tab__num{font-size:10px}
+  .project-cloud-section{padding-top:78px;padding-bottom:78px}.project-cloud-stage{height:auto}
+  .hubs-reassurance{padding:22px 0 76px}
+  .hubs-reassurance__panel .hubs-reassurance__panel .opportunity-thumbs::-webkit-scrollbar{display:none}
+  
+  .switch-grid{gap:34px}.switch-media img{width:min(100%,430px)}
+  .partner-top{gap:26px;padding:28px}
+}
+@media(max-width:640px){
+  :root{--page:calc(100% - 30px)}
+  .section{padding:68px 0}.section--tight{padding:58px 0}
+  .section-head{margin-bottom:34px}.section-head p{font-size:15px}
+  .hero{padding-top:36px}.hero-copy .kicker{font-size:13px}.hero-lead{font-size:15.5px}
+  .btn{min-height:43px;padding:0 17px;font-size:13px}
+  .feature-card,.search-card{border-radius:20px}
+  .hub-card{grid-template-columns:58px minmax(0,1fr);padding:13px}.hub-card img{width:58px;height:58px}.hub-simple__copy strong{font-size:18px}.hub-simple__tagline{font-size:13px}
+  .proof-capsule{padding:24px 16px 18px}.proof-number,.ecosystem-stat-number{font-size:43px}.ecosystem-stat-title{font-size:18px}
+  .switch-copy ul{font-size:14px}
+  .partner-top{padding:23px}.partner-points{display:block}.partner-point{border-right:0;border-bottom:1px solid var(--hairline)}.partner-point:last-child{border-bottom:0}
+  .faq-list summary{padding:18px 0;font-size:15px}.faq-answer{font-size:13.5px;padding-right:24px}
+  .cta{padding:88px 0}.cta-inner>p{font-size:15.5px}
+}
+
+
+/* V49  -  Bridge blue + Apple-like section rhythm */
+:root{
+  --bridge-blue:#D9004C;
+  --apple-gray:#F5F5F7;
+  --sacem-soft:#F0F2F8;
+}
+
+/* Brand accent: network + primary actions only */
+.hero-title-sub{
+  color:var(--bridge-blue) !important;
+  font-weight:430 !important;
+}
+.btn-primary,
+.cta .btn-primary,
+.partnership .btn-primary,
+a.btn-primary,
+button.btn-primary{
+  background:var(--bridge-blue) !important;
+  border-color:var(--bridge-blue) !important;
+  color:#fff !important;
+  box-shadow:none !important;
+}
+.btn-primary:hover,
+.cta .btn-primary:hover,
+.partnership .btn-primary:hover,
+a.btn-primary:hover,
+button.btn-primary:hover{
+  background:#B80040 !important;
+  border-color:#B80040 !important;
+  transform:translateY(-1px);
+}
+.btn-primary:focus-visible{
+  outline:3px solid rgba(217,0,76,.2);
+  outline-offset:3px;
+}
+
+/* Apple-like section rhythm */
+.hero{background:#fff !important;}
+#workspace.product-focus,
+.product-focus--workspace{background:var(--apple-gray) !important;}
+#workspace-projects,
+.project-cloud-section{background:#fff !important;}
+.workspace-plus{background:var(--apple-gray) !important;}
+#search{background:#fff !important;}
+#hubs.product-focus,
+.product-focus--hubs{background:var(--apple-gray) !important;}
+#hubs + .section,
+.hubs-grid-section{background:#fff !important;}
+#hubs-proof{background:#111 !important;}
+#proof{background:var(--apple-gray) !important;}
+.section.multi-workspaces,
+.section:has(.multi-workspace-visual){background:#fff !important;}
+#partnership{background:var(--sacem-soft) !important;}
+#faq{background:#fff !important;}
+#cta{background:#111 !important;}
+
+/* keep white-space transitions clean, no card-like edges */
+.product-focus,
+.workspace-plus,
+.project-cloud-section,
+#search,
+#proof,
+#partnership,
+#faq,
+#cta{
+  border-top:0 !important;
+  border-bottom:0 !important;
+}
+
+/* dark proof remains a deliberate visual break */
+#hubs-proof 
+#hubs-proof h2,
+#hubs-proof 
+#hubs-proof p,
+#hubs-proof 
+
+/* slightly stronger breathing room around color transitions */
+#workspace.product-focus,
+#hubs.product-focus{padding-top:132px;padding-bottom:132px;}
+#proof{padding-top:108px;padding-bottom:108px;}
+#partnership{padding-top:118px;padding-bottom:118px;}
+
+@media(max-width:920px){
+  #workspace.product-focus,
+  #hubs.product-focus{padding-top:88px;padding-bottom:88px;}
+  #proof{padding-top:78px;padding-bottom:78px;}
+  #partnership{padding-top:84px;padding-bottom:84px;}
+}
+
+/* Opportunity proof  -  consolidated */
+#hubs-proof{background:#111;color:#fff;padding:96px 0}
+#hubs-proof .wrap{max-width:1180px}
+.hubs-reassurance__panel{display:grid;grid-template-columns:minmax(0,1fr);gap:34px}
+.opportunity-header{max-width:850px}
+.opportunity-header h2{margin:0;color:#fff;font-size:clamp(36px,4vw,52px);line-height:1.02;letter-spacing:-.045em;font-weight:560}
+.opportunity-proofline{margin:22px 0 0;color:rgba(255,255,255,.78);font-size:19px;line-height:1.25;letter-spacing:-.018em}
+.opportunity-proofline strong{color:#fff;font-size:clamp(34px,3.7vw,48px);line-height:1;font-weight:600;letter-spacing:-.045em;vertical-align:-2px}
+.opportunity-intro{max-width:760px;margin:15px 0 0;color:rgba(255,255,255,.64);font-size:16px;line-height:1.55}
+.opportunity-thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,220px));gap:16px;align-items:start}
+.opportunity-thumb{min-width:0}
+.opportunity-thumb__visual{overflow:hidden;border-radius:16px;background:#1a1a1a;border:1px solid rgba(255,255,255,.09)}
+.opportunity-thumb__image{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#111}
+.opportunity-thumb__caption{padding:11px 2px 0}
+.opportunity-thumb__caption strong{display:block;color:#fff;font-size:14px;line-height:1.2;font-weight:560;letter-spacing:-.018em}
+.opportunity-thumb__caption p{margin:4px 0 0;color:rgba(255,255,255,.52);font-size:11.5px;line-height:1.3}
+@media(max-width:920px){
+  #hubs-proof{padding:78px 0}
+  .hubs-reassurance__panel{gap:28px}
+  .opportunity-thumbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+}
+
+/* Shared SACEM x Bridge header */
+.site-header>.wrap.unified-header{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.unified-header .brand img{height:42px;width:auto;max-width:220px}
+.unified-header .nav{gap:20px}
+.unified-header .nav a{color:#5d5d63;text-decoration:none;white-space:nowrap}
+.unified-header .nav a:hover,.unified-header .nav a[aria-current="page"]{color:#D9004C}
+.unified-header .nav a[aria-current="page"]{font-weight:650}
+.header-cta{white-space:nowrap}
+.mobile-menu{display:none;position:relative}
+.mobile-menu summary{display:flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#111;cursor:pointer;font-size:13px;font-weight:650;list-style:none}
+.mobile-menu summary::-webkit-details-marker{display:none}
+.mobile-menu__panel{position:absolute;right:0;top:calc(100% + 10px);display:grid;min-width:260px;padding:10px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 18px 60px rgba(17,17,21,.12)}
+.mobile-menu__panel a{padding:10px 12px;border-radius:10px;color:#313136;text-decoration:none;font-size:14px}
+.mobile-menu__panel a:hover,.mobile-menu__panel a[aria-current="page"]{background:rgba(217,0,76,.07);color:#D9004C}
+.partner-copy h2{color:#D9004C}
+.partner-pricing-action{display:flex;justify-content:flex-end;padding:0 44px 34px}
+
+/* SACEM Bridge gradient brand system */
+:root{
+  --sacem-bridge-burgundy:#A40232;
+  --sacem-bridge-pink:#FA2856;
+  --sacem-bridge-gradient:linear-gradient(180deg,#A40232 0%,#D20B49 52%,#FA2856 100%);
+}
+.hero-title-sub,
+.partner-copy h2{
+  background:var(--sacem-bridge-gradient) !important;
+  background-clip:text !important;
+  -webkit-background-clip:text !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+}
+.btn-primary,
+.cta .btn-primary,
+.partnership .btn-primary,
+a.btn-primary,
+button.btn-primary{
+  background-color:var(--sacem-bridge-burgundy) !important;
+  background-image:var(--sacem-bridge-gradient) !important;
+  border-color:transparent !important;
+}
+.btn-primary:hover,
+.cta .btn-primary:hover,
+.partnership .btn-primary:hover,
+a.btn-primary:hover,
+button.btn-primary:hover{
+  background-image:var(--sacem-bridge-gradient) !important;
+  border-color:transparent !important;
+  filter:brightness(.91) saturate(1.05);
+}
+.unified-header .nav a:hover,
+.unified-header .nav a[aria-current="page"]{
+  background:var(--sacem-bridge-gradient);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+@media(max-width:1100px){.unified-header .nav{display:none}.mobile-menu{display:block}}
+@media(max-width:640px){
+  #hubs-proof{padding:68px 0}
+  .opportunity-header h2{font-size:34px}
+  .opportunity-proofline{font-size:16px}
+  .opportunity-proofline strong{font-size:34px}
+  .opportunity-intro{font-size:15px;line-height:1.5}
+  .opportunity-thumbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .opportunity-thumb__visual{border-radius:11px}
+  .opportunity-thumb__caption{padding-top:8px}
+  .opportunity-thumb__caption strong{font-size:11.5px}
+  .opportunity-thumb__caption p{font-size:9.5px}
+  .unified-header .brand img{height:32px;max-width:165px}
+  .header-cta{display:none}
+  .partner-pricing-action{justify-content:flex-start;padding:0 23px 26px}
+}
+</style><link href="/bridge-tools/sacem-v2/assets/embedded-01-bac17c58accd.png" rel="icon" sizes="32x32" type="image/png"/><link href="/bridge-tools/sacem-v2/assets/embedded-02-11d734be6339.png" rel="icon" sizes="512x512" type="image/png"/><link href="/bridge-tools/sacem-v2/assets/embedded-03-c3801ac7431d.png" rel="apple-touch-icon" sizes="180x180"/></head>
+<body>
+<header class="site-header"><div class="wrap unified-header"><a aria-label="SACEM Cloud × Bridge.audio" class="brand" href="/bridge-tools/sacem-v2/"><img alt="SACEM Cloud × Bridge.audio" src="/bridge-tools/sacem-v2/assets/logo-sacem-bridge-gradient.png"/></a><nav aria-label="Navigation principale" class="nav"><a href="#workspace">Espace de travail</a><a href="#search">Search</a><a href="#hubs">Hubs</a><a href="#proof">Écosystème</a><a href="#partnership">SACEM</a><a href="/bridge-tools/sacem-v2/pricing.html">Tarifs</a><a href="#faq">FAQ</a></nav><div class="actions"><a class="btn btn-primary header-cta" href="/bridge-tools/sacem-v2/pricing.html">Voir les offres</a><details class="mobile-menu"><summary>Menu</summary><nav class="mobile-menu__panel" aria-label="Navigation mobile"><a href="#workspace">Espace de travail</a><a href="#search">Search</a><a href="#hubs">Hubs</a><a href="#proof">Écosystème</a><a href="#partnership">SACEM</a><a href="/bridge-tools/sacem-v2/pricing.html">Tarifs</a><a href="#faq">FAQ</a></nav></details></div></div></header>
+<main id="top"><section class="hero">
+<div class="wrap hero-grid">
+<div class="hero-copy center">
+<span class="kicker">Workspace + Hubs de découverte</span>
+<h1><span class="hero-title-main">Un seul endroit pour votre musique.</span><span class="hero-title-sub">Un réseau pour toute l’industrie.</span></h1>
+<p class="hero-lead">Stockez, organisez, recherchez, partagez et recevez votre musique dans un seul espace de travail. Publiez quand vous le souhaitez, et laissez les bonnes personnes la découvrir.</p>
+<div class="hero-actions">
+<a class="btn btn-primary" href="#partnership">Créer un compte gratuit</a>
+<a class="btn btn-secondary" href="#workspace">Explorer le produit</a>
+</div><p class="cta-note">Sans CB requise.</p>
+</div>
+<div class="hero-stage-wrap">
+<div aria-label="Sélection de la vue produit" class="hero-tabs floating" role="tablist">
+<button aria-selected="true" class="hero-tab is-active" data-hero-tab="workspace" role="tab" type="button">Espace de travail</button>
+<button aria-selected="false" class="hero-tab" data-hero-tab="hubs" role="tab" type="button">Hubs de découvrabilité</button>
+</div>
+<div class="hero-stage hero-stage--bare">
+<figure class="hero-slide is-active" data-hero-panel="workspace"><img alt="Workspace Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-04-d289d541b805.webp"/></figure>
+<figure class="hero-slide" data-hero-panel="hubs"><img alt="Discovery Hubs Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-05-79d7b245f068.webp"/></figure>
+</div>
+</div>
+</div>
+</section><section aria-label="Fonctionnalités de l’espace de travail" class="product-focus" data-scroll-focus="true" id="workspace" style="--focus-steps:4"><div class="wrap product-focus__shell"><div class="product-focus__head"><h2>Votre musique. Votre espace de travail.</h2><p>Tout pour organiser, collaborer et partager.</p></div><div class="product-focus__layout"><div class="product-focus__controls"><div aria-label="Fonctionnalités de l’espace de travail" class="product-tabs" role="tablist"><button aria-selected="true" class="product-tab is-active" data-product-tab="0" role="tab" type="button"><span class="product-tab__num">01</span><span class="product-tab__title">Organiser</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="1" role="tab" type="button"><span class="product-tab__num">02</span><span class="product-tab__title">Collaborer</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="2" role="tab" type="button"><span class="product-tab__num">03</span><span class="product-tab__title">Créer</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="3" role="tab" type="button"><span class="product-tab__num">04</span><span class="product-tab__title">Partager</span><span aria-hidden="true" class="product-tab__arrow">→</span></button></div><div class="product-focus__detail"><h3 data-product-title="">Organiser</h3><p data-product-copy="">Toute votre musique au même endroit.</p></div></div><div class="product-focus__frame" data-product-swipe=""><figure class="product-focus__visual is-active" data-product-panel="0"><img alt="Bibliothèque Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-04-d289d541b805.webp"/></figure><figure class="product-focus__visual" data-product-panel="1"><img alt="Invitation et collaboration Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-06-eddc0f8c25dd.webp"/></figure><figure class="product-focus__visual" data-product-panel="2"><img alt="Créer un projet dans Bridge.audio par drag and drop" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-07-98a1ed7e6cdf.webp"/></figure><figure class="product-focus__visual" data-product-panel="3"><img alt="Options de partage d’un projet Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-08-a6902a249bfe.webp"/></figure></div></div></div></section><section class="section project-cloud-section" id="workspace-projects">
+<div class="wrap">
+<div class="section-head center project-cloud-head">
+<h2>Vos projets sous toutes leurs formes.</h2>
+<p>Presskit, sync, discographie, live kit, stems, remix contest, musique à l’image… à chacun son format.</p>
+</div>
+<div aria-label="Exemples de projets Bridge.audio" class="project-cloud-stage">
+<div class="project-cloud-glow project-cloud-glow--1"></div>
+<div class="project-cloud-glow project-cloud-glow--2"></div>
+<div class="project-cloud-glow project-cloud-glow--3"></div>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Presskit" class="project-cloud-card project-cloud-card--1" data-lightbox-copy="Artiste, sortie, médias et titres." data-lightbox-title="Presskit" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Presskit partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-09-2d1a40432b3d.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Presskit</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Sync selection" class="project-cloud-card project-cloud-card--2" data-lightbox-copy="Une sélection pensée pour un brief." data-lightbox-title="Sync selection" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Sync selection partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-10-e90e9650cfed.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Sync selection</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Discographie" class="project-cloud-card project-cloud-card--3" data-lightbox-copy="Un catalogue entier, au même endroit." data-lightbox-title="Discographie" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Discographie partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-11-f6c76935294e.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Discographie</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Live kit" class="project-cloud-card project-cloud-card--4" data-lightbox-copy="Titres, vidéos, photos et documents techniques." data-lightbox-title="Live kit" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Live kit partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-12-e6646bbeb26b.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Live kit</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Musique à l’image" class="project-cloud-card project-cloud-card--5" data-lightbox-copy="Scènes, dossiers et morceaux organisés." data-lightbox-title="Musique à l’image" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Musique à l’image partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-13-e2a27bfa9ecf.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Musique à l’image</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Pack de prods" class="project-cloud-card project-cloud-card--6" data-lightbox-copy="Instrumentales, références et notes." data-lightbox-title="Pack de prods" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Pack de prods partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-14-138e05268cc1.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Pack de prods</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Stems &amp; pistes séparées" class="project-cloud-card project-cloud-card--7" data-lightbox-copy="Toutes les pistes d’une session." data-lightbox-title="Stems &amp; pistes séparées" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Stems &amp; pistes séparées partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-15-7398c4176130.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Stems &amp; pistes séparées</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Remix contest" class="project-cloud-card project-cloud-card--8" data-lightbox-copy="Stems, instructions et soumissions." data-lightbox-title="Remix contest" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Remix contest partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-16-6a7f0c9bf866.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Remix contest</h3>
+</div>
+</article>
+<article aria-haspopup="dialog" aria-label="Ouvrir : Trailer cues" class="project-cloud-card project-cloud-card--9" data-lightbox-copy="Musique, références et livrables pour l’image." data-lightbox-title="Trailer cues" data-lightbox-trigger="true" role="button" tabindex="0">
+<div class="project-cloud-card__media">
+<img alt="Trailer cues partagé avec Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-17-9f8b5f523ee8.webp"/>
+</div>
+<div class="project-cloud-card__meta">
+<h3>Trailer cues</h3>
+</div>
+</article>
+</div>
+</div>
+</section><section class="section section--tight workspace-plus" id="workspace-plus">
+<div class="wrap">
+<div class="section-head center section-head--compact-lg">
+<h2>Votre musique travaille avec vous.</h2>
+<p>Décrire, recevoir, être alerté et suivre : tout reste dans le même espace de travail.</p>
+</div>
+<div class="feature-grid">
+<article class="feature-card">
+<div class="feature-card__copy"><span class="feature-eyebrow">Décrire</span><h3>Auto-tagging</h3><p>Genres, moods, langue et paroles suggérés automatiquement.</p></div>
+<div aria-haspopup="dialog" aria-label="Ouvrir : Auto-tagging" class="feature-card__media" data-lightbox-copy="Genres, moods, langue et paroles suggérés automatiquement." data-lightbox-title="Auto-tagging" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Autotagging dans Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-18-f51ec5f56766.webp"/></div>
+</article>
+<article class="feature-card">
+<div class="feature-card__copy"><span class="feature-eyebrow">Recevoir</span><h3>Inbox</h3><p>Centralisez morceaux et collaborations dans la même réception.</p></div>
+<div aria-haspopup="dialog" aria-label="Ouvrir : Inbox" class="feature-card__media" data-lightbox-copy="Centralisez morceaux et collaborations dans la même réception." data-lightbox-title="Inbox" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Inbox Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-19-887a32456656.webp"/></div>
+</article>
+<article class="feature-card">
+<div class="feature-card__copy"><span class="feature-eyebrow">Être alerté</span><h3>Notifications</h3><p>Les bonnes infos, au bon moment.</p></div>
+<div aria-haspopup="dialog" aria-label="Ouvrir : Notifications" class="feature-card__media" data-lightbox-copy="Les bonnes infos, au bon moment." data-lightbox-title="Notifications" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Notifications Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-20-79a16b20bb5a.webp"/></div>
+</article>
+<article class="feature-card">
+<div class="feature-card__copy"><span class="feature-eyebrow">Suivre</span><h3>Activity</h3><p>Voyez qui ouvre, écoute ou télécharge.</p></div>
+<div aria-haspopup="dialog" aria-label="Ouvrir : Activity" class="feature-card__media" data-lightbox-copy="Voyez qui ouvre, écoute ou télécharge." data-lightbox-title="Activity" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Activity report Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-21-c3f5003869f8.webp"/></div>
+</article>
+</div>
+</div>
+</section><section class="section" id="search">
+<div class="wrap">
+<div class="section-head center">
+<h2>Retrouvez les bons titres. Rendez les vôtres plus visibles.</h2>
+<p>Standard, Prompt, Similarity. Trois façons de chercher.</p>
+</div>
+<div class="search-trio">
+<article class="search-card">
+<div aria-haspopup="dialog" aria-label="Ouvrir : Standard" class="media" data-lightbox-copy="Filtres et critères clairs pour retrouver vite le bon titre." data-lightbox-title="Standard" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Recherche standard sur Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-22-31dd477bd202.webp"/></div>
+<h3>Standard</h3>
+<p>Filtres et critères clairs pour retrouver vite le bon titre.</p>
+</article>
+<article class="search-card">
+<div aria-haspopup="dialog" aria-label="Ouvrir : Prompt" class="media" data-lightbox-copy="Cherchez avec vos mots, comme vous pensez." data-lightbox-title="Prompt" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Recherche standard sur Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-23-4213f22504f7.webp"/></div>
+<h3>Prompt</h3>
+<p>Cherchez avec vos mots, comme vous pensez.</p>
+</article>
+<article class="search-card">
+<div aria-haspopup="dialog" aria-label="Ouvrir : Similarity" class="media" data-lightbox-copy="Partez d’une référence et trouvez des titres proches." data-lightbox-title="Similarity" data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Recherche par similarité sur Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-24-c0c34f83f440.webp"/></div>
+<h3>Similarity</h3>
+<p>Partez d’une référence et trouvez des titres proches.</p>
+</article>
+</div>
+</div>
+</section><section aria-label="Fonctionnalités des Hubs de découvrabilité" class="product-focus" data-scroll-focus="true" id="hubs" style="--focus-steps:5"><div class="wrap product-focus__shell"><div class="product-focus__head"><h2>Des Hubs pour être découvert.</h2><p>Publiez votre musique. Les bons professionnels la trouvent.</p></div><div class="product-focus__layout"><div class="product-focus__controls"><div aria-label="Fonctionnalités des Hubs de découvrabilité" class="product-tabs" role="tablist"><button aria-selected="true" class="product-tab is-active" data-product-tab="0" role="tab" type="button"><span class="product-tab__num">01</span><span class="product-tab__title">Publier</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="1" role="tab" type="button"><span class="product-tab__num">02</span><span class="product-tab__title">Être trouvé</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="2" role="tab" type="button"><span class="product-tab__num">03</span><span class="product-tab__title">Être écouté</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="3" role="tab" type="button"><span class="product-tab__num">04</span><span class="product-tab__title">Être contacté</span><span aria-hidden="true" class="product-tab__arrow">→</span></button><button aria-selected="false" class="product-tab" data-product-tab="4" role="tab" type="button"><span class="product-tab__num">05</span><span class="product-tab__title">Mesurer</span><span aria-hidden="true" class="product-tab__arrow">→</span></button></div><div class="product-focus__detail"><h3 data-product-title="">Publier</h3><p data-product-copy="">Choisissez les titres à rendre visibles.</p></div></div><div class="product-focus__frame" data-product-swipe=""><figure class="product-focus__visual is-active" data-product-panel="0"><img alt="Publier un titre sur les Hubs de découvrabilité Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-25-2d6ee5263a21.webp"/></figure><figure class="product-focus__visual" data-product-panel="1"><img alt="Recherche sur les Hubs de découvrabilité Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-26-5653b0d5bccd.webp"/></figure><figure class="product-focus__visual" data-product-panel="2"><img alt="Écoute sur les Hubs de découvrabilité Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-27-42ce126ac220.webp"/></figure><figure class="product-focus__visual" data-product-panel="3"><img alt="Contact depuis les Hubs de découvrabilité Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-28-b2457d42c7cc.webp"/></figure><figure class="product-focus__visual" data-product-panel="4"><img alt="Analytics des Hubs de découvrabilité Bridge.audio" decoding="async" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-29-56e9b5d564d8.webp"/></figure></div></div></div></section><section class="section">
+<div class="wrap hubs-brief hubs-brief--logos">
+<div class="section-head section-head--compact">
+<h2>Quatre Hubs. Quatre façons d’être découvert.</h2>
+</div>
+<div class="hub-list hub-list--logos">
+<div class="hub-card"><img alt="Logo Bridge Sync" src="/bridge-tools/sacem-v2/assets/embedded-30-c0d03aff5952.webp"/><div class="hub-simple__copy"><strong>Bridge Sync</strong><p class="hub-simple__tagline">Pour synchroniser vos titres sur des publicités, films, séries…</p></div></div>
+<div class="hub-card"><img alt="Logo Bridge Score" src="/bridge-tools/sacem-v2/assets/embedded-31-2dccad4bd195.webp"/><div class="hub-simple__copy"><strong>Bridge Score</strong><p class="hub-simple__tagline">Pour connecter votre musique aux projets audiovisuels.</p></div></div>
+<div class="hub-card"><img alt="Logo Bridge Library" src="/bridge-tools/sacem-v2/assets/embedded-32-4776a3743ea8.webp"/><div class="hub-simple__copy"><strong>Bridge Library</strong><p class="hub-simple__tagline">Pour rendre votre catalogue immédiatement trouvable.</p></div></div>
+<div class="hub-card"><img alt="Logo Bridge Talent" src="/bridge-tools/sacem-v2/assets/embedded-33-d040b0dc8e39.webp"/><div class="hub-simple__copy"><strong>Bridge Talent</strong><p class="hub-simple__tagline">Pour rendre artistes et compositeurs plus visibles.</p></div></div>
+</div>
+</div>
+</section><section class="section hubs-reassurance" id="hubs-proof">
+<div class="wrap"><div class="hubs-reassurance__panel"><div class="opportunity-header"><h2>Quand une recherche devient une opportunité.</h2><p class="opportunity-proofline"><strong>150+</strong> recherches par semaine</p><p class="opportunity-intro">Déjà des dizaines d’opportunités finalisées dans des films, séries et publicités  -  notamment avec Apple TV, Nintendo, L’Oréal et d’autres équipes créatives.</p></div><div aria-label="Exemples d’opportunités finalisées" class="opportunity-thumbs"><article class="opportunity-thumb"><div class="opportunity-thumb__visual"><img alt="Visuel Drops of God sur Apple TV+" class="opportunity-thumb__image" decoding="async" height="720" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-34-dd98cb6ee2de.webp" width="720"/></div><div class="opportunity-thumb__caption"><strong>Drops of God</strong><p>Série<span aria-hidden="true"> · </span>Apple TV+</p></div></article><article class="opportunity-thumb"><div class="opportunity-thumb__visual"><img alt="Visuel L’Oréal" class="opportunity-thumb__image" decoding="async" height="720" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-35-9cbb737426ad.webp" width="720"/></div><div class="opportunity-thumb__caption"><strong>L’Oréal</strong><p>Publicité<span aria-hidden="true"> · </span>Beauté</p></div></article><article class="opportunity-thumb"><div class="opportunity-thumb__visual"><img alt="Visuel Nintendo Switch 2" class="opportunity-thumb__image" decoding="async" height="720" loading="lazy" src="/bridge-tools/sacem-v2/assets/embedded-36-c8f8d5e064cd.webp" width="720"/></div><div class="opportunity-thumb__caption"><strong>Nintendo Switch 2</strong><p>Publicité<span aria-hidden="true"> · </span>Gaming</p></div></article></div></div></div>
+</section><section class="section proof" id="proof">
+<div class="wrap">
+<div class="section-head center">
+<h2>Une plateforme déjà adoptée par l’industrie.</h2>
+<p>Créateurs, pros de la musique et équipes créatives.</p>
+</div>
+<div class="ecosystem-proof-stats proof-capsules">
+<div class="ecosystem-stat proof-capsule">
+<div class="proof-number ecosystem-stat-number">50K+</div>
+<h3 class="ecosystem-stat-title">Créateurs &amp; artistes</h3>
+<p class="ecosystem-stat-copy">Artistes, compositeurs et équipes créatives.</p>
+<div aria-label="Artists using Bridge.audio" class="ecosystem-logo-grid ecosystem-logo-grid--wide">
+<img alt="Creator using Bridge.audio" src="https://www.bridge.audio/images/pricing/creators/1.png"/>
+<img alt="Creator using Bridge.audio" src="https://www.bridge.audio/images/pricing/creators/2.png"/>
+<img alt="Creator using Bridge.audio" src="https://www.bridge.audio/images/pricing/creators/3.png"/>
+<img alt="Creator using Bridge.audio" src="https://www.bridge.audio/images/pricing/creators/4.png"/>
+<img alt="Creator using Bridge.audio" src="https://www.bridge.audio/images/pricing/creators/5.png"/>
+</div>
+</div>
+<div class="ecosystem-stat proof-capsule">
+<div class="proof-number ecosystem-stat-number">5K+</div>
+<h3 class="ecosystem-stat-title">Professionnels de la musique</h3>
+<p class="ecosystem-stat-copy">Labels, éditeurs, managers et ayants droit.</p>
+<div aria-label="Music professionals using Bridge.audio" class="ecosystem-logo-grid ecosystem-logo-grid--wide">
+<img alt="Music professional using Bridge.audio" src="https://www.bridge.audio/images/pricing/professionals/1.jpg"/>
+<img alt="Music professional using Bridge.audio" src="https://www.bridge.audio/images/pricing/professionals/2.jpg"/>
+<img alt="Music professional using Bridge.audio" src="https://www.bridge.audio/images/pricing/professionals/3.jpg"/>
+<img alt="Music professional using Bridge.audio" src="https://www.bridge.audio/images/pricing/professionals/4.jpg"/>
+<img alt="Music professional using Bridge.audio" src="https://www.bridge.audio/images/pricing/professionals/5.jpg"/>
+</div>
+</div>
+<div class="ecosystem-stat proof-capsule">
+<div class="proof-number ecosystem-stat-number">600+</div>
+<h3 class="ecosystem-stat-title">Acheteurs &amp; équipes créatives</h3>
+<p class="ecosystem-stat-copy">Superviseurs, agences, marques et médias.</p>
+<div aria-label="Buyer network examples" class="ecosystem-logo-grid ecosystem-logo-grid--wide">
+<img alt="Buyer network example" src="https://www.bridge.audio/images/pricing/buyers/1.jpg"/>
+<img alt="Buyer network example" src="https://www.bridge.audio/images/pricing/buyers/2.jpg"/>
+<img alt="Buyer network example" src="https://www.bridge.audio/images/pricing/buyers/3.jpg"/>
+<img alt="Buyer network example" src="https://www.bridge.audio/images/pricing/buyers/4.jpg"/>
+<img alt="Buyer network example" src="https://www.bridge.audio/images/pricing/buyers/5.jpg"/>
+</div>
+</div>
+</div>
+</div>
+</section><section class="section"><div class="wrap switch-grid"><div class="switch-copy"><h2>Un même compte. Plusieurs usages.</h2><p>Un espace de travail pour chaque projet, groupe, catalogue ou activité.</p><ul><li>Un projet perso</li><li>Un groupe ou un live</li><li>Un label ou un catalogue</li></ul></div><div aria-haspopup="dialog" aria-label="Ouvrir : Une personne. Plusieurs casquettes." class="switch-media" data-lightbox-copy="Un workspace pour chaque projet, groupe, catalogue ou activité." data-lightbox-title="Une personne. Plusieurs casquettes." data-lightbox-trigger="true" role="button" tabindex="0"><img alt="Création et changement de workspace dans Bridge.audio" src="/bridge-tools/sacem-v2/assets/embedded-37-2fb8604f0da5.webp"/></div></div></section><section class="section partnership" id="partnership">
+<div class="wrap">
+<div class="partner-card partner-card--promo">
+<div aria-haspopup="dialog" aria-label="Ouvrir : SACEM × Bridge.audio" class="partner-top" data-lightbox-copy="Le partenariat entre la SACEM et Bridge.audio." data-lightbox-title="SACEM × Bridge.audio" data-lightbox-trigger="true" role="button" tabindex="0">
+<img alt="SACEM Cloud × Bridge.audio" src="/bridge-tools/sacem-v2/assets/logo-sacem-bridge-gradient.png"/>
+<div class="partner-copy">
+<span class="kicker">Partenariat SACEM</span>
+<h2>-50 % la première année.</h2><p class="partner-offer-copy">Pour les sociétaires SACEM qui choisissent un plan Talent Pro M, L ou XL avec paiement annuel.</p>
+</div>
+</div>
+<div class="partner-pricing-action"><a class="btn btn-primary" href="/bridge-tools/sacem-v2/pricing.html">Voir les offres et tarifs</a></div>
+<div class="partner-points">
+<div class="partner-point">
+<strong>Pour qui</strong>
+<p>Les nouveaux comptes créés via la SACEM.</p>
+</div>
+<div class="partner-point">
+<strong>Votre accès</strong>
+<p>Le même produit Bridge.audio, adapté à l’environnement SACEM.</p>
+</div>
+<div class="partner-point">
+<strong>Le principe</strong>
+<p>Un espace de travail privé pour travailler et des Hubs de découvrabilité pour être découvert.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section class="section" id="faq"><div class="wrap"><div class="section-head"><h2>FAQ SACEM Cloud × Bridge.audio.</h2></div><div class="faq-list"><details><summary>Qu’est-ce que SACEM Cloud × Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">SACEM Cloud × Bridge.audio est un environnement de travail conçu pour organiser, partager et faire découvrir des œuvres musicales. Il combine un espace de travail privé pour gérer ses fichiers et ses projets, et des Hubs de découvrabilité pour rendre sa musique visible auprès de professionnels qui recherchent des titres.</div></details>
+<details><summary>À qui s’adresse SACEM Cloud × Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">La plateforme s’adresse aux artistes, auteurs, compositeurs, labels, éditeurs, managers, ingénieurs du son, superviseurs musicaux et plus largement à tous les professionnels qui manipulent, présentent, recherchent ou diffusent de la musique.</div></details>
+<details><summary>Faut-il être membre SACEM pour utiliser la plateforme ?<span class="faq-icon">+</span></summary><div class="faq-answer">Non. Bridge.audio est agnostique et ouvert à l’ensemble de l’industrie. En revanche, le partenariat SACEM donne aux nouveaux comptes créés par des membres SACEM une réduction spécifique la première année.</div></details>
+<details><summary>Quel est l’avantage SACEM la première année ?<span class="faq-icon">+</span></summary><div class="faq-answer">Les sociétaires SACEM bénéficient de 50 % de réduction la première année sur les plans Talent Pro M, L et XL avec paiement annuel. La réduction ne s’applique pas aux abonnements mensuels ni au plan SACEM Cloud à 1,99 €/mois.</div></details>
+<details><summary>Quels types de fichiers puis-je stocker dans mon espace de travail ?<span class="faq-icon">+</span></summary><div class="faq-answer">Vous pouvez réunir vos morceaux audio, pochettes, photos, vidéos, PDF, fiches d’informations, paroles, documents presse et autres éléments utiles à la présentation de vos œuvres.</div></details>
+<details><summary>Puis-je créer plusieurs espaces de travail ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Vous pouvez créer autant d’espaces de travail que nécessaire : un pour votre projet personnel, un pour votre groupe, un autre pour votre label ou pour des collaborations spécifiques, puis passer de l’un à l’autre en un clic.</div></details>
+<details><summary>Puis-je créer autant de projets que je veux ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Dans votre espace, vous pouvez créer autant de projets que nécessaire pour structurer votre activité : presskits, sélections synchro, présentations de catalogue, envois personnalisés ou collections thématiques.</div></details>
+<details class="faq-more">
+<summary>Voir toutes les questions <span class="faq-icon">+</span></summary>
+<div class="faq-more-wrap"><details><summary>Puis-je connecter mon espace Bridge.audio à mon environnement SACEM ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. L’objectif est précisément de permettre une continuité fluide entre votre espace Bridge.audio et votre environnement SACEM, notamment Musicstart, et de vous permettre de vous connecter avec vos identifiants SACEM lorsque cette option est proposée.</div></details><details><summary>SACEM Cloud et Bridge.audio sont-ils le même produit ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. SACEM Cloud utilise le même socle produit que Bridge.audio. Il est simplement adapté au contexte et aux besoins des membres et sociétés de la SACEM, avec une intégration plus directe à leur environnement SACEM.</div></details><details><summary>SACEM Cloud est-il compatible avec mon compte Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui, totalement. SACEM Cloud repose sur Bridge.audio : les comptes, espaces de travail, projets et fichiers restent pleinement compatibles. Si vous utilisez déjà Bridge.audio, la circulation de vos contenus entre vos espaces est donc naturelle et sans rupture.</div></details><details><summary>Mes fichiers et mes accès sont-ils sécurisés ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Vos accès sont protégés, vos partages sont paramétrables, et vos catalogues privés ne sont pas utilisés pour entraîner des IA génératives. Vous gardez le contrôle sur vos fichiers, vos droits et vos niveaux de visibilité.</div></details><details><summary>Puis-je me connecter avec mes identifiants SACEM ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Lorsqu’il est proposé, vous pouvez vous connecter avec vos identifiants SACEM pour accéder plus simplement à SACEM Cloud × Bridge.audio.</div></details><details><summary>Comment fonctionne l’inbox de Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">L’inbox permet de recevoir de la musique et des fichiers dans le bon contexte, puis de les intégrer rapidement à votre organisation. Elle évite la dispersion entre e-mails, liens externes et dossiers temporaires.</div></details>
+<details><summary>Comment retrouver rapidement un titre dans mon catalogue ?<span class="faq-icon">+</span></summary><div class="faq-answer">Bridge.audio combine organisation de bibliothèque, tags descriptifs, recherche par prompt et recherche par similarité. Vous pouvez ainsi retrouver un titre par genre, instrument, émotion, contexte d’usage ou à partir d’une référence musicale.</div></details>
+<details><summary>Comment fonctionne l’IA descriptive de Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">L’IA utilisée par Bridge.audio est descriptive. Elle aide à enrichir les œuvres avec des informations comme les genres, moods, instruments, thèmes, langues ou époques afin de faciliter la recherche. Elle ne remplace pas la création et n’utilise pas les catalogues clients pour entraîner des modèles génératifs.</div></details>
+<details><summary>À quoi servent les tags, le prompt et la similarity search ?<span class="faq-icon">+</span></summary><div class="faq-answer">Ces trois fonctions sont au cœur du produit. Elles améliorent la découvrabilité interne, c’est-à-dire votre capacité à retrouver la bonne musique dans votre propre catalogue, et la découvrabilité externe, c’est-à-dire la capacité de professionnels à trouver vos titres dans Bridge.</div></details>
+<details><summary>Que sont les Hubs de découvrabilité ?<span class="faq-icon">+</span></summary><div class="faq-answer">Les Hubs de découvrabilité sont des espaces conçus pour présenter et rendre découvrable de la musique. Bridge Sync s’adresse aux besoins liés à la synchro et aux pros de l’image, Bridge Score à la musique à l’image et aux briefs narratifs, Bridge Library à la découvrabilité d’un catalogue, et Bridge Talent à la mise en avant d’artistes et de compositeurs.</div></details>
+<details><summary>Comment se passe le contact avec les professionnels ?<span class="faq-icon">+</span></summary><div class="faq-answer">Le parcours est simple : vous publiez, votre musique est trouvée grâce aux moteurs de recherche de Bridge, elle est écoutée dans le bon contexte, puis le professionnel peut ouvrir le profil ou le projet associé et vous contacter pour demander plus d’informations, une synchro, un accès ou un échange.</div></details>
+<details><summary>Puis-je partager des projets en privé ou publiquement ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Vous pouvez partager des projets en privé avec des options d’accès précises, ou créer de beaux liens publics de type presskit, sélection synchro ou discographie, selon le contexte.</div></details>
+<details><summary>Mes droits restent-ils les miens ?<span class="faq-icon">+</span></summary><div class="faq-answer">Oui. Les droits sur vos œuvres restent ceux de leurs titulaires. Bridge.audio fournit un environnement de travail et de découvrabilité ; la plateforme ne s’approprie pas vos droits.</div></details>
+<details><summary>Mes fichiers servent-ils à entraîner des IA génératives ?<span class="faq-icon">+</span></summary><div class="faq-answer">Non. Bridge.audio n’utilise pas les catalogues de ses clients pour entraîner des modèles d’IA générative.</div></details>
+<details><summary>Comment importer mon catalogue dans Bridge.audio ?<span class="faq-icon">+</span></summary><div class="faq-answer">Vous pouvez importer vos morceaux et vos assets directement dans votre espace de travail, les organiser par bibliothèque ou projet, puis enrichir progressivement les métadonnées pour améliorer la recherche et le partage.</div></details></div>
+</details>
+</div></div></section><section class="cta" id="cta"><div class="wrap cta-inner"><span class="kicker">Prêt à commencer ?</span><h2>Créez votre compte gratuit.</h2><p>Sans CB requise. Connectez-vous aussi avec vos identifiants SACEM et découvrez votre espace de travail ainsi que les Hubs de découvrabilité.</p><div class="hero-actions" style="justify-content:center;margin-top:26px;"><a class="btn btn-primary" href="#partnership">Créer un compte gratuit</a><a class="btn btn-secondary" href="#workspace">Explorer le produit</a></div><p class="cta-note cta-note--center">Sans CB requise.</p></div></section></main>
+<footer class="footer"><div class="wrap"><div class="footer-top"><div class="footer-brand"><img alt="SACEM Cloud × Bridge.audio" src="/bridge-tools/sacem-v2/assets/logo-sacem-bridge-gradient.png"/><p>Le cloud pour organiser, partager et faire découvrir vos œuvres. Un espace de travail privé pour travailler, des Hubs de découvrabilité pour développer votre découvrabilité.</p></div><div class="footer-col"><strong>Produit</strong><a href="#workspace">Espace de travail</a><a href="#search">Tags, Prompt, Similarity</a><a href="#hubs">Hubs de découvrabilité</a><a href="#proof">Écosystème</a></div><div class="footer-col"><strong>Hubs de découvrabilité</strong><a href="#hubs">Bridge Sync</a><a href="#hubs">Bridge Score</a><a href="#hubs">Bridge Library</a><a href="#hubs">Bridge Talent</a></div><div class="footer-col"><strong>Pour qui ?</strong><a href="#proof">Artistes &amp; compositeurs</a><a href="#proof">Labels &amp; éditeurs</a><a href="#proof">Managers &amp; équipes</a><a href="#proof">Pros de l’image</a></div><div class="footer-col"><strong>Aide &amp; légal</strong><a href="/bridge-tools/sacem-v2/pricing.html">Tarifs</a><a href="#faq">FAQ</a><a href="#partnership">Partenariat SACEM</a><a href="#cta">Créer un compte gratuit</a><a href="#top">Retour en haut</a></div></div><div class="footer-bottom"><div>© 2026 SACEM Cloud × Bridge.audio</div><div>Organiser. Partager. Faire découvrir.</div></div></div></footer>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Qu’est-ce que SACEM Cloud × Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "SACEM Cloud × Bridge.audio est un environnement de travail conçu pour organiser, partager et faire découvrir des œuvres musicales. Il combine un espace de travail privé pour gérer ses fichiers et ses projets, et des Hubs de découvrabilité pour rendre sa musique visible auprès de professionnels qui recherchent des titres."}}, {"@type": "Question", "name": "À qui s’adresse SACEM Cloud × Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "La plateforme s’adresse aux artistes, auteurs, compositeurs, labels, éditeurs, managers, ingénieurs du son, superviseurs musicaux et plus largement à tous les professionnels qui manipulent, présentent, recherchent ou diffusent de la musique."}}, {"@type": "Question", "name": "Faut-il être membre SACEM pour utiliser la plateforme ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Bridge.audio est agnostique et ouvert à l’ensemble de l’industrie. En revanche, le partenariat SACEM donne aux nouveaux comptes créés par des membres SACEM une réduction spécifique la première année."}}, {"@type": "Question", "name": "Quel est l’avantage SACEM la première année ?", "acceptedAnswer": {"@type": "Answer", "text": "Les sociétaires SACEM bénéficient de 50 % de réduction la première année sur les plans Talent Pro M, L et XL avec paiement annuel. La réduction ne s’applique pas aux abonnements mensuels ni au plan SACEM Cloud à 1,99 €/mois."}}, {"@type": "Question", "name": "Quels types de fichiers puis-je stocker dans mon espace de travail ?", "acceptedAnswer": {"@type": "Answer", "text": "Vous pouvez réunir vos morceaux audio, pochettes, photos, vidéos, PDF, fiches d’informations, paroles, documents presse et autres éléments utiles à la présentation de vos œuvres."}}, {"@type": "Question", "name": "Puis-je créer plusieurs espace de travails ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Vous pouvez créer autant de espace de travails que nécessaire : un pour votre projet personnel, un pour votre groupe, un autre pour votre label ou pour des collaborations spécifiques, puis passer de l’un à l’autre en un clic."}}, {"@type": "Question", "name": "Puis-je créer autant de projets que je veux ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Dans votre espace, vous pouvez créer autant de projets que nécessaire pour structurer votre activité : presskits, sélections synchro, présentations de catalogue, envois personnalisés ou collections thématiques."}}, {"@type": "Question", "name": "Comment fonctionne l’inbox de Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "L’inbox permet de recevoir de la musique et des fichiers dans le bon contexte, puis de les intégrer rapidement à votre organisation. Elle évite la dispersion entre e-mails, liens externes et dossiers temporaires."}}, {"@type": "Question", "name": "Comment retrouver rapidement un titre dans mon catalogue ?", "acceptedAnswer": {"@type": "Answer", "text": "Bridge.audio combine organisation de bibliothèque, tags descriptifs, recherche par prompt et recherche par similarité. Vous pouvez ainsi retrouver un titre par genre, instrument, émotion, contexte d’usage ou à partir d’une référence musicale."}}, {"@type": "Question", "name": "Comment fonctionne l’IA descriptive de Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "L’IA utilisée par Bridge.audio est descriptive. Elle aide à enrichir les œuvres avec des informations comme les genres, moods, instruments, thèmes, langues ou époques afin de faciliter la recherche. Elle ne remplace pas la création et n’utilise pas les catalogues clients pour entraîner des modèles génératifs."}}, {"@type": "Question", "name": "À quoi servent les tags, le prompt et la similarity search ?", "acceptedAnswer": {"@type": "Answer", "text": "Ces trois fonctions sont au cœur du produit. Elles améliorent la découvrabilité interne, c’est-à-dire votre capacité à retrouver la bonne musique dans votre propre catalogue, et la découvrabilité externe, c’est-à-dire la capacité de professionnels à trouver vos titres dans Bridge."}}, {"@type": "Question", "name": "Que sont les Hubs de découvrabilité ?", "acceptedAnswer": {"@type": "Answer", "text": "Les Hubs de découvrabilité sont des espaces conçus pour présenter et rendre découvrable de la musique. Bridge Sync s’adresse aux besoins liés à la synchro et aux pros de l’image, Bridge Score à la musique à l’image et aux briefs narratifs, Bridge Library à la découvrabilité d’un catalogue, et Bridge Talent à la mise en avant d’artistes et de compositeurs."}}, {"@type": "Question", "name": "Comment se passe le contact avec les professionnels ?", "acceptedAnswer": {"@type": "Answer", "text": "Le parcours est simple : vous publiez, votre musique est trouvée grâce aux moteurs de recherche de Bridge, elle est écoutée dans le bon contexte, puis le professionnel peut ouvrir le profil ou le projet associé et vous contacter pour demander plus d’informations, une synchro, un accès ou un échange."}}, {"@type": "Question", "name": "Puis-je partager des projets en privé ou publiquement ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Vous pouvez partager des projets en privé avec des options d’accès précises, ou créer de beaux liens publics de type presskit, sélection synchro ou discographie, selon le contexte."}}, {"@type": "Question", "name": "Mes droits restent-ils les miens ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Les droits sur vos œuvres restent ceux de leurs titulaires. Bridge.audio fournit un environnement de travail et de découvrabilité ; la plateforme ne s’approprie pas vos droits."}}, {"@type": "Question", "name": "Mes fichiers servent-ils à entraîner des IA génératives ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Bridge.audio n’utilise pas les catalogues de ses clients pour entraîner des modèles d’IA générative."}}, {"@type": "Question", "name": "Comment importer mon catalogue dans Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "Vous pouvez importer vos morceaux et vos assets directement dans votre espace de travail, les organiser par bibliothèque ou projet, puis enrichir progressivement les métadonnées pour améliorer la recherche et le partage."}}, {"@type": "Question", "name": "Puis-je me connecter avec mes identifiants SACEM ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Lorsqu’il est proposé, vous pouvez vous connecter avec vos identifiants SACEM pour accéder plus simplement à SACEM Cloud × Bridge.audio."}}, {"@type": "Question", "name": "Mes fichiers et mes accès sont-ils sécurisés ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. Vos accès sont protégés, vos partages sont paramétrables, et vos catalogues privés ne sont pas utilisés pour entraîner des IA génératives. Vous gardez le contrôle sur vos fichiers, vos droits et vos niveaux de visibilité."}}, {"@type": "Question", "name": "SACEM Cloud est-il compatible avec mon compte Bridge.audio ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, totalement. SACEM Cloud repose sur Bridge.audio : les comptes, espaces de travail, projets et fichiers restent pleinement compatibles. Si vous utilisez déjà Bridge.audio, la circulation de vos contenus entre vos espaces est donc naturelle et sans rupture."}}, {"@type": "Question", "name": "SACEM Cloud et Bridge.audio sont-ils le même produit ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. SACEM Cloud utilise le même socle produit que Bridge.audio. Il est simplement adapté au contexte et aux besoins des membres et sociétés de la SACEM, avec une intégration plus directe à leur environnement SACEM."}}, {"@type": "Question", "name": "Puis-je connecter mon espace Bridge.audio à mon environnement SACEM ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui. L’objectif est précisément de permettre une continuité fluide entre votre espace Bridge.audio et votre environnement SACEM, notamment Musicstart, et de vous permettre de vous connecter avec vos identifiants SACEM lorsque cette option est proposée."}}]}</script>
+<div aria-hidden="true" class="lightbox-modal" id="lightbox-modal">
+<div class="lightbox-modal__backdrop" data-lightbox-close=""></div>
+<div aria-labelledby="lightbox-title" aria-modal="true" class="lightbox-modal__dialog" role="dialog">
+<button aria-label="Fermer" class="lightbox-modal__close" data-lightbox-close="" type="button">×</button>
+<button aria-label="Précédent" class="lightbox-modal__nav lightbox-modal__nav--prev" data-lightbox-prev="" type="button">‹</button>
+<button aria-label="Suivant" class="lightbox-modal__nav lightbox-modal__nav--next" data-lightbox-next="" type="button">›</button>
+<div class="lightbox-modal__body">
+<div class="lightbox-modal__image-wrap">
+<img alt="" class="lightbox-modal__image" id="lightbox-image" src=""/>
+</div>
+<div class="lightbox-modal__meta">
+<div class="lightbox-modal__text">
+<h3 class="lightbox-modal__title" id="lightbox-title"></h3>
+<p class="lightbox-modal__copy" id="lightbox-copy"></p>
+</div>
+<div class="lightbox-modal__side">
+<div class="lightbox-modal__counter" id="lightbox-counter">1 / 1</div>
+<div class="lightbox-modal__hint">Esc pour fermer</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script id="site-behaviour">(() => {
+  const mqMobile = window.matchMedia('(max-width:920px)');
+
+  // Hero switcher
+  const heroTabs = [...document.querySelectorAll('[data-hero-tab]')];
+  const heroPanels = [...document.querySelectorAll('[data-hero-panel]')];
+  let heroIndex = 0, heroTimer;
+  const setHero = (index) => {
+    if (!heroTabs.length) return;
+    heroIndex = (index + heroTabs.length) % heroTabs.length;
+    heroTabs.forEach((tab, i) => {
+      const active = i === heroIndex;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', String(active));
+    });
+    heroPanels.forEach((panel, i) => panel.classList.toggle('is-active', i === heroIndex));
+  };
+  const startHero = () => {
+    clearInterval(heroTimer);
+    heroTimer = setInterval(() => setHero(heroIndex + 1), 4200);
+  };
+  heroTabs.forEach((tab, i) => tab.addEventListener('click', () => { setHero(i); startHero(); }));
+  heroPanels.forEach(panel => panel.addEventListener('click', () => { setHero(heroIndex + 1); startHero(); }));
+  setHero(0); startHero();
+
+  // Workspace + Hubs product focus tabs
+  document.querySelectorAll('.product-focus').forEach(section => {
+    const tabs = [...section.querySelectorAll('[data-product-tab]')];
+    const panels = [...section.querySelectorAll('[data-product-panel]')];
+    const detailTitle = section.querySelector('[data-product-title]');
+    const detailCopy = section.querySelector('[data-product-copy]');
+    if (!tabs.length || !panels.length) return;
+    const labels = tabs.map(tab => tab.querySelector('.product-tab__title')?.textContent.trim() || '');
+    const copies = section.id === 'workspace'
+      ? ['Toute votre musique au même endroit.','Invitez, collaborez, avancez.','Glissez. Déposez. C’est prêt.','Privé, public, lien ou page dédiée.']
+      : ['Choisissez les titres à rendre visibles.','Tags, prompt et similarity.','Dans le bon contexte, par les bons pros.','Directement depuis la page ou le titre.','Vues, écoutes et téléchargements en un coup d’œil.'];
+    let active = 0;
+    const activate = index => {
+      active = (index + tabs.length) % tabs.length;
+      tabs.forEach((tab, i) => {
+        const on = i === active;
+        tab.classList.toggle('is-active', on);
+        tab.setAttribute('aria-selected', String(on));
+      });
+      panels.forEach((panel, i) => panel.classList.toggle('is-active', i === active));
+      if (detailTitle) detailTitle.textContent = labels[active];
+      if (detailCopy) detailCopy.textContent = copies[active] || '';
+      if (mqMobile.matches) tabs[active].scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    };
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => activate(i)));
+    const swipe = section.querySelector('[data-product-swipe]');
+    let sx = 0, sy = 0;
+    swipe?.addEventListener('touchstart', e => { const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; }, {passive:true});
+    swipe?.addEventListener('touchend', e => {
+      if (!mqMobile.matches) return;
+      const t=e.changedTouches[0], dx=t.clientX-sx, dy=t.clientY-sy;
+      if (Math.abs(dx)>45 && Math.abs(dx)>Math.abs(dy)*1.2) activate(active + (dx<0 ? 1 : -1));
+    }, {passive:true});
+    section._productFocusActivate = activate;
+    section._productFocusGetActive = () => active;
+    activate(0);
+  });
+
+  // Desktop scroll storytelling for Workspace + Hubs.
+  // The page scroll remains native: sticky only holds the visual while progress selects a frame.
+  const scrollFocusSections = [...document.querySelectorAll('.product-focus[data-scroll-focus="true"]')];
+  let focusRaf = 0;
+  const focusStepMetrics = section => {
+    const tabs = [...section.querySelectorAll('[data-product-tab]')];
+    const count = tabs.length;
+    const rect = section.getBoundingClientRect();
+    const stickyTop = 64;
+    const travel = Math.max(1, section.offsetHeight - window.innerHeight);
+    const consumed = Math.min(travel, Math.max(0, stickyTop - rect.top));
+    const progress = consumed / travel;
+    return { tabs, count, progress };
+  };
+  const syncScrollFocus = () => {
+    focusRaf = 0;
+    if (mqMobile.matches) return;
+    scrollFocusSections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+      const {count, progress} = focusStepMetrics(section);
+      if (!count) return;
+      const index = Math.min(count - 1, Math.max(0, Math.round(progress * (count - 1))));
+      if (section._productFocusGetActive?.() !== index) section._productFocusActivate?.(index);
+    });
+  };
+  const requestFocusSync = () => {
+    if (!focusRaf) focusRaf = requestAnimationFrame(syncScrollFocus);
+  };
+  window.addEventListener('scroll', requestFocusSync, {passive:true});
+  window.addEventListener('resize', requestFocusSync, {passive:true});
+  mqMobile.addEventListener?.('change', requestFocusSync);
+
+  // Tabs remain fully interactive. On desktop a click gently moves the native page scroll
+  // to the corresponding storytelling position instead of creating a separate carousel state.
+  scrollFocusSections.forEach(section => {
+    const tabs = [...section.querySelectorAll('[data-product-tab]')];
+    tabs.forEach((tab, index) => tab.addEventListener('click', () => {
+      if (mqMobile.matches || tabs.length < 2) return;
+      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+      const travel = Math.max(1, section.offsetHeight - window.innerHeight);
+      const target = sectionTop - 64 + travel * (index / (tabs.length - 1));
+      window.scrollTo({top:target, behavior:'smooth'});
+    }));
+  });
+  requestFocusSync();
+
+  // Lightbox
+  const modal = document.getElementById('lightbox-modal');
+  if (!modal) return;
+  const image = modal.querySelector('.lightbox-modal__image');
+  const title = modal.querySelector('.lightbox-modal__title');
+  const copy = modal.querySelector('.lightbox-modal__copy');
+  const counter = modal.querySelector('.lightbox-modal__counter');
+  const prev = modal.querySelector('[data-lightbox-prev]');
+  const next = modal.querySelector('[data-lightbox-next]');
+  const triggers = [...document.querySelectorAll('[data-lightbox-trigger="true"]')];
+  const items = triggers.map(el => {
+    const img = el.querySelector('img');
+    return {el, src:img?.getAttribute('src')||'', alt:img?.alt||'', title:el.dataset.lightboxTitle||'', copy:el.dataset.lightboxCopy||''};
+  });
+  let lightboxIndex=0, lastFocus=null;
+  const open = index => {
+    if (!items.length) return;
+    lightboxIndex=(index+items.length)%items.length;
+    const item=items[lightboxIndex];
+    image.src=item.src; image.alt=item.alt; title.textContent=item.title; copy.textContent=item.copy;
+    counter.textContent=`${lightboxIndex+1} / ${items.length}`;
+    modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.documentElement.style.overflow='hidden';
+    modal.querySelector('[data-lightbox-close]')?.focus({preventScroll:true});
+  };
+  const close = () => {
+    modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.documentElement.style.overflow='';
+    lastFocus?.focus?.({preventScroll:true});
+  };
+  const go = delta => open(lightboxIndex + delta);
+  triggers.forEach((el,i) => {
+    el.addEventListener('click',()=>{lastFocus=el;open(i)});
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lastFocus=el;open(i)}});
+  });
+  prev?.addEventListener('click',e=>{e.stopPropagation();go(-1)});
+  next?.addEventListener('click',e=>{e.stopPropagation();go(1)});
+  modal.addEventListener('click',e=>{if(e.target.closest('[data-lightbox-close]'))close();else if(!e.target.closest('.lightbox-modal__dialog'))close()});
+  document.addEventListener('keydown',e=>{if(!modal.classList.contains('is-open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+  const swipeZone=modal.querySelector('.lightbox-modal__image-wrap'); let lx=0,ly=0;
+  swipeZone?.addEventListener('touchstart',e=>{const t=e.changedTouches[0];lx=t.clientX;ly=t.clientY},{passive:true});
+  swipeZone?.addEventListener('touchend',e=>{const t=e.changedTouches[0],dx=t.clientX-lx,dy=t.clientY-ly;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.2)go(dx<0?1:-1)},{passive:true});
+})();</script></body>
+</html>
