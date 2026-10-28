@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Tarifs · SACEM Cloud by Bridge.audio</title>
+<meta content="Comparez les offres Bridge.audio et découvrez l'avantage exclusif réservé aux membres SACEM." name="description"/>
+<style>
+/* Typography: Satoshi Bold, not ExtraBold. Uses local Satoshi when available, then Inter/system fallback. */
+
+:root{--bg:#f3f3f4;--surface:#fff;--soft:#f8f8f9;--border:#d9d8dc;--text:#252428;--muted:#6f6d76;--danger:#d92d20;--free:#252428;--talent:#ffc833;--music:#2f43de;--supervisor:#ff3364;--radius:18px;font-family:Satoshi,Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}button,select{font:inherit}.page-shell{min-height:100vh;padding:32px}.pricing-hero{max-width:1180px;margin:0 auto 30px;padding-top:30px;text-align:center}.pricing-hero h1{margin:0 auto;max-width:980px;font-size:clamp(42px,6vw,82px);line-height:.96;letter-spacing:-.058em;font-weight:700}.pricing-hero p{max-width:610px;margin:18px auto 0;color:var(--muted);font-size:17px;line-height:1.45}.billing{display:inline-flex;gap:6px;margin-top:22px;padding:5px;border:1px solid var(--border);border-radius:999px;background:#fff}.billing button{border:0;border-radius:999px;background:transparent;padding:9px 14px;color:var(--muted);font-size:13px;font-weight:650;cursor:pointer}.billing button.active{background:#252428;color:#fff}.pricing-section{max-width:1180px;margin:0 auto 80px;display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,410px);gap:28px;align-items:start}.pricing-step{display:flex;flex-direction:column;gap:6px;margin:0 0 18px}.pricing-step-label{color:var(--muted);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.14em;opacity:.82}.pricing-step-title{font-size:28px;line-height:1;font-weight:700;letter-spacing:-.05em}.pricing-step-description{color:var(--muted);font-size:14px;line-height:1.45;max-width:520px}.plans{display:grid;gap:12px}.pricing-plan{--plan-color:#252428;--plan-text:#fff;position:relative;display:flex;justify-content:space-between;gap:16px;padding:18px 20px;border:1px solid var(--border);border-radius:18px;background:var(--surface);cursor:pointer;transition:.15s ease;overflow:hidden}.pricing-plan:before{content:none}.pricing-plan:hover{transform:translateY(-1px);border-color:#252428;box-shadow:0 3px 0 #252428}.pricing-plan.selected{border:2px solid #252428;box-shadow:4px 4px 0 #252428}.pricing-plan-main{min-width:0}.pricing-plan-name{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;color:var(--plan-text);font-weight:700;font-size:13px;line-height:1;letter-spacing:-.01em;text-transform:uppercase;padding:8px 10px;border:1px solid rgba(37,36,40,.08);border-radius:999px;background:var(--plan-color)}.plan-diamond{display:inline-flex;color:currentColor;width:20px;height:19px;flex:0 0 auto}.plan-diamond svg{display:block;width:100%;height:100%}.pricing-plan-title{font-size:20px;font-weight:700;line-height:1.04;letter-spacing:-.045em;max-width:520px}.pricing-plan-description{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45;max-width:520px}.pricing-plan-lovedby{margin-top:12px;color:var(--muted);font-size:10px;line-height:1.1;font-weight:700;letter-spacing:.13em;text-transform:uppercase;opacity:.78}.right{text-align:right;flex:0 0 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;min-width:118px}.pricing-plan-notice{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.09em;margin-bottom:8px;font-weight:700}.pricing-plan-price-main{display:flex;align-items:flex-end;gap:2px;color:var(--text)}.pricing-plan-price-value{font-size:31px;line-height:.88;font-weight:700;letter-spacing:-.06em;white-space:nowrap}.pricing-plan-price-suffix{font-size:13px;line-height:1.1;font-weight:600;color:var(--muted);margin-bottom:4px}.pricing-plan-price-yearly{font-size:11px;line-height:1.2;color:var(--muted);font-weight:600}.selected-plan{--active:#252428;--active-rgb:37,36,40;--active-text:#fff;position:sticky;top:24px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:0;box-shadow:0 1px 0 rgba(37,36,40,.04)}.selected-plan-top{padding:22px 22px 16px;background:linear-gradient(180deg,rgba(var(--active-rgb),.075),#fff 70%);border-bottom:1px solid rgba(var(--active-rgb),.14)}.selected-plan-title{display:flex;align-items:center;justify-content:center;gap:10px;width:calc(100% + 44px);margin:-22px -22px 0;padding:18px 22px;background:var(--active);color:var(--active-text);font-size:16px;line-height:1;font-weight:700;letter-spacing:-.015em;text-transform:uppercase;text-align:center}.selected-plan-title .plan-diamond{color:var(--active-text)}.selected-plan-subtitle{margin:16px auto 0;max-width:320px;color:var(--text);font-size:19px;line-height:1.18;font-weight:700;letter-spacing:-.035em;text-align:center}.selected-plan-loved{display:flex;justify-content:center;margin-top:12px;color:#252428;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;opacity:.72;text-align:center}.pricing-plan-accent{display:flex;align-items:flex-start;justify-content:flex-start;margin:18px 22px 8px;gap:10px;text-align:left}.total-price-main{display:flex;align-items:flex-end;gap:3px}.total-price-value{font-size:44px;line-height:.88;font-weight:700;letter-spacing:-.07em}.total-price-suffix{font-size:15px;line-height:1.1;color:var(--muted);font-weight:700;margin-bottom:5px}.total-price-yearly{margin-top:4px;font-size:12px;line-height:1.25;color:var(--muted);font-weight:650}.selected-plan-details{display:grid;gap:2px;padding:8px 22px 16px}.recap-feature{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid rgba(23,22,21,.065)}.recap-feature:last-child{border-bottom:0}.summary-icon{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:7px;background:rgba(var(--active-rgb),.13)}.summary-icon img{width:13px;height:13px}.recap-feature-title{margin:0 0 3px;color:var(--text);font-size:13px;line-height:1.15;font-weight:650;letter-spacing:-.02em}.recap-feature-description,.recap-feature-list li{margin:0;color:var(--muted);font-size:11.5px;line-height:1.32}.recap-feature-list{display:grid;gap:2px;margin:0;padding:0;list-style:none}.pricing-plan-sign-up{width:calc(100% - 44px);height:50px;margin:10px 22px 8px;border:2px solid #252428;border-radius:14px;background:var(--active);color:var(--active-text);font-weight:700;font-size:15px;letter-spacing:-.01em;cursor:pointer;box-shadow:0 4px 0 #252428}.pricing-plan-sign-up.secondary{background:#fff;color:#252428}.pricing-plan-sign-up.is-disabled{background:#ececef;color:#8a8792;border-color:#d6d4da;box-shadow:none;cursor:not-allowed}.pricing-plan-sign-up.is-disabled:hover{transform:none;filter:none}.reassurance{margin:0 22px 18px;text-align:center;color:var(--muted);font-size:12px;font-weight:600}.trust{max-width:1180px;margin:30px auto 0;padding:24px;border:1px solid var(--border);border-radius:20px;background:#fff;text-align:center}.trust strong{display:block;margin-bottom:16px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.logos{display:flex;align-items:center;justify-content:space-between;gap:16px}.logos img{height:clamp(42px,5vw,64px);max-width:18%;object-fit:contain;filter:grayscale(1);opacity:.86}@media(max-width:900px){.page-shell{padding:20px}.pricing-section{grid-template-columns:1fr}.selected-plan{position:relative;top:0}.pricing-hero{padding-top:24px}.pricing-hero h1{font-size:44px}.logos img{height:42px}}@media(max-width:620px){.pricing-plan{display:block}.right{align-items:flex-start;text-align:left;margin-top:14px}.logos{flex-wrap:wrap;justify-content:center}.logos img{max-width:30%}}
+
+html{scroll-behavior:smooth}.settings.shake,.settings-warning.shake,.selected-plan.shake{animation:bridgeShake .42s cubic-bezier(.36,.07,.19,.97) both}@keyframes bridgeShake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}.ecosystem-kicker{display:block;margin-bottom:6px;color:var(--muted);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}.ecosystem-title{margin:0 0 18px;font-size:24px;line-height:1.05;font-weight:700;letter-spacing:-.045em;color:var(--text)}@media(max-width:900px){.pricing-section{gap:18px;margin-bottom:44px}.pricing-infos{order:1}.selected-plan{order:2}.pricing-step-description{max-width:100%}.pricing-plan.selected{box-shadow:3px 3px 0 #252428}.selected-plan{scroll-margin-top:18px}.pricing-plan-sign-up{height:54px}.recap-feature{grid-template-columns:24px 1fr;padding:10px 0}.recap-feature-title{font-size:14px}.recap-feature-list li{font-size:12.5px}}@media(max-width:620px){.page-shell{padding:16px}.pricing-hero{margin-bottom:22px}.pricing-section{margin-bottom:36px}.pricing-plan{padding:16px}.pricing-plan-title{font-size:19px}.selected-plan-title{font-size:14px}.total-price-value{font-size:40px}.trust{padding:20px 16px}.ecosystem-title{font-size:21px}.pricing-step-label{display:none}}
+
+
+.ecosystem-proof{max-width:1180px;margin:0 auto 56px;padding:34px;border:1px solid var(--border);border-radius:28px;background:#fff;box-shadow:0 20px 70px rgba(37,36,40,.06)}
+.ecosystem-proof-kicker{margin:0 0 8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.ecosystem-proof h3{max-width:760px;margin:0 auto 26px;text-align:center;font-size:clamp(28px,4vw,48px);line-height:1.02;letter-spacing:-.05em;font-weight:700;color:var(--text)}
+.ecosystem-proof-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ecosystem-stat{min-height:210px;padding:22px;border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg,#fff,#f8f8f9)}
+.ecosystem-stat-number{font-size:42px;line-height:1;font-weight:700;letter-spacing:-.06em;color:var(--text)}
+.ecosystem-stat-title{margin-top:10px;font-size:16px;font-weight:700;color:var(--text)}
+.ecosystem-stat-copy{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.45}
+.ecosystem-logo-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.ecosystem-logo-grid span{display:inline-flex;align-items:center;min-height:28px;padding:7px 10px;border:1px solid var(--border);border-radius:999px;background:#fff;color:#4c4a52;font-size:11px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+@media (max-width:900px){.ecosystem-proof{margin:22px 0 36px;padding:20px;border-radius:22px}.ecosystem-proof-stats{grid-template-columns:1fr}.ecosystem-stat{min-height:0}.ecosystem-proof h3{text-align:left}.ecosystem-proof-kicker{text-align:left}}
+
+/* Refined title system  -  tech / mode / Gen Z, Satoshi Bold but not ExtraBold */
+.pricing-hero h1{font-weight:700!important;letter-spacing:-.044em!important;line-height:.98!important;color:#1b1b1f!important;}
+.pricing-step-title,.pricing-plan-title,.selected-plan-subtitle,.ecosystem-title,.ecosystem-proof h3{font-weight:700!important;letter-spacing:-.036em!important;color:#1b1b1f!important;}
+.pricing-plan-name,.selected-plan-title,.pricing-step-label,.pricing-plan-lovedby,.selected-plan-loved,.ecosystem-proof-kicker,.ecosystem-kicker{font-weight:650!important;letter-spacing:.105em!important;}
+.total-price-value,.pricing-plan-price-value,.ecosystem-stat-number{font-weight:700!important;letter-spacing:-.055em!important;}
+.recap-feature-title,.settings h3,.setting-field label,.pricing-plan-sign-up,.billing button{font-weight:650!important;}
+body{font-family:Satoshi,Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;color:#1f1f23!important;}
+
+.summary-card .billing-label{display:none!important;}
+
+
+/* Bigger recap icons  -  targeted override */
+.selected-plan-details .recap-feature{grid-template-columns:32px 1fr;gap:13px;align-items:flex-start;}
+.selected-plan-details .summary-icon{width:30px;height:30px;border-radius:10px;}
+.selected-plan-details .summary-icon img{width:18px;height:18px;}
+@media(max-width:620px){.selected-plan-details .recap-feature{grid-template-columns:30px 1fr;gap:12px}.selected-plan-details .summary-icon{width:28px;height:28px}.selected-plan-details .summary-icon img{width:17px;height:17px}}
+
+/* Mobile-only order: plan identity → price → personalization → options → CTA. Desktop order is unchanged. */
+@media(max-width:900px){
+  .selected-plan{display:flex;flex-direction:column;}
+  .selected-plan-top{order:1;}
+  .pricing-plan-accent{order:2;}
+  
+  
+  .selected-plan-details{order:5;}
+  .pricing-plan-sign-up{order:6;}
+  .reassurance{order:7;}
+}
+
+
+/* Sticky CTA footer inside the selected plan card */
+.selected-plan{
+  display:flex;
+  flex-direction:column;
+  max-height:calc(100vh - 48px);
+}
+.selected-plan-body{
+  min-height:0;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:8px;
+}
+.selected-plan-footer{
+  flex:0 0 auto;
+  position:sticky;
+  bottom:0;
+  z-index:5;
+  padding:12px 0 16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.72),#fff 28%);
+  border-top:1px solid rgba(37,36,40,.08);
+  box-shadow:0 -10px 24px rgba(37,36,40,.045);
+}
+.selected-plan-footer .pricing-plan-sign-up{margin-top:0;}
+.selected-plan-footer .reassurance{margin-bottom:0;}
+@media(max-width:900px){
+  .selected-plan{max-height:calc(100vh - 32px);}
+  .selected-plan-footer{padding-bottom:calc(16px + env(safe-area-inset-bottom));}
+}
+
+
+/* Desktop: options stay at the bottom of the scrollable recap body; only the CTA footer is sticky. */
+.selected-plan-body 
+.selected-plan-body 
+
+
+/* Mobile and desktop selected plan order: identity → included options → settings → sticky price/CTA */
+.selected-plan-body{display:flex;flex-direction:column;}
+.selected-plan-body .selected-plan-top{order:1;}
+.selected-plan-body .selected-plan-details{order:2;}
+.selected-plan-body 
+.selected-plan-body 
+@media(max-width:900px){
+  .selected-plan-body .selected-plan-top{order:1;}
+  .selected-plan-body .selected-plan-details{order:2;}
+  .selected-plan-body 
+  .selected-plan-body 
+}
+
+/* Full Compare */
+.full-compare{max-width:1180px;margin:-28px auto 72px;padding:30px;border:1px solid var(--border);border-radius:28px;background:#fff;box-shadow:0 20px 70px rgba(37,36,40,.05)}
+.full-compare-kicker{margin:0 0 8px;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;text-align:center}
+.full-compare h3{margin:0 0 22px;text-align:center;font-size:clamp(26px,3vw,40px);line-height:1.05;letter-spacing:-.04em;font-weight:700;color:var(--text)}
+.compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);border-radius:18px;background:#fff}
+.compare-table{width:100%;min-width:860px;border-collapse:separate;border-spacing:0;font-size:13px}
+.compare-table th,.compare-table td{padding:14px 14px;border-bottom:1px solid rgba(37,36,40,.08);border-right:1px solid rgba(37,36,40,.06);vertical-align:top;text-align:left}
+.compare-table th:last-child,.compare-table td:last-child{border-right:0}
+.compare-table tr:last-child td{border-bottom:0}
+.compare-table thead th{position:sticky;top:0;background:#f8f8f9;z-index:1;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#252428}
+.compare-feature{width:22%;font-weight:700;color:#252428}
+.compare-family td{background:#f3f3f4;color:#6f6d76;font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.compare-check{font-weight:700;color:#252428}
+.compare-muted{color:var(--muted)}
+@media(max-width:900px){.full-compare{margin:0 0 44px;padding:20px;border-radius:22px}.full-compare-kicker,.full-compare h3{text-align:left}.compare-table th,.compare-table td{padding:12px}.compare-table{font-size:12px}}
+
+
+/* Fixed checkout card: locked plan name + locked CTA, scrollable middle content */
+.selected-plan{
+  height:calc(100vh - 48px);
+  max-height:none;
+}
+.selected-plan-body{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}
+.selected-plan-title{
+  position:sticky;
+  top:0;
+  z-index:8;
+  box-shadow:0 10px 22px rgba(37,36,40,.08);
+}
+.selected-plan-footer{
+  position:relative;
+  bottom:auto;
+}
+@media(max-width:900px){
+  .selected-plan{
+    height:calc(100svh - 32px);
+    max-height:none;
+  }
+}
+@media(min-width:1180px){
+  .selected-plan{height:calc(100vh - 48px);}
+}
+
+
+/* Variant: sticky footer with price and CTA on the same line */
+.selected-plan-footer{
+  padding:12px 22px 16px;
+}
+.selected-plan-footer-main{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.footer-price{
+  flex:0 0 auto;
+  min-width:112px;
+}
+.footer-price-main{
+  display:flex;
+  align-items:flex-end;
+  gap:3px;
+}
+.footer-price-value{
+  font-size:31px;
+  line-height:.9;
+  font-weight:700;
+  letter-spacing:-.055em;
+  color:var(--text);
+  white-space:nowrap;
+}
+.footer-price-suffix{
+  margin-bottom:3px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.1;
+  font-weight:700;
+}
+.footer-price-yearly{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10.5px;
+  line-height:1.2;
+  font-weight:650;
+  white-space:nowrap;
+}
+.selected-plan-footer .pricing-plan-sign-up{
+  flex:1 1 auto;
+  width:auto;
+  min-width:0;
+  margin:0;
+}
+.selected-plan-footer .reassurance{
+  margin:9px 0 0;
+}
+@media(max-width:430px){
+  .selected-plan-footer-main{align-items:stretch;flex-direction:column;gap:9px;}
+  .footer-price{min-width:0;text-align:center;}
+  .footer-price-main{justify-content:center;}
+  .footer-price-value{font-size:34px;}
+}
+
+
+/* Keep Set your options at the bottom of the scrollable checkout body on every breakpoint. */
+.selected-plan-body 
+.selected-plan-body 
+@media(max-width:900px){
+  .selected-plan-body 
+}
+
+
+/* --- M / L / XL: full-width stacked packages at the bottom of checkout --- */
+
+
+.selected-plan-details{padding-bottom:4px}
+.selected-plan-body .settings,
+.selected-plan-body .settings-warning{display:none!important}
+
+/* Use supplied Bridge SVGs cleanly in recap + options */
+.summary-icon img,
+.option-icon{
+  display:block;
+  object-fit:contain;
+}
+.plan-diamond svg{
+  display:block;
+  width:21px;
+  height:20px;
+}
+
+/* Desktop: fixed checkout, scrollable body, sizes stay at the bottom before footer */
+@media(min-width:901px){
+  .selected-plan{
+    height:calc(100vh - 48px);
+  }
+  .selected-plan-body{
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    scroll-padding-top:64px;
+  }
+  
+}
+
+/* Mobile: natural page scroll; selecting a plan scrolls checkout into view */
+@media(max-width:900px){
+  .selected-plan{
+    height:auto;
+    min-height:0;
+    max-height:none;
+  }
+  .selected-plan-body{
+    display:flex;
+    flex-direction:column;
+    overflow:visible;
+  }
+  .selected-plan-title{
+    position:relative;
+  }
+  
+  .selected-plan-footer{
+    position:sticky;
+    bottom:0;
+    z-index:10;
+  }
+}
+
+
+
+
+
+/* ===== CHECKOUT CARD  -  CLEAN 3-ZONE STRUCTURE ===== */
+
+/* Picker */
+.pricing-plan{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  width:100%;
+  text-align:left;
+}
+.pricing-plan-main{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+  text-align:left;
+}
+.pricing-plan-name,
+.pricing-plan-title,
+.pricing-plan-lovedby{
+  align-self:flex-start;
+  text-align:left;
+}
+.pricing-plan-name{margin-bottom:8px}
+.pricing-plan-lovedby{margin-top:10px}
+.pricing-plan .right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  flex:0 0 auto;
+  text-align:right;
+}
+.pricing-plan[data-plan-id="free"]{
+  --plan-color:#e7e7e9!important;
+  --plan-text:#252428!important;
+}
+.pricing-plan[data-plan-id="free"] .pricing-plan-name{
+  background:#e7e7e9!important;
+  color:#252428!important;
+}
+
+/* Card shell */
+.selected-plan{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border-radius:18px;
+}
+.selected-plan.free-theme{
+  --active:#e7e7e9!important;
+  --active-rgb:231,231,233!important;
+  --active-text:#252428!important;
+}
+
+/* 1. Header  -  full width, top, only top corners rounded */
+.selected-plan-header{
+  flex:0 0 auto;
+  width:100%;
+  box-sizing:border-box;
+  padding:22px;
+  border-radius:18px 18px 0 0;
+  background:var(--active);
+  color:var(--active-text);
+  text-align:center;
+}
+.selected-plan-header .selected-plan-title,
+.selected-plan-header .selected-plan-subtitle,
+.selected-plan-header .selected-plan-loved{
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  text-align:center;
+  color:inherit;
+}
+.selected-plan-header .selected-plan-title{
+  margin-bottom:9px;
+  box-shadow:none!important;
+}
+.selected-plan-header .selected-plan-loved{
+  margin-top:8px;
+  opacity:.76;
+}
+
+/* 2. Body  -  features */
+.selected-plan-body{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-y:auto;
+  padding:14px 22px 12px;
+  background:#fff;
+}
+.selected-plan-details{
+  padding:0;
+}
+.recap-feature{
+  padding:9px 0;
+}
+
+/* 3. Checkout stack  -  size + essentials + price + CTA as ONE bottom block */
+.checkout-stack{
+  flex:0 0 auto;
+  padding:14px 22px 16px;
+  border-top:1px solid rgba(37,36,40,.08);
+  background:#fff;
+}
+.checkout-size-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+  padding:4px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:#f4f4f5;
+}
+.checkout-size-tab{
+  appearance:none;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  padding:9px 8px;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:12.5px;
+  font-weight:700;
+  line-height:1;
+}
+.checkout-size-tab:hover{color:var(--text)}
+.checkout-size-tab[aria-selected="true"]{
+  background:#fff;
+  color:var(--text);
+  box-shadow:0 1px 0 rgba(37,36,40,.08),0 2px 8px rgba(37,36,40,.06);
+}
+.checkout-size-tab:focus-visible{
+  outline:3px solid rgba(var(--active-rgb),.25);
+  outline-offset:2px;
+}
+.checkout-size-lines{
+  margin-top:10px;
+}
+.checkout-size-line{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:34px;
+  padding:7px 0;
+  color:var(--text);
+  font-size:13px;
+  line-height:1.25;
+  font-weight:700;
+}
+.checkout-size-line + .checkout-size-line{
+  border-top:1px solid rgba(37,36,40,.06);
+}
+.checkout-size-line img{
+  width:18px;
+  height:18px;
+  flex:0 0 auto;
+}
+.checkout-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(37,36,40,.08);
+}
+.checkout-price{
+  min-width:0;
+}
+.checkout-price-main{
+  display:flex;
+  align-items:flex-end;
+  gap:3px;
+}
+.checkout-price-value{
+  font-size:30px;
+  line-height:.9;
+  font-weight:700;
+  letter-spacing:-.055em;
+}
+.checkout-price-suffix{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:650;
+}
+.checkout-price-yearly{
+  margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.2;
+  font-weight:600;
+}
+.checkout-cta{
+  min-height:44px;
+  padding:0 18px;
+  border-radius:12px;
+  white-space:nowrap;
+}
+.checkout-reassurance{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:10px;
+  text-align:center;
+}
+
+/* Desktop */
+@media(min-width:901px){
+  .selected-plan{
+    position:sticky;
+    top:24px;
+    height:calc(100vh - 48px);
+    min-height:620px;
+    max-height:860px;
+  }
+  .selected-plan-body{
+    overscroll-behavior:contain;
+  }
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .selected-plan{
+    position:relative;
+    height:auto;
+    min-height:0;
+    max-height:none;
+  }
+  .selected-plan-body{
+    overflow:visible;
+  }
+  .checkout-stack{
+    position:sticky;
+    bottom:0;
+    z-index:10;
+  }
+}
+@media(max-width:620px){
+  .pricing-plan{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .pricing-plan .right{
+    align-items:flex-start;
+    text-align:left;
+  }
+  .selected-plan-header{
+    padding:18px 16px;
+  }
+  .selected-plan-body{
+    padding:12px 16px 10px;
+  }
+  .checkout-stack{
+    padding:12px 16px 14px;
+  }
+  .checkout-size-line{
+    font-size:12.5px;
+  }
+  .checkout-bottom{
+    gap:10px;
+  }
+  .checkout-price-value{
+    font-size:27px;
+  }
+  .checkout-cta{
+    padding:0 14px;
+  }
+}
+
+
+
+/* ===== CHECKOUT HEADER  -  SYSTEM COMPONENT ===== */
+.selected-plan{
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+}
+
+/* Header = identity only */
+.selected-plan-header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:42px;
+  padding:10px 18px;
+  box-sizing:border-box;
+  border-radius:18px 18px 0 0;
+  background:var(--active);
+  color:var(--active-text);
+  text-align:center;
+  border-bottom:1px solid rgba(37,36,40,.05);
+}
+.selected-plan-header .selected-plan-title{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  width:auto;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  color:inherit;
+  text-align:center;
+  font-size:12px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:normal;
+  box-shadow:none!important;
+  background:transparent!important;
+  border:0!important;
+}
+.selected-plan-header .plan-diamond{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+.selected-plan-header .plan-diamond svg{
+  width:17px;
+  height:16px;
+}
+
+/* White intro section directly below header */
+.selected-plan-intro{
+  padding:18px 22px 10px;
+  background:#fff;
+  text-align:center;
+}
+.selected-plan-intro .selected-plan-subtitle{
+  width:100%;
+  max-width:440px;
+  margin:0 auto;
+  color:var(--text);
+  text-align:center;
+  font-size:17px;
+  line-height:1.18;
+  font-weight:700;
+  letter-spacing:-.025em;
+}
+.selected-plan-intro .selected-plan-loved{
+  width:100%;
+  max-width:520px;
+  margin:8px auto 0;
+  color:var(--muted);
+  text-align:center;
+  font-size:9.5px;
+  line-height:1.35;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* Free uses same component structure, just light identity color */
+.selected-plan.free-theme .selected-plan-header{
+  background:#e7e7e9;
+  color:#252428;
+  border-bottom-color:rgba(37,36,40,.06);
+}
+
+@media(max-width:620px){
+  .selected-plan-header{
+    min-height:40px;
+    padding:9px 14px;
+  }
+  .selected-plan-header .selected-plan-title{
+    font-size:11.5px;
+  }
+  .selected-plan-intro{
+    padding:15px 16px 8px;
+  }
+  .selected-plan-intro .selected-plan-subtitle{
+    font-size:16px;
+  }
+  .selected-plan-intro .selected-plan-loved{
+    font-size:9px;
+  }
+}
+
+
+
+
+/* ===== v13.3  -  stacked intro, compact and balanced ===== */
+.selected-plan-header{
+  padding:13px 18px!important;
+}
+.selected-plan-intro{
+  display:block!important;
+  padding:16px 22px 10px!important;
+  background:#fff;
+  text-align:center!important;
+}
+.selected-plan-intro .selected-plan-subtitle,
+.selected-plan-intro .selected-plan-loved{
+  width:100%!important;
+  max-width:none!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  text-align:center!important;
+}
+.selected-plan-intro .selected-plan-subtitle{
+  margin-top:0!important;
+  margin-bottom:0!important;
+  font-size:16px;
+  line-height:1.18;
+}
+.selected-plan-intro .selected-plan-loved{
+  margin-top:8px!important;
+  font-size:9px;
+  line-height:1.3;
+  opacity:.76;
+}
+@media(max-width:620px){
+  .selected-plan-header{
+    padding:12px 14px!important;
+  }
+  .selected-plan-intro{
+    padding:14px 16px 8px!important;
+  }
+  .selected-plan-intro .selected-plan-subtitle{
+    font-size:14px;
+  }
+  .selected-plan-intro .selected-plan-loved{
+    font-size:8.5px;
+  }
+}
+
+
+/* ===== WORDING / SCANNABILITY PASS ===== */
+.recap-feature-title{
+  font-weight:700;
+}
+.recap-feature-list{
+  color:var(--muted);
+}
+.checkout-size-line{
+  letter-spacing:-.01em;
+}
+.selected-plan-loved{
+  letter-spacing:.07em;
+}
+
+
+/* ===== ECOSYSTEM PROOF  -  REAL LOGOS ===== */
+.ecosystem-logo-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px!important;
+  margin-top:16px!important;
+}
+.ecosystem-logo-grid img{
+  display:block;
+  width:100%;
+  aspect-ratio:1/1;
+  object-fit:cover;
+  border:0;
+  border-radius:999px;
+  background:transparent;
+  box-shadow:none;
+}
+
+/* ===== COMPARE TABLE  -  FAST VISUAL SCAN ===== */
+.compare-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+}
+.compare-table th,
+.compare-table td{
+  text-align:center!important;
+  vertical-align:middle!important;
+}
+.compare-table .compare-feature{
+  text-align:left!important;
+}
+.compare-plan-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:28px;
+  padding:7px 10px;
+  border-radius:999px;
+  font-size:10px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.compare-plan-pill.free{
+  background:#e7e7e9;
+  color:#252428;
+}
+.compare-plan-pill.talent{
+  background:#ffc833;
+  color:#252428;
+}
+.compare-plan-pill.music{
+  background:#2f43de;
+  color:#fff;
+}
+.compare-plan-pill.supervisor{
+  background:#FF3364;
+  color:#fff;
+}
+.compare-plan-pill.enterprise{
+  background:#252428;
+  color:#fff;
+}
+.compare-yes{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  border-radius:6px;
+  background:#2f43de;
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  line-height:1;
+}
+.compare-no{
+  color:#aaa8af;
+  font-size:18px;
+  line-height:1;
+  font-weight:500;
+}
+.compare-table tbody td:not(.compare-feature){
+  font-size:11.5px;
+  line-height:1.3;
+  font-weight:600;
+}
+.compare-table tbody tr:not(.compare-family):hover td{
+  background:#fafafa;
+}
+
+
+/* ===== v15.1  -  FREE SUMMARY + HEADER SCALE + CTA ALIGNMENT ===== */
+
+/* Match checkout plan name scale to picker pill */
+.selected-plan-header .selected-plan-title{
+  font-size:13px!important;
+  line-height:1!important;
+}
+
+/* Free uses the same quick-compare rows as paid plans */
+.checkout-free-summary{
+  display:grid;
+  gap:0;
+}
+.checkout-free-summary .checkout-size-line{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:34px;
+  padding:7px 0;
+  color:var(--text);
+  font-size:13px;
+  line-height:1.25;
+  font-weight:700;
+}
+.checkout-free-summary .checkout-size-line + .checkout-size-line{
+  border-top:1px solid rgba(37,36,40,.06);
+}
+.checkout-free-summary .checkout-size-line img{
+  width:18px;
+  height:18px;
+  flex:0 0 auto;
+}
+
+/* Desktop: CTA sits 25px from the right edge */
+@media(min-width:901px){
+  .checkout-stack{
+    padding-right:25px!important;
+  }
+  .checkout-bottom{
+    justify-content:space-between;
+  }
+  .checkout-cta-wrap{
+    margin-left:auto;
+  }
+}
+
+
+/* ===== v15.2  -  REAL CTA RIGHT ALIGNMENT ===== */
+@media(min-width:901px){
+  .checkout-stack{
+    padding-right:25px!important;
+  }
+  .checkout-bottom{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:end;
+    gap:18px;
+  }
+  .checkout-cta-wrap{
+    justify-self:end;
+    margin:0!important;
+  }
+  .checkout-cta{
+    width:auto!important;
+    min-width:190px;
+    margin:0!important;
+  }
+  .checkout-reassurance{
+    margin:7px 0 0!important;
+    text-align:center;
+  }
+}
+
+
+
+/* ===== v17  -  SACEM CLOUD, DISCREET COLLAPSED PARTNER OFFER =====
+   The member benefit stays visually secondary until explicitly opened. */
+.partner-plan-divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:16px 2px 7px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:.105em;
+  text-transform:uppercase;
+}
+.partner-plan-divider::before,
+.partner-plan-divider::after{
+  content:"";
+  height:1px;
+  flex:1 1 auto;
+  background:rgba(37,36,40,.08);
+}
+.partner-plan-divider span{white-space:nowrap;opacity:.58}
+
+/* Collapsed by default: intentionally smaller and quieter than a normal plan card. */
+.pricing-plan.sacem-plan{
+  --plan-color:#fff6f8!important;
+  --plan-text:#252428!important;
+  min-height:56px;
+  padding:10px 13px;
+  gap:12px;
+  border-color:rgba(37,36,40,.11);
+  border-radius:14px;
+  background:rgba(255,255,255,.68);
+  box-shadow:none;
+  overflow:hidden;
+}
+.pricing-plan.sacem-plan:not(.is-expanded){
+  align-items:center;
+}
+.pricing-plan.sacem-plan:not(.is-expanded):hover{
+  transform:none;
+  border-color:rgba(255,51,100,.28);
+  box-shadow:none;
+  background:#fff;
+}
+.pricing-plan.sacem-plan.is-expanded{
+  padding:15px 16px;
+  border-color:rgba(255,51,100,.30);
+  background:linear-gradient(180deg,#fff,#fffafb);
+}
+.pricing-plan.sacem-plan.selected{
+  border:1px solid rgba(255,51,100,.42);
+  box-shadow:0 2px 0 rgba(255,51,100,.10);
+}
+.pricing-plan.sacem-plan{border-color:rgba(217,0,76,.18);background:linear-gradient(180deg,#fff,rgba(217,0,76,.018));}
+.pricing-plan.sacem-plan:hover{border-color:rgba(217,0,76,.42);box-shadow:0 3px 0 rgba(217,0,76,.16);}
+.pricing-plan.sacem-plan.selected{border-color:#D9004C!important;box-shadow:3px 3px 0 rgba(217,0,76,.22)!important;}
+.sacem-expanded-kicker,.sacem-expanded-price .pricing-plan-notice{color:#D9004C!important;}
+.sacem-chevron{border-color:rgba(217,0,76,.16);}
+.sacem-plan.is-expanded .sacem-chevron{background:#FFF3F7;color:#D9004C;}
+.selected-plan.sacem-theme{--active:#D9004C!important;--active-rgb:217,0,76!important;--active-text:#fff!important;}
+.selected-plan.sacem-theme .checkout-cta{background:#D9004C!important;border-color:#D9004C!important;color:#fff!important;}
+.selected-plan.sacem-theme .summary-icon{background:rgba(217,0,76,.09)!important;}
+
+.sacem-collapsed-main{
+  display:flex;
+  align-items:center;
+  min-width:0;
+  gap:11px;
+}
+.sacem-mini-logo{
+  display:block;
+  width:46px;
+  height:auto;
+  flex:0 0 auto;
+  object-fit:contain;
+}
+.sacem-collapsed-copy{min-width:0}
+.sacem-collapsed-title{
+  color:var(--text);
+  font-size:13px;
+  line-height:1.1;
+  font-weight:700;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.sacem-collapsed-subtitle{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10.5px;
+  line-height:1.2;
+}
+.sacem-collapsed-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-left:auto;
+  flex:0 0 auto;
+}
+.sacem-collapsed-price{
+  color:var(--text);
+  font-size:13px;
+  line-height:1;
+  font-weight:700;
+  white-space:nowrap;
+}
+.sacem-chevron{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  background:#f4f4f5;
+  color:#77747d;
+  font-size:14px;
+  line-height:1;
+  transition:transform .16s ease,background .16s ease;
+}
+.sacem-plan.is-expanded .sacem-chevron{transform:rotate(180deg);background:#FFF3F7;color:#D9004C}
+.sacem-expanded-content{display:none;width:100%}
+.sacem-plan.is-expanded .sacem-expanded-content{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
+.sacem-plan.is-expanded .sacem-collapsed-main,
+.sacem-plan.is-expanded .sacem-collapsed-right{display:none}
+.sacem-expanded-left{min-width:0}
+.sacem-expanded-brand{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.sacem-expanded-brand .sacem-mini-logo{width:58px}
+.sacem-expanded-kicker{
+  color:#D9004C;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.sacem-expanded-title{font-size:18px;font-weight:700;line-height:1.06;letter-spacing:-.035em}
+.sacem-expanded-note{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.35}
+.sacem-expanded-price{text-align:right;flex:0 0 auto}
+.sacem-expanded-price .pricing-plan-notice{margin-bottom:5px;color:#D9004C}
+.sacem-plan .pricing-plan-price-value{font-size:27px}
+
+.selected-plan.sacem-theme{
+  --active:#ff3364!important;
+  --active-rgb:255,51,100!important;
+  --active-text:#fff!important;
+}
+.selected-plan.sacem-theme .selected-plan-header{background:#D9004C;justify-content:space-between;gap:12px}
+.selected-plan.sacem-theme .selected-plan-header .sacem-summary-logo{
+  display:block;
+  width:84px;
+  max-width:24%;
+  height:auto;
+  object-fit:contain;
+  margin-left:10px;
+}
+.selected-plan.sacem-theme .selected-plan-title{justify-content:flex-start;text-align:left}
+.sacem-eligibility{margin-top:7px;color:var(--muted);font-size:10px;line-height:1.3;text-align:center}
+.sacem-fixed-summary{display:grid;gap:0}
+.sacem-fixed-summary .checkout-size-line + .checkout-size-line{border-top:1px solid rgba(37,36,40,.06)}
+.sacem-fixed-summary .checkout-size-line img{width:18px;height:18px;flex:0 0 auto}
+
+@media(max-width:620px){
+  .partner-plan-divider{margin-top:14px}
+  .pricing-plan.sacem-plan{padding:10px 12px}
+  .sacem-mini-logo{width:40px}
+  .sacem-collapsed-title{font-size:12.5px}
+  .sacem-collapsed-subtitle{display:none}
+  .sacem-collapsed-price{font-size:12px}
+  .sacem-plan.is-expanded .sacem-expanded-content{align-items:flex-start;flex-direction:column}
+  .sacem-expanded-price{text-align:left}
+  .selected-plan.sacem-theme .selected-plan-header .sacem-summary-logo{width:72px;max-width:28%}
+}
+
+
+/* ===== v21  -  SACEM CLOUD OFFICIAL LOGO + CHECKOUT WHITE OUTLINE ===== */
+.selected-plan.sacem-theme .selected-plan-header .sacem-summary-logo{
+  object-fit:contain;
+  filter:
+    drop-shadow(1px 0 0 #fff)
+    drop-shadow(-1px 0 0 #fff)
+    drop-shadow(0 1px 0 #fff)
+    drop-shadow(0 -1px 0 #fff)
+    drop-shadow(1px 1px 0 #fff)
+    drop-shadow(-1px 1px 0 #fff)
+    drop-shadow(1px -1px 0 #fff)
+    drop-shadow(-1px -1px 0 #fff);
+}
+
+.sacem-benefit{max-width:1180px;margin:-4px auto 28px;padding:18px 22px;display:flex;align-items:center;gap:16px;border:1px solid rgba(217,0,76,.2);border-radius:20px;background:linear-gradient(105deg,rgba(217,0,76,.08),rgba(255,255,255,.92));box-shadow:0 12px 40px rgba(37,36,40,.04)}
+.sacem-benefit__badge{flex:0 0 auto;display:grid;place-items:center;width:64px;height:64px;border-radius:18px;background:#d9004c;color:#fff;font-size:21px;font-weight:750;letter-spacing:-.05em}
+.sacem-benefit strong{display:block;margin-bottom:4px;color:#1f1f23;font-size:15px}
+.sacem-benefit p{margin:0;color:#6f6d76;font-size:13px;line-height:1.45}
+.pricing-plan-promo{margin-top:9px;color:#d9004c;font-size:11px;font-weight:750;line-height:1.25}
+.dual-plan-prices{display:grid;grid-template-columns:repeat(2,minmax(96px,1fr));gap:8px;min-width:244px;text-align:left}
+.dual-price{padding:10px 11px;border:1px solid rgba(37,36,40,.11);border-radius:12px;background:#fff}
+.dual-price.sacem{border-color:rgba(217,0,76,.24);background:rgba(217,0,76,.055)}
+.dual-price-label{display:block;margin-bottom:6px;color:var(--muted);font-size:9px;font-weight:750;line-height:1.15;letter-spacing:.08em;text-transform:uppercase}
+.dual-price.sacem .dual-price-label{color:#a4003a}
+.dual-price-main{display:flex;align-items:flex-end;gap:3px;white-space:nowrap}
+.dual-price-value{font-size:25px;line-height:.9;font-weight:700;letter-spacing:-.055em}
+.dual-price-suffix{color:var(--muted);font-size:10px;font-weight:650}
+.dual-price-detail{margin-top:5px;color:var(--muted);font-size:9px;font-weight:600;line-height:1.2}
+.checkout-member-prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.checkout-member-prices .dual-price{padding:12px}
+.checkout-member-prices .dual-price-value{font-size:28px}
+.checkout-bottom.has-member-price{display:block!important}
+.checkout-bottom.has-member-price .checkout-cta-wrap{width:100%;margin:14px 0 0!important}
+.checkout-bottom.has-member-price .checkout-cta{width:100%!important;min-width:0;margin:0!important}
+.selected-plan-benefit strong{display:block;margin-bottom:3px;color:#8e0033}
+.pricing-plan.sacem-flat{border-color:rgba(217,0,76,.2);background:linear-gradient(180deg,#fff,rgba(217,0,76,.025))}
+.pricing-plan.sacem-flat:hover{border-color:rgba(217,0,76,.5);box-shadow:0 3px 0 rgba(217,0,76,.16)}
+.pricing-plan.sacem-flat.selected{border-color:#d9004c;box-shadow:4px 4px 0 rgba(217,0,76,.22)}
+.compare-plan-pill.sacem{background:#d9004c;color:#fff}
+.selected-plan-benefit{margin:12px 22px 2px;padding:12px 14px;border-radius:13px;background:rgba(217,0,76,.08);color:#a4003a;font-size:12px;font-weight:700;line-height:1.35}
+@media(max-width:620px){.sacem-benefit{align-items:flex-start;padding:15px;margin-bottom:20px}.sacem-benefit__badge{width:54px;height:54px;border-radius:15px;font-size:18px}.dual-plan-prices{width:100%;min-width:0}.dual-price-value{font-size:23px}}
+
+/* SACEM Cloud shell */
+.site-header{position:sticky;top:0;z-index:1000;height:70px;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(17,17,20,.07)}
+.site-header__inner{width:min(1280px,calc(100% - 48px));height:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.site-brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.03em;color:#111114;text-decoration:none;white-space:nowrap}
+.site-brand__sacem{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 12px;border-radius:999px;background:#d9004c;color:#fff;font-size:13px;letter-spacing:.01em}
+.site-brand__cross{color:#a3a3a8;font-weight:500}
+.site-brand__bridge{font-size:17px}
+.site-nav{display:flex;align-items:center;gap:24px;font-size:13px;color:#65656c}
+.site-nav a{color:inherit;text-decoration:none}
+.site-nav a:hover,.site-nav a[aria-current="page"]{color:#111114}
+.site-nav a[aria-current="page"]{font-weight:700}
+.site-header__cta{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 17px;border-radius:999px;background:#111;color:#fff;text-decoration:none;font-size:13px;font-weight:650}
+.site-footer{background:#fff;border-top:1px solid rgba(17,17,20,.08);padding:34px 24px;color:#6f6d76}
+.site-footer__inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;font-size:12px}
+.site-footer__links{display:flex;gap:18px;flex-wrap:wrap}
+.site-footer a{color:inherit;text-decoration:none}
+@media(max-width:900px){.site-header{height:62px}.site-header__inner{width:calc(100% - 28px)}.site-nav{display:none}.site-header__cta{min-height:38px;padding:0 13px;font-size:12px}.site-brand__bridge{font-size:15px}.site-brand__sacem{height:30px;padding:0 10px;font-size:12px}}
+@media(max-width:620px){.site-header__cta{display:none}.site-footer__inner{align-items:flex-start;flex-direction:column}.page-shell{padding-top:10px}}
+
+/* Shared SACEM x Bridge header */
+.site-header>.wrap.unified-header{width:min(1280px,calc(100% - 48px));height:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.unified-header .brand{display:flex;align-items:center;text-decoration:none}
+.unified-header .brand img{display:block;width:auto;height:42px;max-width:220px;object-fit:contain}
+.unified-header .nav{display:flex;align-items:center;gap:20px;font-size:12.5px}
+.unified-header .nav a{color:#5d5d63;text-decoration:none;white-space:nowrap}
+.unified-header .nav a:hover,.unified-header .nav a[aria-current="page"]{color:#D9004C}
+.unified-header .nav a[aria-current="page"]{font-weight:700}
+.unified-header .actions{display:flex;align-items:center;gap:8px}
+.unified-header .btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 17px;border:1px solid transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:650}
+.unified-header .btn-primary{background:#D9004C;color:#fff}
+.unified-header .btn-primary:hover{background:#B80040;transform:translateY(-1px)}
+.header-cta{white-space:nowrap}
+.mobile-menu{display:none;position:relative}
+.mobile-menu summary{display:flex;align-items:center;justify-content:center;min-height:42px;padding:0 15px;border:1px solid rgba(17,17,20,.08);border-radius:999px;background:#fff;color:#111;cursor:pointer;font-size:13px;font-weight:650;list-style:none}
+.mobile-menu summary::-webkit-details-marker{display:none}
+.mobile-menu__panel{position:absolute;right:0;top:calc(100% + 10px);display:grid;min-width:260px;padding:10px;border:1px solid rgba(17,17,20,.08);border-radius:18px;background:#fff;box-shadow:0 18px 60px rgba(17,17,21,.12)}
+.mobile-menu__panel a{padding:10px 12px;border-radius:10px;color:#313136;text-decoration:none;font-size:14px}
+.mobile-menu__panel a:hover,.mobile-menu__panel a[aria-current="page"]{background:rgba(217,0,76,.07);color:#D9004C}
+.pricing-step-title{color:#D9004C}
+
+/* SACEM Bridge gradient brand system */
+:root{
+  --sacem-bridge-burgundy:#A40232;
+  --sacem-bridge-pink:#FA2856;
+  --sacem-bridge-gradient:linear-gradient(180deg,#A40232 0%,#D20B49 52%,#FA2856 100%);
+}
+.pricing-step-title,
+.sacem-expanded-kicker,
+.sacem-expanded-price .pricing-plan-notice,
+.pricing-plan-promo,
+.dual-price.sacem .dual-price-label,
+.selected-plan-benefit strong{
+  background:var(--sacem-bridge-gradient) !important;
+  background-clip:text !important;
+  -webkit-background-clip:text !important;
+  color:transparent !important;
+  -webkit-text-fill-color:transparent !important;
+}
+.unified-header .nav a:hover,
+.unified-header .nav a[aria-current="page"]{
+  background:var(--sacem-bridge-gradient);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+.unified-header .btn-primary,
+.selected-plan.sacem-theme .checkout-cta,
+.selected-plan.sacem-theme .selected-plan-header,
+.sacem-benefit__badge,
+.compare-plan-pill.sacem,
+.pricing-plan.sacem-flat .pricing-plan-name{
+  background-color:var(--sacem-bridge-burgundy) !important;
+  background-image:var(--sacem-bridge-gradient) !important;
+  border-color:transparent !important;
+  color:#fff !important;
+}
+.unified-header .btn-primary:hover,
+.selected-plan.sacem-theme .checkout-cta:hover{
+  background-image:var(--sacem-bridge-gradient) !important;
+  filter:brightness(.91) saturate(1.05);
+}
+@media(max-width:1100px){.unified-header .nav{display:none}.mobile-menu{display:block}}
+@media(max-width:900px){.site-header>.wrap.unified-header{width:calc(100% - 28px)}.unified-header .brand img{height:34px;max-width:185px}}
+@media(max-width:620px){.header-cta{display:none}.unified-header .brand img{height:32px;max-width:165px}}
+
+
+/* SACEM V3 — palette rose / prune, montée en gamme et interface accessible */
+:root{--bg:#FCF9FA;--soft:#FFF7FA;--border:#E8DDE2;--text:#34232C;--muted:#6F5B65;--talent:#C92365;--music:#A6265A;--supervisor:#8F164D}
+body{background:var(--bg)}.pricing-hero h1{max-width:900px}.pricing-hero p{max-width:740px}
+.pricing-plan{border-color:#E8DDE2;box-shadow:0 2px 14px rgba(91,21,52,.035);transition:transform .18s,border-color .18s,box-shadow .18s}
+.pricing-plan:hover{border-color:#B42B64;box-shadow:0 8px 25px rgba(111,25,65,.1)}
+.pricing-plan.selected{border:2px solid #9E2056;box-shadow:0 0 0 3px rgba(158,32,86,.12)}
+.pricing-plan-name{font-size:12px;letter-spacing:.055em;min-height:32px}
+.pricing-plan[data-i="0"] .pricing-plan-name{background:#EDE6EA!important;color:#402632!important}
+.pricing-plan[data-i="1"] .pricing-plan-name{background:#F8C5D5!important;color:#402632!important}
+.pricing-plan[data-i="2"] .pricing-plan-name{background:#EF9FBA!important;color:#402632!important}
+.pricing-plan[data-i="3"] .pricing-plan-name{background:#E56A97!important;color:#fff!important}
+.pricing-plan[data-i="4"] .pricing-plan-name{background:#C92365!important;color:#fff!important}
+.pricing-plan[data-i="5"] .pricing-plan-name{background:#8F164D!important;color:#fff!important}
+.pricing-plan:focus-visible,.billing button:focus-visible,.pricing-plan-sign-up:focus-visible{outline:3px solid #9E2056;outline-offset:3px}
+.selected-plan{border-color:#E8DDE2}.selected-plan-title{background:var(--active);color:var(--active-text)}
+.pricing-plan-sign-up{border-color:#772044;box-shadow:0 3px 0 #772044}.pricing-plan-sign-up:hover{filter:brightness(.97)}
+.compare-plan-pill.talent{background:#EF9FBA;color:#402632}
+.compare-plan-pill.creator{background:#EF9FBA!important;color:#402632!important}
+.compare-plan-pill.creator-plus{background:#E56A97!important;color:white!important}
+.compare-plan-pill.creator-max{background:#C92365!important;color:white!important}
+.compare-plan-pill.creator-ultra{background:#8F164D!important;color:white!important}
+.compare-plan-pill.sacem{background:#F8C5D5!important;color:#402632!important}
+.compare-plan-pill.free{background:#EDE6EA!important;color:#402632!important}
+.plan-diamond{display:none!important}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* V9 — progression chromatique SACEM : neutres puis bordeaux → rouge */
+:root{--bg:#FAF9F9;--soft:#F7F5F5;--border:#E4DFE1;--text:#211D20;--muted:#635C61}
+.pricing-plan[data-i="0"] .pricing-plan-name,.compare-plan-pill.free{background:#D9DADD!important;color:#202126!important}
+.pricing-plan[data-i="1"] .pricing-plan-name,.compare-plan-pill.sacem{background:#16171B!important;color:#fff!important;background-image:none!important}
+.pricing-plan[data-i="2"] .pricing-plan-name,.compare-plan-pill.creator{background:#64172B!important;color:#fff!important}
+.pricing-plan[data-i="3"] .pricing-plan-name,.compare-plan-pill.creator-plus{background:#8F1834!important;color:#fff!important}
+.pricing-plan[data-i="4"] .pricing-plan-name,.compare-plan-pill.creator-max{background:#BE1735!important;color:#fff!important}
+.pricing-plan[data-i="5"] .pricing-plan-name,.compare-plan-pill.creator-ultra{background:#ED2437!important;color:#fff!important}
+.pricing-plan.sacem-flat .pricing-plan-name{background:#16171B!important;background-image:none!important;color:#fff!important}
+.compare-table thead th{background:#FAF8F9}
+.compare-no{color:#A3A0A2}
+.full-compare .compare-table tbody tr:not(.compare-family):hover td{background:#FCF7F8}
+
+/* V12 — three-column decision architecture */
+.pricing-v12{display:block!important;max-width:1180px;margin:38px auto 60px;padding:0 20px}
+.pricing-v12 .plans{display:grid!important;grid-template-columns:1fr 1fr 1.55fr;align-items:stretch;gap:18px;width:100%!important;max-width:none!important}
+.v12-card{min-width:0;border:1px solid #dedadd;border-radius:22px;background:#fff;overflow:hidden;display:flex;flex-direction:column;padding:0 22px 22px;box-shadow:0 10px 30px rgba(30,15,25,.055)}
+.v12-top{margin:0 -22px 22px;padding:24px 22px 27px;min-height:158px;background:#e2e2e4;color:#1d1d21}
+.v12-card.sacem .v12-top{background:#16171b;color:#fff}
+.v12-card.v12-creator .v12-top{background:linear-gradient(110deg,#64172b,#ed2437);color:#fff}
+.v12-eyebrow{font-size:11px;letter-spacing:.09em;font-weight:800}.v12-top h2{font-size:32px;margin:10px 0 5px}.v12-top p{margin:0;font-size:14px;line-height:1.45;opacity:.85}
+.v12-price{font-size:36px;font-weight:800;letter-spacing:-.05em}.v12-price small{font-size:14px;letter-spacing:0;font-weight:500}
+.v12-facts{display:grid;gap:13px;margin:22px 0 30px;font-size:14px}.v12-facts span{padding-bottom:12px;border-bottom:1px solid #eee}
+.v12-action{width:100%;border:0;background:#c91238;color:#fff;border-radius:999px;padding:14px 16px;font-weight:750;cursor:pointer;margin-top:auto;font-size:14px}
+.v12-card.sacem .v12-action{background:#16171b}.v12-action:disabled{background:#a5a2a5;cursor:not-allowed}.v12-note{font-size:12px;line-height:1.55;color:#655e63;margin:16px 0 0}
+.v12-variants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:18px}
+.v12-variant{background:#fff;border:1.5px solid #e7dce0;border-radius:13px;padding:14px 12px;text-align:left;cursor:pointer;display:grid;gap:6px;position:relative;color:#211d20}
+.v12-variant.is-active{border-color:#a41536;background:#fff5f7;box-shadow:0 0 0 2px rgba(164,21,54,.1)}
+.v12-variant-title{font-weight:800;font-size:15px}.v12-variant-price{font-size:22px;font-weight:850}.v12-variant small{font-size:11px;color:#635c61}.v12-variant em{font-size:10px;color:#a41536;font-style:normal;font-weight:800}
+.v12-creator-details{display:grid;gap:9px;padding:14px;background:#faf6f7;border-radius:12px;margin-bottom:16px;font-size:13px;line-height:1.45}.v12-discount{color:#9a1535;font-weight:750}
+.v12-detail{margin:22px auto 0;max-width:940px;color:#6c6268;text-align:center;font-size:13px;line-height:1.6}
+.v12-card button:focus-visible{outline:3px solid #d92a4c;outline-offset:3px}
+@media(max-width:960px){.pricing-v12 .plans{grid-template-columns:repeat(2,minmax(0,1fr))}.v12-creator{grid-column:1/-1}}
+@media(max-width:620px){.pricing-v12 .plans{grid-template-columns:1fr}.v12-creator{grid-column:auto}.v12-top{min-height:auto}.v12-card{padding-bottom:22px}}
+
+/* V13 — lisibilité des niveaux et bénéfices quantifiés */
+.v13-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:5px;background:#f3edef;border-radius:15px;margin:0 0 22px}
+.v13-tab{border:0;background:transparent;border-radius:11px;min-height:45px;padding:10px 3px;font-size:14px;font-weight:800;color:#66535b;cursor:pointer;transition:background .15s,color .15s}
+.v13-tab.is-active{background:#811b35;color:#fff;box-shadow:0 3px 12px #3e0d1d25}
+.v13-tab sup{color:#ed2437;font-size:14px}.v13-tab.is-active sup{color:#fff}
+.v13-price-block{display:flex;flex-direction:column;gap:3px;margin:0 0 20px;min-height:88px}
+.v13-price{font-size:clamp(36px,3.8vw,56px);line-height:1.08;font-weight:850;letter-spacing:-.06em;color:#171319}
+.v13-price small{font-size:16px;letter-spacing:0;font-weight:500;color:#675f63}
+.v13-billing{font-size:12px;color:#70656b}
+.v13-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:15px 0 25px}
+.v13-metrics>div{border-radius:13px;background:#faf6f7;padding:15px 8px 13px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:7px;min-height:100px}
+.v13-metrics strong{font-size:clamp(19px,2vw,29px);line-height:1.08;letter-spacing:-.045em;overflow-wrap:anywhere}
+.v13-metrics span{font-size:11px;line-height:1.35;color:#625961}
+.v12-card.free .v13-metrics>div{background:#f4f4f5}.v12-card.sacem .v13-metrics>div{background:#f2f1f2}
+.v13-benefit{margin:0 0 18px;font-size:13px;line-height:1.5;color:#821c38;background:#fff0f3;border-radius:11px;padding:11px 13px}
+.v13-tab:focus-visible{outline:3px solid #ed2437;outline-offset:2px}
+@media(max-width:620px){.v13-metrics{gap:5px}.v13-metrics>div{padding:12px 5px}.v13-tabs{gap:2px}.v13-tab{font-size:12px}}
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="wrap unified-header">
+<a aria-label="SACEM Cloud by Bridge.audio, accueil" class="brand" href="index.html"><img alt="SACEM Cloud by Bridge.audio" id="siteHeaderLogo"/></a>
+<nav aria-label="Navigation principale" class="nav">
+<a href="index.html#workspace">Espace de travail</a>
+<a href="index.html#search">Search</a>
+<a href="index.html#hubs">Hubs</a>
+<a href="index.html#proof">Écosystème</a>
+<a href="index.html#partnership">SACEM</a>
+<a aria-current="page" href="pricing.html">Tarifs</a>
+<a href="index.html#faq">FAQ</a>
+</nav>
+<div class="actions">
+<a class="btn btn-primary header-cta" href="#plans">Voir les offres</a>
+<details class="mobile-menu"><summary>Menu</summary><nav aria-label="Navigation mobile" class="mobile-menu__panel"><a href="index.html#workspace">Espace de travail</a><a href="index.html#search">Search</a><a href="index.html#hubs">Hubs</a><a href="index.html#proof">Écosystème</a><a href="index.html#partnership">SACEM</a><a aria-current="page" href="pricing.html">Tarifs</a><a href="index.html#faq">FAQ</a></nav></details>
+</div>
+</div>
+</header>
+<main class="page-shell">
+<header class="pricing-hero"><h1>Votre musique, votre espace, votre rythme.</h1><p>Stockez, organisez et partagez vos créations. Publiez sur Bridge Talent avec les offres Creator, avec une indexation dédiée à la découverte des titres publiés.</p><div class="billing"><button class="active" id="yearlyBtn" type="button">Annuel <span style="opacity:.7">tarif mensuel équivalent</span></button><button id="monthlyBtn" type="button">Mensuel</button></div></header><aside aria-label="Avantage sociétaires SACEM" class="sacem-benefit"><div class="sacem-benefit__badge">-50 %</div><div><strong>Avantage sociétaires SACEM sur Creator</strong><p>50 % de réduction pendant les 12 premiers mois de la première souscription annuelle éligible à Creator, Creator Plus ou Creator Max, après vérification du statut SACEM. Aucune réduction sur les abonnements mensuels ni au plan SACEM Cloud à 1,99 €/mois.</p></div></aside>
+<section class="pricing-section pricing-v12" aria-label="Choisissez votre offre"><div class="plans" id="plans"></div><div id="summary" class="v12-detail" aria-live="polite"></div></section>
+<section aria-label="Bridge.audio ecosystem proof" class="ecosystem-proof">
+<p class="ecosystem-proof-kicker">ÉCOSYSTÈME BRIDGE.AUDIO</p>
+<h3>Connecter toute l’industrie musicale, et au-delà.</h3>
+<div class="ecosystem-proof-stats">
+<div class="ecosystem-stat">
+<div class="ecosystem-stat-number">50K+</div>
+<div class="ecosystem-stat-title">Créateurs &amp; artistes</div>
+<div class="ecosystem-stat-copy">Artistes, compositeurs, voix et équipes créatives indépendantes.</div>
+<div aria-label="Artists using Bridge.audio" class="ecosystem-logo-grid">
+<img alt="" src="assets/embedded-08-a6902a249bfe.webp"/>
+<img alt="" src="assets/embedded-09-2d1a40432b3d.webp"/>
+<img alt="" src="assets/embedded-10-e90e9650cfed.webp"/>
+<img alt="" src="assets/embedded-11-f6c76935294e.webp"/>
+<img alt="" src="assets/embedded-12-e6646bbeb26b.webp"/>
+</div>
+</div>
+<div class="ecosystem-stat">
+<div class="ecosystem-stat-number">5K+</div>
+<div class="ecosystem-stat-title">Professionnels de la musique</div>
+<div class="ecosystem-stat-copy">Labels, éditeurs, managers, agents et ayants droit.</div>
+<div aria-label="Professionnels de la musique using Bridge.audio" class="ecosystem-logo-grid">
+<img alt="" src="assets/embedded-13-e2a27bfa9ecf.webp"/>
+<img alt="" src="assets/embedded-14-138e05268cc1.webp"/>
+<img alt="" src="assets/embedded-15-7398c4176130.webp"/>
+<img alt="" src="assets/embedded-16-6a7f0c9bf866.webp"/>
+<img alt="" src="assets/embedded-17-9f8b5f523ee8.webp"/>
+</div>
+</div>
+<div class="ecosystem-stat">
+<div class="ecosystem-stat-number">600+</div>
+<div class="ecosystem-stat-title">Acheteurs &amp; équipes créatives</div>
+<div class="ecosystem-stat-copy">Superviseurs, agences, marques, diffuseurs et équipes média à la recherche de musique.</div>
+<div aria-label="Buyer network examples" class="ecosystem-logo-grid">
+<img alt="" src="assets/embedded-18-f51ec5f56766.webp"/>
+<img alt="" src="assets/embedded-19-887a32456656.webp"/>
+<img alt="" src="assets/embedded-20-79a16b20bb5a.webp"/>
+<img alt="" src="assets/embedded-21-c3f5003869f8.webp"/>
+<img alt="" src="assets/embedded-22-31dd477bd202.webp"/>
+</div>
+</div>
+</div>
+</section>
+<section aria-label="Full plan comparison" class="full-compare">
+<p class="full-compare-kicker">COMPARATIF COMPLET</p>
+<div style="max-width:1100px;margin:24px auto;padding:22px 26px;background:#f8f4f5;border:1px solid #e8dce0;border-radius:16px;line-height:1.65;color:#27242b"><strong>Important : SACEM Cloud est conçu pour les créateurs individuels.</strong><br/>Free et Starter ne permettent aucune publication sur Bridge Talent. Creator, Creator Plus et Creator Max permettent respectivement 10, 50 et 100 publications. Creator Ultra (250 publications) est présenté comme une option de phase 2, non disponible au lancement et soumise à accord des partenaires. Les titres publiés sur Bridge Talent bénéficient d’une indexation pour faciliter leur découverte par les professionnels. Le cloud personnel permet de conserver, organiser et partager ses fichiers.<br/><small>Tarifs TTC. Sur les offres Creator, le tarif affiché en annuel est un équivalent mensuel facturé pour 12 mois. La réduction sociétaire de 50 % est limitée aux 12 premiers mois de la première souscription annuelle éligible ; elle ne s’applique pas aux abonnements mensuels. Starter : 1,99 € TTC/mois pour les sociétaires éligibles, garanti pendant toute la durée du partenariat, quelle que soit la périodicité.</small></div><p style="max-width:1100px;margin:12px auto 24px;color:#666;font-size:14px">Creator Ultra figure dans cette maquette à titre illustratif : offre de phase 2, non disponible au lancement et soumise à un accord écrit entre les partenaires. Son tarif mensuel hors annuel reste à confirmer.</p><h3>Comparez les offres en détail.</h3>
+<div class="compare-scroll">
+<table class="compare-table" id="compareTable"></table>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="site-footer__inner">
+<div>© 2026 SACEM Cloud by Bridge.audio</div>
+<div class="site-footer__links"><a href="index.html">Accueil</a><a href="index.html#partnership">Partenariat SACEM</a><a href="index.html#faq">FAQ</a><a href="index.html#top">Retour en haut</a></div>
+</div>
+</footer>
+<script>
+
+
+
+
+
+
+
+
+
+
+const icons={"cloud": "assets/embedded-38-07bcdaee8631.svg", "team": "assets/embedded-39-288348d31704.svg", "rocket": "assets/embedded-40-14f80fb5518b.svg", "search": "assets/embedded-41-e8d467ebd0ea.svg", "chart": "assets/embedded-42-128f2da2b405.svg", "wrench": "assets/embedded-43-071d026a4b00.svg", "music": "assets/embedded-44-e4fe99640ac2.svg", "eye": "assets/embedded-45-9c0aabc65c22.svg", "paper": "assets/embedded-46-e5f9467104d0.svg"};
+const plans=[
+{id:'free',badge:'FREE',color:'#D9DADD',rgb:'217,218,221',text:'#202126',title:'Free',loved:'DÉCOUVRIR SACEM CLOUD',cta:'Commencer gratuitement',free:true,size:{key:'Free',storage:'2 Go',tracks:'25 titres',members:'1',slots:'0'},common:[['cloud','Bibliothèque personnelle',['2 Go de stockage','25 titres stockables']],['paper','Organiser et partager',['Organisation simple','Partage par lien']],['eye','Bridge Talent',['Aucune publication incluse']]]},
+{id:'sacem',badge:'OFFRE SOCIÉTAIRE SACEM',color:'#16171B',rgb:'22,23,27',text:'#fff',title:'Starter',loved:'STOCKER ET PARTAGER SA MUSIQUE',cta:'Choisir Starter',partner:true,yearly:1.99,monthly:1.99,size:{key:'Starter',storage:'50 Go',tracks:'50 titres',members:'1',slots:'0'},common:[['cloud','Bibliothèque personnelle',['50 Go de stockage','50 titres stockables']],['paper','Organiser et partager',['Organisation simple','Partage par lien']],['eye','Bridge Talent',['Aucune publication incluse']]]},
+{id:'creator',badge:'CREATOR',color:'#64172B',rgb:'100,23,43',text:'#fff',talent:true,title:'Creator',loved:'PUBLIER SES PREMIERS TITRES',cta:'Choisir Creator',yearly:5,monthly:8,size:{key:'Creator',storage:'100 Go',tracks:'100 titres',members:'1',slots:'10'},common:[['cloud','Bibliothèque personnelle',['100 Go de stockage','100 titres stockables']],['paper','Organiser et partager',['Organisation et partage simples']],['eye','Bridge Talent',['Jusqu’à 10 titres publiés','Indexation des titres publiés pour leur découverte']]]},
+{id:'creator-plus',badge:'CREATOR PLUS',color:'#8F1834',rgb:'143,24,52',text:'#fff',talent:true,title:'Creator Plus',loved:'DÉVELOPPER SON CATALOGUE',cta:'Choisir Creator Plus',yearly:9,monthly:14,size:{key:'Creator Plus',storage:'250 Go',tracks:'500 titres',members:'1',slots:'50'},common:[['cloud','Bibliothèque personnelle',['250 Go de stockage','500 titres stockables']],['paper','Organiser et partager',['Organisation et partage simples']],['eye','Bridge Talent',['Jusqu’à 50 titres publiés','Indexation des titres publiés pour leur découverte']]]},
+{id:'creator-max',badge:'CREATOR MAX',color:'#BE1735',rgb:'190,23,53',text:'#fff',talent:true,title:'Creator Max',loved:'POUR LES CATALOGUES PERSONNELS ÉTENDUS',cta:'Choisir Creator Max',yearly:19,monthly:29,size:{key:'Creator Max',storage:'500 Go',tracks:'Titres illimités',members:'1',slots:'100'},common:[['cloud','Bibliothèque personnelle',['500 Go de stockage','Titres stockables illimités']],['paper','Organiser et partager',['Organisation et partage simples']],['eye','Bridge Talent',['Jusqu’à 100 titres publiés','Indexation des titres publiés pour leur découverte']]]},
+{id:'creator-ultra',badge:'CREATOR ULTRA · PHASE 2',color:'#ED2437',rgb:'237,36,55',text:'#fff',talent:true,future:true,title:'Creator Ultra',loved:'OFFRE ENVISAGÉE · NON DISPONIBLE AU LANCEMENT',cta:'Offre envisagée',yearly:29,monthly:null,size:{key:'Creator Ultra',storage:'1 To',tracks:'Titres illimités',members:'1',slots:'250'},common:[['cloud','Bibliothèque personnelle',['1 To de stockage','Titres stockables illimités']],['paper','Organiser et partager',['Organisation et partage simples']],['eye','Bridge Talent',['Jusqu’à 250 titres publiés','Indexation des titres publiés pour leur découverte']]]}
+];
+const compareRows=[
+ ['CAPACITÉ ET LIMITES','Stockage cloud',['2 Go','50 Go','100 Go','250 Go','500 Go','1 To']],
+ ['','Titres stockables',['25','50','100','500','Illimités','Illimités']],
+ ['','Utilisateur / espace personnel',['1','1','1','1','1','1']],
+ ['BRIDGE TALENT','Titres publiables sur Bridge Talent',['0','0','10','50','100','250']],
+ ['','Découvrabilité des titres publiés',['—','—','Indexation des 10 titres publiés','Indexation des 50 titres publiés','Indexation des 100 titres publiés','Indexation des 250 titres publiés']],
+ ['BIBLIOTHÈQUE PERSONNELLE','Stockage de fichiers musicaux',['Oui','Oui','Oui','Oui','Oui','Oui']],
+ ['','Organisation simple des fichiers',['Oui','Oui','Oui','Oui','Oui','Oui']],
+ ['','Partage simple par lien',['Oui','Oui','Oui','Oui','Oui','Oui']],
+ ['PRIX ET CONDITIONS','Prix public · annuel, équivalent mensuel',['Gratuit','—','5 €','9 €','19 €','29 € · indicatif']],
+ ['','Prix sociétaire SACEM · première année annuelle',['Gratuit','1,99 €','2,50 €','4,50 €','9,50 €','14,50 € · indicatif']],
+ ['','Prix public · paiement mensuel',['Gratuit','—','8 €','14 €','29 €','À confirmer']],
+ ['','Disponibilité',['Au lancement','Au lancement','Au lancement','Au lancement','Au lancement','Phase 2 · sous réserve d’accord']]
+];
+let state={plan:0,yearly:true};
+const yearlyBtn=document.getElementById('yearlyBtn');
+const monthlyBtn=document.getElementById('monthlyBtn');
+
+function diamond(){return `<svg width="21" height="20" aria-hidden="true" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g >
+<path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="currentColor"/>
+<path d="M5.26953 1.36719L6.35156 3.74805L8.18555 4.58203H15.7246L15.8096 4.58691C16.005 4.61152 16.1821 4.72048 16.293 4.88672L19.0273 8.98828C19.197 9.24307 19.1768 9.58007 18.9775 9.8125L10.7744 19.3828C10.6425 19.5365 10.4486 19.6238 10.2461 19.6211C10.0434 19.6181 9.85124 19.5256 9.72363 19.3682L1.97656 9.79785C1.80124 9.58124 1.77502 9.27883 1.91016 9.03516L3.0498 6.98438L3.19824 6.71484L0.945312 5.69141L0 5.26172L0.945312 4.83203L3.32715 3.74902L4.41016 1.36719L4.83984 0.421875L5.26953 1.36719ZM8.93555 9.35742L7.48242 10.0176L8.93555 10.6787L9.59668 12.1318L10.2568 10.6787L11.7109 10.0176L10.2568 9.35742L9.59668 7.9043L8.93555 9.35742ZM4.11426 4.30176L4.04102 4.46289L3.87988 4.53613L2.28125 5.26172L3.87988 5.98828L4.04102 6.06152L4.11426 6.22266L4.83984 7.82031L5.56641 6.22266L5.63965 6.06152L5.80078 5.98828L7.39844 5.26172L5.80078 4.53613L5.63965 4.46289L5.56641 4.30176L4.83984 2.70312L4.11426 4.30176Z" fill="url(#paint0_linear_33277_11157)"/>
+</g>
+
+</svg>
+`}
+const sacemLogo='assets/logo-sacem-bridge-gradient.png';
+document.getElementById('siteHeaderLogo').src=sacemLogo;
+function icon(k){return `<span class="summary-icon"><img src="${icons[k]}" alt=""></span>`}
+function optIcon(k){return `<img class="option-icon" src="${icons[k]}" alt="">`}
+function currentPlan(){return plans[state.plan]}
+function fmtPrice(n){return Number.isInteger(n)?String(n):n.toFixed(2).replace('.',',')}
+function selectedPrice(){const p=currentPlan();return p.free?0:(state.yearly?p.yearly:p.monthly)}
+function priceText(p){if(p.future&&!state.yearly)return 'À confirmer';return p.free?'Gratuit':`${fmtPrice(state.yearly?p.yearly:p.monthly)}€`}
+function sacemFirstYearPrice(p){return state.yearly?p.yearly/2:p.monthly}
+function pricePeriodDetail(value){return state.yearly?`${fmtPrice(value*12)} €/an, paiement annuel`:'facturé mensuellement'}
+function renderDualPrices(p,checkout=false){
+ const standard=state.yearly?p.yearly:(p.future?'À confirmer':p.monthly);
+ const member=p.future&&!state.yearly?'À confirmer':sacemFirstYearPrice(p);
+ const cls=checkout?'checkout-member-prices':'dual-plan-prices';
+ return `<div class="${cls}" aria-label="Tarif public et tarif sociétaire SACEM">
+   <div class="dual-price"><span class="dual-price-label">Tarif public</span><div class="dual-price-main"><span class="dual-price-value">${typeof standard==='number'?fmtPrice(standard)+'€':standard}</span><span class="dual-price-suffix">/mois</span></div><div class="dual-price-detail">${typeof standard==='number'?pricePeriodDetail(standard):'Tarif mensuel à confirmer'}</div></div>
+   <div class="dual-price sacem"><span class="dual-price-label">Sociétaire SACEM · année 1</span><div class="dual-price-main"><span class="dual-price-value">${typeof member==='number'?fmtPrice(member)+'€':member}</span><span class="dual-price-suffix">/mois</span></div><div class="dual-price-detail">${typeof member==='number'?pricePeriodDetail(member):'Sans remise sur abonnement mensuel'}${p.future?' · indicatif, phase 2':''}</div></div>
+ </div>`;
+}
+function renderFonctionnalités(p){
+ return p.common.map(([i,t,items])=>`<div class="recap-feature">${icon(i)}<div><p class="recap-feature-title">${t}</p><ul class="recap-feature-list">${items.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`).join('');
+}
+function renderPlanSpecs(p){
+ const s=p.size;
+ const discovery=p.talent?`${s.slots} titres publiés sur Bridge Talent`:'0 titre publié sur Bridge Talent';
+ return `<div class="checkout-size-lines">
+   <div class="checkout-size-line">${optIcon('cloud')}<span>${s.storage} de stockage · ${s.tracks}</span></div>
+   
+   <div class="checkout-size-line">${optIcon('eye')}<span>${discovery}</span></div>
+ </div>`;
+}
+function renderCheckoutStack(p){
+ const val=selectedPrice();
+ const price=p.future&&!state.yearly?'À confirmer':p.free?'Gratuit':`${fmtPrice(val)}€`;
+ const annualTotal=!p.free&&state.yearly?fmtPrice(val*12):null;
+ const billingLine=p.free?'':state.yearly?`${annualTotal} €/an facturés annuellement`:'Facturé mensuellement';
+ return `<div class="checkout-stack">
+   ${renderPlanSpecs(p)}
+   <div class="checkout-bottom ${p.talent&&state.yearly?'has-member-price':''}">
+     ${p.talent&&state.yearly?renderDualPrices(p,true):`<div class="checkout-price"><div class="checkout-price-main"><span class="checkout-price-value" aria-live="polite">${price}</span>${p.free?'':'<span class="checkout-price-suffix">/mois</span>'}</div>${billingLine?`<div class="checkout-price-yearly">${billingLine}</div>`:''}</div>`}
+     <div class="checkout-cta-wrap"><button class="pricing-plan-sign-up checkout-cta" id="mainCta">${p.cta}</button><div class="checkout-reassurance">${p.free?'Aucune carte bancaire requise':p.partner?'Tarif sociétaire garanti pendant le contrat':'Résiliable à tout moment'}</div></div>
+   </div>
+ </div>`;
+}
+function renderPlans(){
+ const root=document.getElementById('plans');
+ root.setAttribute('role','radiogroup');
+ root.setAttribute('aria-label','Comparez les offres SACEM Cloud');
+ root.innerHTML=plans.map((p,i)=>`<button type="button" class="pricing-plan ${p.partner?'sacem-flat ':''}${i===state.plan?'selected':''}" role="radio" aria-checked="${i===state.plan}" tabindex="${i===state.plan?'0':'-1'}" data-i="${i}" style="--plan-color:${p.color};--plan-text:${p.text}">
+  <div class="pricing-plan-main"><div class="pricing-plan-name">${p.badge}</div><div class="pricing-plan-title">${p.title}</div><div class="pricing-plan-lovedby">${p.loved}</div>${p.future?'<div class="pricing-plan-promo">Phase 2 · non disponible au lancement</div>':''}${p.promo?`<div class="pricing-plan-promo">${p.promo}</div>`:''}</div>
+  <div class="right">${p.talent&&state.yearly?renderDualPrices(p):`<div class="pricing-plan-notice">${p.free?'':p.partner?'Tarif sociétaire garanti':'Tarif public'}</div><div class="pricing-plan-price-main"><span class="pricing-plan-price-value">${priceText(p)}</span>${p.free?'':'<span class="pricing-plan-price-suffix">/mois</span>'}</div>${p.free?'':`<div class="pricing-plan-price-yearly">${state.yearly?'paiement annuel':'paiement mensuel'}</div>`}`}</div>
+ </button>`).join('');
+ [...root.querySelectorAll('.pricing-plan')].forEach((el)=>{
+  const i=Number(el.dataset.i);
+  const select=()=>{state.plan=i;render();positionCheckout()};
+  el.addEventListener('click',select);
+  el.addEventListener('keydown',e=>{
+   if(e.key==='Enter'||e.key===' '){e.preventDefault();select();return}
+   if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();focusPlan((i+1)%plans.length)}
+   if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();focusPlan((i-1+plans.length)%plans.length)}
+  });
+ });
+}
+function focusPlan(i){const items=[...document.querySelectorAll('.pricing-plan')];items.forEach((x,j)=>x.tabIndex=j===i?0:-1);items[i].focus()}
+function renderSummary(){
+ const p=currentPlan(),summary=document.getElementById('summary');
+ summary.style.setProperty('--active',p.color);summary.style.setProperty('--active-rgb',p.rgb);summary.style.setProperty('--active-text',p.text);
+ summary.classList.toggle('free-theme',p.free===true);summary.classList.toggle('sacem-theme',p.partner===true);
+ summary.innerHTML=`<div class="selected-plan-header"><div class="selected-plan-title">${p.badge}</div>${p.partner?`<img class="sacem-summary-logo" src="${sacemLogo}" alt="SACEM × Bridge.audio">`:''}</div>
+   <div class="selected-plan-intro"><div class="selected-plan-subtitle">${p.title}</div><div class="selected-plan-loved">${p.loved}</div></div>
+   ${p.talent&&state.yearly?'<div class="selected-plan-benefit"><strong>Avantage sociétaire SACEM</strong>50 % de réduction sur la première année de cette offre avec paiement annuel, après vérification de votre statut.</div>':''}
+   <div class="selected-plan-body"><div class="selected-plan-details">${renderFonctionnalités(p)}</div></div>${renderCheckoutStack(p)}`;
+ document.getElementById('mainCta').onclick=()=>alert(p.future?'Creator Ultra : offre de phase 2, non disponible au lancement.':'Action de démonstration');
+}
+function compareValue(v){if(v==='Oui')return '<span class="compare-yes" aria-label="Oui">✓</span>';if(v==='Non')return '<span class="compare-no" aria-label="Non">-</span>';return v}
+function renderCompare(){
+ const t=document.getElementById('compareTable');
+ const headers=plans.map(p=>`<th><span class="compare-plan-pill ${p.id}">${p.title}${p.future?' <small>· phase 2</small>':''}</span></th>`).join('');
+ t.innerHTML=`<thead><tr><th class="compare-feature">Fonctionnalité</th>${headers}</tr></thead><tbody>${compareRows.map(([family,feature,vals])=>{const familyRow=family?`<tr class="compare-family"><td colspan="${plans.length+1}">${family}</td></tr>`:'';return `${familyRow}<tr><td class="compare-feature">${feature}</td>${vals.map(v=>`<td>${compareValue(v)}</td>`).join('')}</tr>`}).join('')}</tbody>`;
+}
+function positionCheckout(){
+ const summary=document.getElementById('summary');
+ if(!summary)return;
+ const mobile=window.matchMedia('(max-width:900px)').matches;
+ requestAnimationFrame(()=>{
+  if(mobile){
+   const y=summary.getBoundingClientRect().top+window.scrollY-12;
+   window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  }else{
+   const rect=summary.getBoundingClientRect();
+   if(rect.top<24 || rect.bottom>window.innerHeight-24){
+    const y=summary.getBoundingClientRect().top+window.scrollY-24;
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+   }
+   const body=summary.querySelector('.selected-plan-body');
+   if(body) body.scrollTop=0;
+  }
+ });
+}
+
+/* V13 : un seul prix visible, quatre onglets compacts */
+function renderPlans(){
+ const root=document.getElementById('plans');
+ const card=(p,i)=>`<article class="v12-card ${p.id}"><div class="v12-top"><span class="v12-eyebrow">${p.free?'GRATUIT':'OFFRE ESSENTIELLE'}</span><h2>${p.title}</h2><p>${p.free?'Pour découvrir SACEM Cloud':'Pour conserver et partager vos créations'}</p></div><div class="v12-price">${priceText(p)}<small> ${p.free?'':'/ mois'}</small></div><div class="v13-metrics"><div><strong>${p.size.storage}</strong><span>Stockage cloud</span></div><div><strong>${p.size.tracks.replace(' titres','')}</strong><span>Titres stockables</span></div><div><strong>${p.size.slots}</strong><span>Publications Bridge Talent</span></div></div><button type="button" class="v12-action" data-select="${i}">${p.free?'Découvrir gratuitement':'Choisir Starter'}</button>${p.partner?'<p class="v12-note">Tarif sociétaire garanti pendant le partenariat, en paiement mensuel ou annuel.</p>':''}</article>`;
+ const creator=plans[state.plan>=2?state.plan:2];
+ const variants=plans.slice(2).map((p,j)=>`<button type="button" class="v13-tab ${creator.id===p.id?'is-active':''}" data-select="${j+2}" aria-pressed="${creator.id===p.id}">${j===0?'Creator':p.title.replace('Creator ','')}${p.future?'<sup>•</sup>':''}</button>`).join('');
+ const price=priceText(creator);
+ root.innerHTML=card(plans[0],0)+card(plans[1],1)+`<article class="v12-card v12-creator"><div class="v12-top"><span class="v12-eyebrow">POUR PARTAGER VOTRE MUSIQUE AVEC LES PROFESSIONNELS</span><h2>Creator</h2><p>Publiez vos titres sur Bridge Talent.</p></div><div class="v13-tabs" role="group" aria-label="Choisir votre niveau Creator">${variants}</div><div class="v13-price-block" aria-live="polite"><div class="v13-price">${price}<small>${price==='À confirmer'?'':' / mois'}</small></div><span class="v13-billing">${creator.future?'Phase 2 · tarif indicatif en annuel':state.yearly?'Équivalent mensuel · facturation annuelle':'Facturation mensuelle'}</span></div><div class="v13-metrics" aria-live="polite"><div><strong>${creator.size.storage}</strong><span>Stockage cloud</span></div><div><strong>${creator.size.tracks.replace(' titres','')}</strong><span>Titres stockables</span></div><div><strong>${creator.size.slots}</strong><span>Publications Bridge Talent</span></div></div>${state.yearly?`<p class="v13-benefit">Sociétaires SACEM : <strong>${fmtPrice(creator.yearly*.5)} € / mois</strong> équivalent pendant la première année d’un abonnement annuel éligible${creator.future?' (indicatif)':''}.</p>`:''}<button type="button" class="v12-action" data-choose="creator" ${creator.future?'disabled':''}>${creator.future?'Offre envisagée · non disponible':`Choisir ${creator.title}`}</button><p class="v12-note">${creator.future?'Ultra est une offre envisagée en phase 2, sous réserve d’accord écrit entre les partenaires. Prix annuel indicatif.':'L’indexation concerne uniquement les titres publiés sur Bridge Talent.'}</p></article>`;
+ root.querySelectorAll('[data-select]').forEach(el=>el.addEventListener('click',()=>{const i=Number(el.dataset.select);if(i<2){alert('Action de démonstration');return;}state.plan=i;render();}));
+ const choose=root.querySelector('[data-choose]');if(choose&&!choose.disabled)choose.addEventListener('click',()=>alert('Action de démonstration'));
+}
+function renderSummary(){const el=document.getElementById('summary');el.innerHTML='<p>Les offres Creator donnent accès à la publication de titres sur Bridge Talent. L’indexation concerne uniquement les titres publiés, pas la bibliothèque privée. Les outils professionnels Bridge.audio ne sont pas inclus.</p>';}
+
+function render(){renderPlans();renderSummary();renderCompare()}
+yearlyBtn.onclick=()=>{state.yearly=true;yearlyBtn.classList.add('active');monthlyBtn.classList.remove('active');render()};
+monthlyBtn.onclick=()=>{state.yearly=false;monthlyBtn.classList.add('active');yearlyBtn.classList.remove('active');render()};
+render();
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
