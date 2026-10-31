@@ -1,0 +1,72 @@
+/* V37: shared responsive layer for V31 restored content and all V36 pages.
+   Rules are organized by viewport and affect layout only. */
+html,body{max-width:100%}
+img,svg,video,canvas{max-width:100%}
+.container,.legacy-v31 .wrap{min-width:0}
+.legacy-v31{--page:min(1160px,calc(100% - 48px));--header-h:70px;min-width:0;max-width:100%;overflow-wrap:break-word}
+.legacy-v31 .wrap{max-width:100%}
+.legacy-v31 .product-focus__layout,.legacy-v31 .product-focus__controls,.legacy-v31 .product-focus__frame,
+.legacy-v31 .project-cloud-section,.legacy-v31 .project-cloud-stage,.legacy-v31 .opportunity-thumbs{min-width:0;max-width:100%}
+.legacy-v31 .product-focus__visual img,.legacy-v31 .project-cloud-card img,.legacy-v31 .opportunity-thumb img{max-width:100%;height:auto}
+.site-nav a,.mobile-panel a{overflow-wrap:normal}
+#contenu,main{min-width:0}
+@media (max-width:1100px){
+ .legacy-v31{--page:calc(100% - 48px)}
+ .legacy-v31 .opportunity-thumbs{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .legacy-v31 .product-focus__layout{gap:28px}
+}
+@media (max-width:920px){
+ .legacy-v31{--page:calc(100% - 36px)}
+ .legacy-v31 .project-cloud-stage{max-width:100%;overflow:visible}
+ .legacy-v31 .project-cloud-card{min-width:0}
+ .legacy-v31 .product-tabs{max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
+ .legacy-v31 .product-focus__frame{max-width:100%}
+ .legacy-v31 .opportunity-thumbs{gap:10px}
+ .conversion-grid{gap:28px}
+ .header-inner{gap:12px}
+ .mobile-panel{z-index:100;max-width:calc(100vw - 24px)}
+}
+@media (max-width:640px){
+ .legacy-v31 .feature-grid{grid-template-columns:1fr;gap:13px}
+ .legacy-v31 .feature-card{min-width:0;padding:18px}
+ .legacy-v31 .feature-card__copy{min-height:0}
+ .legacy-v31 .feature-card__media{margin-top:12px;max-width:100%}
+ .legacy-v31 .feature-card__media img{width:100%;height:auto;object-fit:contain}
+ .legacy-v31{--page:calc(100% - 32px)}
+ .legacy-v31 .wrap{width:var(--page);margin-inline:auto}
+ .legacy-v31 .product-focus__shell,.legacy-v31 .product-focus__layout{width:100%;max-width:100%}
+ .legacy-v31 .product-focus__head h2{overflow-wrap:break-word}
+ .legacy-v31 .product-tabs{display:flex;flex-wrap:nowrap;gap:6px;scrollbar-width:none}
+ .legacy-v31 .product-tabs::-webkit-scrollbar{display:none}
+ .legacy-v31 .product-tab{flex:0 0 auto;min-width:0;max-width:none;white-space:nowrap}
+ .legacy-v31 .product-focus__frame{min-height:0;aspect-ratio:1.42/1}
+ .legacy-v31 .product-focus__visual{max-width:100%}
+ .legacy-v31 .product-focus__visual img{max-height:none;width:100%;height:auto;object-fit:contain}
+ .legacy-v31 .project-cloud-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .legacy-v31 .project-cloud-card{position:relative;inset:auto;min-width:0;width:auto;max-width:100%;height:auto;transform:none;animation:none}
+ .legacy-v31 .project-cloud-card__media{height:auto}
+ .legacy-v31 .project-cloud-card__media img{width:100%;height:auto;object-fit:contain}
+ .legacy-v31 .opportunity-thumbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .legacy-v31 .opportunity-thumb__caption{overflow-wrap:anywhere}
+ .legacy-v31 .ecosystem-logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .legacy-v31 .switch-grid,.legacy-v31 .partner-points{grid-template-columns:1fr}
+ .legacy-v31 .partner-top{grid-template-columns:1fr}
+ .legacy-v31 .footer-top{grid-template-columns:1fr}
+ .conversion-card{min-width:0;padding:23px}
+ .conversion-card select{font-size:16px}
+ .footer-nav{display:flex;flex-wrap:wrap;gap:13px}
+ .hero-art,.hero-frame{max-width:100%}
+ .v36-table-wrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+ .v36-table-wrap:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+}
+@media (max-width:390px){
+ .legacy-v31{--page:calc(100% - 28px)}
+ .legacy-v31 .product-tab{padding-inline:10px}
+ .legacy-v31 .project-cloud-stage{gap:7px}
+ .legacy-v31 .opportunity-thumbs{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .legacy-v31 .ecosystem-logo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero-copy h1{font-size:clamp(38px,11vw,50px)}
+ .v36-scale-header h2{font-size:32px}
+ .v36-scale-grid{min-width:0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.legacy-v31 .product-tab,.legacy-v31 .project-cloud-card,.v36-card{transition:none}}

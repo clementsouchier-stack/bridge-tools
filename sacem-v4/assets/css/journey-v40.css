@@ -1,0 +1,55 @@
+/* V41 shared scroll storytelling: Workspace (4 steps), Bridge Talents (5 steps). */
+.legacy-v31 .journey-v40{background:#fff;color:#171a23;isolation:isolate;padding:0;overflow:visible}
+.legacy-v31 .journey-v40>.wrap{width:min(1180px,calc(100% - 56px));max-width:1180px;margin-inline:auto}
+.legacy-v31 .journey-v40__head{max-width:740px;margin:0 0 30px}
+.legacy-v31 .journey-v40__head h2{font-size:clamp(32px,3.3vw,44px);line-height:1.1;letter-spacing:-.045em;font-weight:650;margin:0}
+.legacy-v31 .journey-v40__head p{font-size:16px;line-height:1.55;color:#6d7483;margin:14px 0 0;max-width:650px}
+.legacy-v31 .journey-v40__desktop{position:relative;height:272vh;min-height:1780px}
+.legacy-v31 .journey-v40__sticky{position:sticky;top:74px;min-height:0;height:calc(100vh - 90px);display:flex;align-items:center}
+.legacy-v31 .journey-v40__layout{width:100%;display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.45fr);gap:clamp(28px,4.5vw,65px);align-items:center}
+.legacy-v31 .journey-v40__guide{display:flex;align-items:center;gap:12px;color:#7b8190;font-size:12px;font-weight:550;margin-bottom:19px}
+.legacy-v31 .journey-v40__counter{color:#2f43de;font-weight:760;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.legacy-v31 .journey-v40__text{max-width:35ch;min-height:134px}
+.legacy-v31 .journey-v40__text h3{font-size:clamp(32px,3.1vw,43px);font-weight:650;letter-spacing:-.048em;line-height:1.06;margin:0 0 13px}
+.legacy-v31 .journey-v40__text p{font-size:clamp(15px,1.35vw,17px);line-height:1.6;color:#596273;margin:0}
+.legacy-v31 .journey-v40__progress{height:3px;background:#e8ebf2;border-radius:99px;margin-top:25px;max-width:260px;overflow:hidden}
+.legacy-v31 .journey-v40__progress span{display:block;width:20%;height:100%;background:#2f43de;transition:width .23s ease}
+.legacy-v31 .journey-v40__visual{position:relative;width:100%;aspect-ratio:1.43;max-height:57vh;display:grid;place-items:center}
+.legacy-v31 .journey-v40__slide{position:absolute;inset:0;display:grid;place-items:center;margin:0;opacity:0;visibility:hidden;transition:opacity .32s ease,visibility 0s linear .32s;pointer-events:none}
+.legacy-v31 .journey-v40__slide.is-active{opacity:1;visibility:visible;transition:opacity .32s ease;pointer-events:auto}
+.legacy-v31 .journey-v40__slide img{width:100%;height:100%;max-height:57vh;object-fit:contain;border-radius:17px;box-shadow:0 18px 46px rgba(17,17,21,.06)}
+.legacy-v31 .journey-v40__mobile{display:none}
+/* Smaller screens and short viewports: each step is readable in natural flow. */
+@media(max-width:1049px), (max-height:699px){
+ .legacy-v31 .journey-v40{padding:76px 0 82px}
+ .legacy-v31 .journey-v40>.wrap{width:min(900px,calc(100% - 40px))}
+ .legacy-v31 .journey-v40__desktop{display:none}
+ .legacy-v31 .journey-v40__mobile{display:grid;gap:36px}
+ .legacy-v31 .journey-v40__mobile-step{border-bottom:1px solid #e7e9f0;padding-bottom:34px}
+ .legacy-v31 .journey-v40__mobile-step:last-child{border-bottom:0;padding-bottom:0}
+ .legacy-v31 .journey-v40__number{display:block;color:#2f43de;font-size:12px;font-weight:720;letter-spacing:.04em;margin-bottom:9px}
+ .legacy-v31 .journey-v40__mobile-step h3{font-size:clamp(25px,4vw,34px);line-height:1.13;letter-spacing:-.04em;margin:0 0 8px;font-weight:650}
+ .legacy-v31 .journey-v40__mobile-step p{font-size:15px;line-height:1.55;color:#5a6375;margin:0 0 18px;max-width:55ch}
+ .legacy-v31 .journey-v40__mobile-step figure{margin:0}
+ .legacy-v31 .journey-v40__mobile-step img{display:block;width:100%;max-height:490px;object-fit:contain;border-radius:16px;box-shadow:0 12px 32px #1111170d}
+}
+@media(max-width:600px){
+ .legacy-v31 .journey-v40{padding:64px 0 76px}
+ .legacy-v31 .journey-v40>.wrap{width:calc(100% - 34px)}
+ .legacy-v31 .journey-v40__head{margin-bottom:28px}
+ .legacy-v31 .journey-v40__head h2{font-size:clamp(29px,7.4vw,37px)}
+ .legacy-v31 .journey-v40__head p{font-size:15px}
+ .legacy-v31 .journey-v40__mobile{gap:29px}
+ .legacy-v31 .journey-v40__mobile-step{padding-bottom:29px}
+ .legacy-v31 .journey-v40__mobile-step h3{font-size:27px}
+ .legacy-v31 .journey-v40__mobile-step p{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.legacy-v31 .journey-v40__slide,.legacy-v31 .journey-v40__progress span{transition:none}}
+
+/* Shared composition for both storytelling sections */
+.legacy-v31 .journey-v40__eyebrow{display:block;color:#2f43de;font-size:12px;font-weight:750;letter-spacing:.035em;margin-bottom:12px}
+.legacy-v31 .journey-v40--workspace .journey-v40__desktop{height:225vh;min-height:1510px}
+.legacy-v31 .journey-v40--workspace .journey-v40__progress span{width:25%}
+@media(max-width:1049px),(max-height:699px){
+ .legacy-v31 .journey-v40--workspace .journey-v40__desktop{display:none;height:auto;min-height:0}
+}
