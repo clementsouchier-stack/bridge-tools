@@ -1,0 +1,242 @@
+[
+  {
+    "page": "index.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1631,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "index.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 2057,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "index.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 2189,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "index.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 2189,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "labels.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1185,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "labels.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 1447,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "labels.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 1640,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "labels.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 1640,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-walboomers.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1214,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-walboomers.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 1268,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-walboomers.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 1520,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-walboomers.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 1571,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-beggars.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1214,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-beggars.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 1268,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-beggars.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 1420,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-beggars.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 1510,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-delsin.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1296,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-delsin.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 1388,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-delsin.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 1585,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "label-delsin.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 1666,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "in-amsterdam.html",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "clientWidth": 1440,
+    "bodyHeight": 1007,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "in-amsterdam.html",
+    "width": 768,
+    "scrollWidth": 768,
+    "clientWidth": 768,
+    "bodyHeight": 1051,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "in-amsterdam.html",
+    "width": 390,
+    "scrollWidth": 390,
+    "clientWidth": 390,
+    "bodyHeight": 1140,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  },
+  {
+    "page": "in-amsterdam.html",
+    "width": 375,
+    "scrollWidth": 375,
+    "clientWidth": 375,
+    "bodyHeight": 1140,
+    "imgs": [],
+    "h1": 1,
+    "errors": []
+  }
+]

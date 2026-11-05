@@ -1,0 +1,32 @@
+test_404_is_noindex_without_home_canonical (test_release_v28.ReleaseTests.test_404_is_noindex_without_home_canonical) ... ok
+test_core_button_and_status_contrast (test_release_v28.ReleaseTests.test_core_button_and_status_contrast) ... ok
+test_editorial_categories_cannot_publish_without_review (test_release_v28.ReleaseTests.test_editorial_categories_cannot_publish_without_review) ... ok
+test_editorial_categories_with_small_samples_not_generated (test_release_v28.ReleaseTests.test_editorial_categories_with_small_samples_not_generated) ... ok
+test_editorial_category_with_3_profiles_and_review_generates (test_release_v28.ReleaseTests.test_editorial_category_with_3_profiles_and_review_generates) ... ok
+test_logo_path_and_missing_asset_rejected (test_release_v28.ReleaseTests.test_logo_path_and_missing_asset_rejected) ... ok
+test_no_preview_category_points_to_empty_listing (test_release_v28.ReleaseTests.test_no_preview_category_points_to_empty_listing) ... ok
+test_no_preview_pages_claim_to_be_production (test_release_v28.ReleaseTests.test_no_preview_pages_claim_to_be_production) ... ok
+test_preview_logo_not_used_as_tiny_og_image (test_release_v28.ReleaseTests.test_preview_logo_not_used_as_tiny_og_image) ... ok
+test_production_build_refuses_dirty_output_directory (test_release_v28.ReleaseTests.test_production_build_refuses_dirty_output_directory) ... ok
+test_production_home_never_links_to_unreleased_categories (test_release_v28.ReleaseTests.test_production_home_never_links_to_unreleased_categories) ... ok
+test_production_internal_links_resolve_to_generated_documents (test_release_v28.ReleaseTests.test_production_internal_links_resolve_to_generated_documents) ... ok
+test_production_origin_must_not_have_query_or_path (test_release_v28.ReleaseTests.test_production_origin_must_not_have_query_or_path) ... ok
+test_stale_future_invalid_source_date_blocked (test_release_v28.ReleaseTests.test_stale_future_invalid_source_date_blocked) ... ok
+test_status_and_destination_are_distinct_fields (test_release_v28.ReleaseTests.test_status_and_destination_are_distinct_fields) ... ok
+test_submission_action_precedes_main_in_keyboard_order (test_release_v28.ReleaseTests.test_submission_action_precedes_main_in_keyboard_order) ... ok
+test_unsafe_slug_and_key_rejected_before_build (test_release_v28.ReleaseTests.test_unsafe_slug_and_key_rejected_before_build) ... ok
+test_untrusted_inbox_rejected (test_release_v28.ReleaseTests.test_untrusted_inbox_rejected) ... ok
+test_existing_inbox_urls_are_exact (test_site.SiteTests.test_existing_inbox_urls_are_exact) ... ok
+test_js_syntax (test_site.SiteTests.test_js_syntax) ... ok
+test_logo_is_valid_svg (test_site.SiteTests.test_logo_is_valid_svg) ... ok
+test_no_illustrative_labels_in_public_listing (test_site.SiteTests.test_no_illustrative_labels_in_public_listing) ... ok
+test_no_private_data_signatures (test_site.SiteTests.test_no_private_data_signatures) ... ok
+test_page_inventory (test_site.SiteTests.test_page_inventory) ... ok
+test_production_build_metadata_and_sitemap (test_site.SiteTests.test_production_build_metadata_and_sitemap) ... ok
+test_production_fail_closed (test_site.SiteTests.test_production_fail_closed) ... ok
+test_valid_semantics_metadata_and_noindex (test_site.SiteTests.test_valid_semantics_metadata_and_noindex) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.172s
+
+OK
