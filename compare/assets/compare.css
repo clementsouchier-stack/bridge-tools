@@ -143,3 +143,29 @@ body.menu-locked{overflow:hidden}
 @media(max-width:560px){.bc-footer-inner{padding:48px 0 36px}.bc-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}.bc-footer-col a{padding:7px 0}.bc-proto{white-space:normal}}
 
 @media print{.bridge-marketing-nav,.bc-compare-bar,.bc-footer{display:none}}
+
+/* ---------- Harmonized page typography & components ----------
+ * The five pages were authored separately and use different class names
+ * (.eyebrow / .kicker / .dc-eyebrow, .btn / .button / .dc-btn, …).
+ * These rules align them on one scale without rewriting each layout.
+ * Section headings are always introduced by an eyebrow, so the
+ * "eyebrow + heading" selectors target exactly the hero and section titles.
+ */
+:is(.eyebrow,.kicker,.dc-eyebrow){font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;line-height:1.5}
+.eyebrow + h1,.kicker + h1,.dc-eyebrow + h1{font-size:clamp(42px,5vw,70px);font-weight:730;letter-spacing:-.058em;line-height:1.03}
+.eyebrow + h2,.kicker + h2,.dc-eyebrow + h2{font-size:clamp(31px,3.6vw,48px);font-weight:720;letter-spacing:-.048em;line-height:1.08}
+.eyebrow + h1 em,.eyebrow + h2 em,.kicker + h1 span,.dc-eyebrow + h1 em,.dc-eyebrow + h2 em{font-style:normal}
+
+.wrap,.container,.dc-container{width:min(var(--bc-max),calc(100% - 2*var(--bc-gutter)));max-width:none;margin-left:auto;margin-right:auto}
+.section,.dc-section{padding-top:88px;padding-bottom:88px}
+
+.btn,.button,.dc-btn{min-height:48px;border-radius:var(--bc-radius);font-weight:700;font-size:14px;letter-spacing:-.005em}
+.dc-btn.primary,.btn.blue,.button.primary{background:var(--bc-blue);border-color:var(--bc-blue);color:#fff}
+.dc-btn.primary:hover,.btn.blue:hover,.button.primary:hover{background:var(--bc-blue-hover);border-color:var(--bc-blue-hover)}
+
+@media(max-width:700px){
+  .eyebrow + h1,.kicker + h1,.dc-eyebrow + h1{font-size:clamp(38px,10.4vw,50px);line-height:1.04}
+  .eyebrow + h2,.kicker + h2,.dc-eyebrow + h2{font-size:clamp(28px,7.8vw,36px);line-height:1.1}
+  .section,.dc-section{padding-top:60px;padding-bottom:60px}
+  :is(.eyebrow,.kicker,.dc-eyebrow){font-size:11px}
+}
