@@ -12,7 +12,7 @@
   --bc-ink:#252428;
   --bc-text:#4f535c;
   --bc-muted:#666b75;
-  --bc-subtle:#7b808b;
+  --bc-subtle:#6b7079;
   --bc-line:#e3e6ed;
   --bc-line-strong:#d4d8e2;
   --bc-soft:#f8f9fb;
@@ -97,7 +97,7 @@ body.menu-locked{overflow:hidden}
 .bc-compare-bar{background:var(--bc-soft);border-bottom:1px solid var(--bc-line);font-family:var(--bc-font)}
 .bc-compare-inner{width:min(var(--bc-max),calc(100% - 2*var(--bc-gutter)));margin:0 auto;display:flex;align-items:center;gap:14px;min-height:48px}
 .bc-compare-label{flex:none;font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:var(--bc-subtle)}
-.bc-compare-bar ul{display:flex;gap:4px;margin:0;padding:0;list-style:none;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
+.bc-compare-bar ul{position:relative;display:flex;gap:4px;margin:0;padding:0;list-style:none;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 calc(100% - 24px),transparent)}
 .bc-compare-bar ul::-webkit-scrollbar{display:none}
 .bc-compare-bar a{display:flex;align-items:center;min-height:36px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:620;color:var(--bc-text);text-decoration:none;white-space:nowrap;border:1px solid transparent}
 .bc-compare-bar a:hover{color:var(--bc-ink);background:#fff;border-color:var(--bc-line)}

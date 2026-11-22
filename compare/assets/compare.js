@@ -64,5 +64,6 @@
   const current = list?.querySelector('[aria-current="page"]');
   if (!list || !current || list.scrollWidth <= list.clientWidth) return;
   const li = current.parentElement;
-  list.scrollLeft = Math.max(0, li.offsetLeft - (list.clientWidth - li.offsetWidth) / 2);
+  // Bring the current page to the start of the strip so its label is never cut off.
+  list.scrollLeft = Math.max(0, li.offsetLeft - 4);
 })();
