@@ -169,3 +169,30 @@ body.menu-locked{overflow:hidden}
   .section,.dc-section{padding-top:60px;padding-bottom:60px}
   :is(.eyebrow,.kicker,.dc-eyebrow){font-size:11px}
 }
+
+/* ---------- Final call to action (identical on every page) ---------- */
+.bc-cta{background:var(--bc-dark);color:#fff;text-align:center;font-family:var(--bc-font);padding:96px 0 100px;position:relative;overflow:hidden}
+.bc-cta::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:120%;background:radial-gradient(closest-side,#3455eb40,transparent 70%);pointer-events:none}
+.bc-cta-inner{position:relative;width:min(760px,calc(100% - 2*var(--bc-gutter)));margin:0 auto}
+.bc-cta .eyebrow{color:#aeb9ff}
+.bc-cta h2{color:#fff;margin:14px 0 16px}
+.bc-cta h2 em{color:#9aabff;font-style:normal}
+.bc-cta p{margin:0 auto;max-width:560px;font-size:17px;line-height:1.6;color:#c9ccd6}
+.bc-cta-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+.bc-cta-actions a{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:var(--bc-radius);font-size:15px;font-weight:700;text-decoration:none;border:1px solid transparent}
+.bc-cta-primary{background:var(--bc-blue);color:#fff}
+.bc-cta-primary:hover{background:var(--bc-blue-hover)}
+.bc-cta-secondary{color:#fff;border-color:#5b5e69!important;background:transparent}
+.bc-cta-secondary:hover{background:#ffffff14;border-color:#8b8f9a!important}
+@media(max-width:700px){.bc-cta{padding:68px 0 72px}.bc-cta p{font-size:16px}.bc-cta-actions{flex-direction:column;align-items:stretch}}
+
+/* ---------- Comparison tables: one look across the five page implementations ----------
+ * DISCO .dc-table · [untitled] .compare-shell · WeTransfer .comparison (rows) ·
+ * SoundCloud .compare-table · Cloud Storage .comparison (.thead/.trow).
+ * Rule: competitor column(s) first, Bridge.audio last; neutral grey header, Bridge column in blue.
+ */
+.dc-table thead th,.compare-shell .cmp-head>div,.comparison-head>div,.compare-table thead th,#comparison-grid .thead>div{background:var(--bc-soft);color:var(--bc-ink);font-size:13px;font-weight:750;letter-spacing:-.005em;border-bottom:1px solid var(--bc-line)}
+.dc-table thead th.dc-bridge-title,.compare-shell .cmp-head>div:last-child,.comparison-head>div:last-child,.compare-table thead th:last-child,#comparison-grid .thead>div:last-child{background:var(--bc-blue);color:#fff;border-bottom-color:var(--bc-blue)}
+.compare-table thead th:last-child .table-brand span,.compare-table thead th:last-child .table-brand svg{color:#fff;fill:#fff}
+@media(min-width:901px){.dc-table-wrap,.compare-shell,.comparison,.compare-card,#comparison-grid{border:1px solid var(--bc-line);border-radius:var(--bc-radius-card);overflow:hidden;background:#fff;box-shadow:none}}
+.dc-table td.dc-win,.compare-shell .bridge-value,.comparison .br,.compare-table td:last-child,#comparison-grid [data-platform="bridge"]{color:#2847cf;background:#f7f8ff}
