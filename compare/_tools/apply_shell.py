@@ -22,7 +22,13 @@ import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-PAGES = ["disco", "untitled", "wetransfer", "soundcloud", "cloud-storage"]
+PAGES = [
+    "alternative-to-disco",
+    "alternative-to-untitled",
+    "alternative-to-wetransfer",
+    "alternative-to-soundcloud",
+    "alternative-to-dropbox-google-drive",
+]
 BLOCKS = {
     "header": (ROOT / "_partials" / "header.html").read_text(encoding="utf-8").strip(),
     "footer": (ROOT / "_partials" / "footer.html").read_text(encoding="utf-8").strip(),
