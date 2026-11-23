@@ -61,11 +61,21 @@ The pages were authored separately and keep their own class names and layouts; `
 ## Visual sources
 
 - All Bridge screenshots are actual Bridge interfaces previously supplied for these pages, now served from `assets/img/` instead of base64 strings.
-- `bridge-sync-contact-panel-1672.webp` (SoundCloud page, "Let the right people find you") is the existing Bridge Sync screenshot with the **Contact rights holder** panel open, reused from `landing-upload/assets/`. It shows a sender email address and a contact name; confirm both are fine for a public page before launch.
+- `bridge-sync-contact-panel-1672.webp` (SoundCloud page, "Let the right people find you") is the existing Bridge Sync screenshot with the **Contact rights holder** panel open, reused from `landing-upload/assets/`. The sender email, the recipient's name and the account avatar were replaced with neutral placeholders (`music.supervisor@agency.com`, `Rights team`).
 - WeTransfer page: the expired transfer is an **HTML illustration labelled as such**, not a WeTransfer screenshot (no current authentic capture was available from the build environment).
 - Cloud Storage page: the Google Drive folder is a **recreated list view labelled as an illustration**, using Drive's real columns and noting that Drive previews audio. Track names 04–05 are illustrative.
 - DISCO page: the DISCO wordmark is now plain text; the previous version hot-linked DISCO's CDN logo.
 - `cloud-storage/*.png` are earlier review screenshots, not used by the page; kept untouched.
+
+## Shared page components
+
+- **Final call to action** `.bc-cta`: same dark block, eyebrow, two-line title and two buttons (Try Bridge for free + one secondary link) on every page.
+- **Comparison tables**: competitor column(s) first, Bridge.audio last; neutral header, Bridge column in blue (rules at the end of `compare.css`).
+- **Section eyebrows**: plain labels; numbered sections use `01 · LABEL`.
+
+## Fact check (23 November 2026)
+
+Checked against official pages: WeTransfer Free (10 transfers or 3 GB per rolling 30 days, up to 3 days, non-commercial; Ultimate keeps transfers active), SoundCloud Basic (2 hours of uploads), DISCO (Plus $16.99 / Pro $26.99 per month billed annually for 1 user and 1K files; Artist $10.80 with 2 seats; Discovery Suite from $10/month; free trial), [untitled] (free Starter; Membership $7.99/month or $49.99/year), Box Individual (10 GB, 250 MB per file). Bridge plan figures follow 09 — Commercial Offers (Free; Talent Pro from €5/month; Music Pro from €9/month). The live bridge.audio pricing page did not expose plan prices to automated reading; re-check visually before launch.
 
 ## SEO and metadata decisions (pending)
 
